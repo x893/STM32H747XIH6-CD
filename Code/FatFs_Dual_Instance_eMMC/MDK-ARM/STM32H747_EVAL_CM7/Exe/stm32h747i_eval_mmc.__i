@@ -1,0 +1,6 @@
+--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../CM7/Inc -I ../../Drivers/CMSIS/Include -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers/BSP/STM32H747I_EVAL -I ../../Drivers/BSP/Components/Common -I ../../Middlewares/Third_Party/FatFs/src -I ..\Common\Inc
+-I.\RTE\_STM32H747_EVAL_CM7
+-IC:\Keil\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+-IC:\Keil\ARM\PACK\Keil\STM32H7xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32H7xx\Include
+-D__UVISION_VERSION="534" -D_RTE_ -DCORE_CM7 -DSTM32H747xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H747xx -DUSE_STM32H747I_EVAL -DCORE_CM7
+-o stm32h747_eval_cm7\exe\stm32h747i_eval_mmc.o --depend stm32h747_eval_cm7\exe\stm32h747i_eval_mmc.d "..\..\Drivers\BSP\STM32H747I_EVAL\stm32h747i_eval_mmc.c"

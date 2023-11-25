@@ -1,0 +1,6 @@
+Silk screen error:
+The 4-pin silk screen of JP1 is marked as PB13 and should actually be PD13.
+The 21-pin silk screen of JP1 is marked as PC14 and should actually be PG14.
+
+Silk screen printing is easy to make mistakes.
+It is recommended to look at the schematic diagram directly!

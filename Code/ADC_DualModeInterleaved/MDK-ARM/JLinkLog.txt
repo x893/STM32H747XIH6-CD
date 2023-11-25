@@ -1,0 +1,80 @@
+T5FBC 000:006.438   SEGGER J-Link V7.22b Log File
+T5FBC 000:006.543   DLL Compiled: Jun 17 2021 17:22:49
+T5FBC 000:006.550   Logging started @ 2022-08-27 04:06
+T5FBC 000:006.555 - 6.558ms
+T5FBC 000:006.568 JLINK_SetWarnOutHandler(...)
+T5FBC 000:006.576 - 0.011ms
+T5FBC 000:006.584 JLINK_OpenEx(...)
+T5FBC 000:258.966   Firmware: J-Link V12 compiled Jul 27 2020 14:00:11
+T5FBC 000:259.336   Firmware: J-Link V12 compiled Jul 27 2020 14:00:11
+T5FBC 000:261.836   Hardware: V10.10
+T5FBC 000:261.857   S/N: 4294967295
+T5FBC 000:261.868   OEM: SEGGER
+T5FBC 000:261.877   Feature(s): GDB, RDI, FlashBP, FlashDL, JFlash
+T5FBC 000:269.469   TELNET listener socket opened on port 19021
+T5FBC 000:269.845   WEBSRV Starting webserver
+T5FBC 000:269.975   WEBSRV Failed to put socket into listener state (port 19080)
+T5FBC 000:270.018   WEBSRV Failed to put socket into listener state (port 19081)
+T5FBC 000:270.151   WEBSRV Webserver running on local port 19082
+T5FBC 000:270.185 - 263.603ms returns "O.K."
+T5FBC 000:270.199 JLINK_GetEmuCaps()
+T5FBC 000:270.207 - 0.011ms returns 0xB9FF7BBF
+T5FBC 000:270.237 JLINK_TIF_GetAvailable(...)
+T5FBC 000:270.587 - 0.358ms
+T5FBC 000:270.603 JLINK_SetErrorOutHandler(...)
+T5FBC 000:270.609 - 0.008ms
+T5FBC 000:270.632 JLINK_ExecCommand("ProjectFile = "E:\STM32_H7\STM32H747XIH6\STM32H747XIH6-CD\Code\ADC_DualModeInterleaved\MDK-ARM\JLinkSettings.ini"", ...). 
+T5FBC 000:284.425   Device "STM32H745XI_M4" selected.
+T5FBC 000:284.837 - 14.214ms returns 0x00
+T5FBC 000:285.964 JLINK_ExecCommand("Device = STM32H747XIHx:CM4", ...). 
+T5FBC 000:291.173   Device "STM32H745XI_M4" selected.
+T5FBC 000:291.762 - 5.791ms returns 0x00
+T5FBC 000:291.782 JLINK_GetHardwareVersion()
+T5FBC 000:291.789 - 0.010ms returns 101000
+T5FBC 000:291.796 JLINK_GetDLLVersion()
+T5FBC 000:291.802 - 0.009ms returns 72202
+T5FBC 000:291.809 JLINK_GetOEMString(...)
+T5FBC 000:291.816 JLINK_GetFirmwareString(...)
+T5FBC 000:291.827 - 0.013ms
+T5FBC 000:294.855 JLINK_GetDLLVersion()
+T5FBC 000:294.868 - 0.016ms returns 72202
+T5FBC 000:294.875 JLINK_GetCompileDateTime()
+T5FBC 000:294.881 - 0.009ms
+T5FBC 000:296.584 JLINK_GetFirmwareString(...)
+T5FBC 000:296.598 - 0.017ms
+T5FBC 000:298.646 JLINK_GetHardwareVersion()
+T5FBC 000:298.659 - 0.016ms returns 101000
+T5FBC 000:299.743 JLINK_GetSN()
+T5FBC 000:299.757 - 0.017ms returns -1
+T5FBC 000:299.764 JLINK_GetOEMString(...)
+T5FBC 000:301.778 JLINK_TIF_Select(JLINKARM_TIF_JTAG)
+T5FBC 000:302.748 - 0.978ms returns 0x00
+T5FBC 000:302.763 JLINK_HasError()
+T5FBC 000:302.780 JLINK_SetSpeed(5000)
+T5FBC 000:302.875 - 0.102ms
+T5FBC 000:302.891 JLINK_GetIdData(pIdData)
+T5FBC 000:304.736   ConfigTargetSettings() start
+T5FBC 000:304.756    J-Link Script File: Executing ConfigTargetSettings()
+T5FBC 000:305.762   J-Link script: ConfigTargetSettings()
+T5FBC 000:306.774   ConfigTargetSettings() end
+T5FBC 000:308.620   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+T5FBC 000:309.833   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T5FBC 000:362.674   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+T5FBC 000:362.902   
+  ***** Error: 
+T5FBC 000:362.916   STM32: Connecting to CPU via connect under reset failed.
+T5FBC 000:476.710   ConfigTargetSettings() start
+T5FBC 000:476.747    J-Link Script File: Executing ConfigTargetSettings()
+T5FBC 000:477.827   J-Link script: ConfigTargetSettings()
+T5FBC 000:478.925   ConfigTargetSettings() end
+T5FBC 000:481.497   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+T5FBC 000:483.240   STM32 (connect): Can not attach to CPU. Trying connect under reset.
+T5FBC 000:535.684   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
+T5FBC 000:535.892   
+  ***** Error: 
+T5FBC 000:535.909   STM32: Connecting to CPU via connect under reset failed.
+T5FBC 000:587.802 - 284.932ms
+T5FBC 002:738.062 JLINK_Close()
+T5FBC 002:743.703 - 5.666ms
+T5FBC 002:743.732   
+T5FBC 002:743.739   Closed

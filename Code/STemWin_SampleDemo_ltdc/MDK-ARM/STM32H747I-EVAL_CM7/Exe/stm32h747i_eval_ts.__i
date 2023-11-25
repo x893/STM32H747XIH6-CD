@@ -1,0 +1,6 @@
+--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../CM7/Core/Inc -I ../CM7/STemWin/App -I ../CM7/STemWin/Target -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers/BSP/STM32H747I_EVAL -I ../../Drivers/BSP/Components/otm8009a -I ../../Middlewares/ST/STemWin/inc
+-I.\RTE\_STM32H747I-EVAL_CM7_480x272_GT911
+-IC:\Keil\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include
+-IC:\Keil\ARM\PACK\Keil\STM32H7xx_DFP\2.4.0\Drivers\CMSIS\Device\ST\STM32H7xx\Include
+-D__UVISION_VERSION="529" -D_RTE_ -DCORE_CM7 -DSTM32H747xx -DUSE_HAL_DRIVER -DSTM32H747xx -DUSE_STM32H747I_EVAL -DUSE_480x272 -DCORE_CM7
+-o stm32h747i-eval_cm7\exe\stm32h747i_eval_ts.o --depend stm32h747i-eval_cm7\exe\stm32h747i_eval_ts.d "../../Drivers/BSP/STM32H747I_EVAL/stm32h747i_eval_ts.c"

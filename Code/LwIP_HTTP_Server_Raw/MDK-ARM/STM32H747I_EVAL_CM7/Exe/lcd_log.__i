@@ -1,0 +1,6 @@
+--c99 -c --cpu Cortex-M7.fp.dp -D__MICROLIB -g -O3 --apcs=interwork --split_sections -I ../Common/Inc -I ../CM7/Inc -I ../CM7/Src -I ../../Drivers/CMSIS/Include -I ../../Drivers/CMSIS/Device/ST/STM32H7xx/Include -I ../../Drivers/STM32H7xx_HAL_Driver/Inc -I ../../Drivers/BSP/STM32H747I_EVAL -I ../../Drivers/BSP/Components/Common -I ../../Utilities -I ../../Utilities/Log -I ../../Utilities/Fonts -I ../../Utilities/CPU -I ../../Middlewares/Third_Party/LwIP/src/include/ -I ../../Middlewares/Third_Party/LwIP/src/apps/ -I ../../Middlewares/Third_Party/LwIP/system
+-I.\RTE\_STM32H747I_EVAL_CM7_LTDC_480x272
+-IC:\Keil\ARM\PACK\ARM\CMSIS\5.7.0\CMSIS\Core\Include
+-IC:\Keil\ARM\PACK\Keil\STM32H7xx_DFP\2.7.0\Drivers\CMSIS\Device\ST\STM32H7xx\Include
+-D__UVISION_VERSION="534" -D_RTE_ -DCORE_CM7 -DSTM32H747xx -D_RTE_ -DUSE_HAL_DRIVER -DSTM32H747xx -DUSE_STM32H747I_EVAL -DCORE_CM7 -DUSE_480x272
+-o stm32h747i_eval_cm7\exe\lcd_log.o --depend stm32h747i_eval_cm7\exe\lcd_log.d "..\..\Utilities\Log\lcd_log.c"
