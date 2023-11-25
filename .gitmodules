@@ -1,4 +1,0 @@
-[submodule "88W8801/marvell_wlan_host_driver"]
-	path = 88W8801/marvell_wlan_host_driver
-	url = https://github.com/glifeather/marvell_wlan_host_driver.git
-	branch = main
