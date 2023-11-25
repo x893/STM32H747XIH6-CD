@@ -1,0 +1,18 @@
+Created by Yu-ZhongJun, RT-Thread Development Team, Glif.
+
+1.Header file directory:
+  ..
+  lwip/include
+2.For AC6 compilers, the optimization level should be set to -Oz;
+3.STM32CubeMX should disable the default SDIO initialization function and SysTick interrupt;
+4.The stack should allocate at least 0x800 bytes, which can be set to 0x0 when the heap is not used;
+5.SDIO GPIO configuration:
+  PC8 - SDIO_D0
+  PC9 - SDIO_D1
+  PC10 - SDIO_D2
+  PC11 - SDIO_D3
+  PC12 - SDIO_CK
+  PD2 - SDIO_CMD
+6.88w8801.h NAT mode (STA + AP) is disabled by default and can be enabled by yourself;
+7.88w8801.h By default, the firmware is not written to Flash and the firmware in Flash is not used. You can enable it yourself;
+8.88w8801.h All debugging flags are disabled by default and can be enabled yourself.

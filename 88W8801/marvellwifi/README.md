@@ -68,11 +68,11 @@ View usage:
 
 ## Example
 
-    mwifi mlan0 connect SSID -k PASSWORD    //连接SSID，密码PASSWORD
-    mwifi mlan0 disconnect                  //断开连接
-    mwifi mlan0 reassoc -e                  //开启自动重连
-    mwifi mlan0 pwrsave -e                  //进入低功耗模式
-    mwifi mlan0 scan                        //扫描附近的热点
+    mwifi mlan0 connect SSID -k PASSWORD    // Connect SSID, password PASSWORD
+    mwifi mlan0 disconnect                  // Disconnect
+    mwifi mlan0 reassoc -e                  // Enable automatic reconnection
+    mwifi mlan0 pwrsave -e                  // Enter low power mode
+    mwifi mlan0 scan                        // Scan for nearby hotspots
 
 For more usage, please refer to mwifi.c
 

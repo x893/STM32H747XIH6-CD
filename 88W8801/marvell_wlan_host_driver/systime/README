@@ -1,0 +1,3 @@
+Created by Glif.
+
+1.When using LL_Init1msTick/LL_InitTick to initialize SysTick, you need to call LL_SYSTICK_EnableIT to enable the interrupt.
