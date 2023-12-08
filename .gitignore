@@ -1,4 +1,11 @@
 *.uvguix.*
 *.bak
 *.lst
-Exe/
+[Ee]xe/
+[Ll]st/
+[Bb]uild/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+
