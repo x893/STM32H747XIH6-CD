@@ -1,6 +1,9 @@
 *.uvguix.*
 *.bak
 *.lst
+*.sct
+*.schPreview
+*.pcb.htm
 [Ee]xe/
 [Ll]st/
 [Bb]uild/
@@ -8,4 +11,7 @@
 [Dd]ebugPublic/
 [Rr]elease/
 [Rr]eleases/
-
+JLinkLog.txt
+JLinkSettings.ini
+EventRecorderStub.scvd
+DebugConfig/

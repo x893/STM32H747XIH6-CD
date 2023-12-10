@@ -45,21 +45,38 @@
   */
 int main(void)
 {
- /*HW semaphore Clock enable*/
-  __HAL_RCC_HSEM_CLK_ENABLE();
- 
-  /* Activate HSEM notification for Cortex-M4*/
-  HAL_HSEM_ActivateNotification(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
+/*
+	HAL_EnableDBGSleepMode();
+	HAL_EnableDBGStopMode();
+	HAL_EnableDBGStandbyMode();
+	
+	HAL_EnableDomain2DBGSleepMode();
+	HAL_EnableDomain2DBGStopMode();
+	HAL_EnableDomain2DBGStandbyMode();
+*/
+	/* HW semaphore Clock enable */
+	__HAL_RCC_HSEM_CLK_ENABLE();
+#if 1
+	/* Activate HSEM notification for Cortex-M4*/
+	while (__HAL_HSEM_GET_FLAG(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0)) == 0)
+	{
+		__NOP();
+	}
+	__HAL_HSEM_CLEAR_FLAG(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
+#else
+	/* Activate HSEM notification for Cortex-M4*/
+	HAL_HSEM_ActivateNotification(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
   
-  /* 
-    Domain D2 goes to STOP mode (Cortex-M4 in deep-sleep) waiting for Cortex-M7 to
-    perform system initialization (system clock config, external memory configuration.. )   
-  */
-  HAL_PWREx_ClearPendingEvent();
-  HAL_PWREx_EnterSTOPMode(PWR_MAINREGULATOR_ON, PWR_STOPENTRY_WFE, PWR_D2_DOMAIN);
+	/*
+	Domain D2 goes to STOP mode (Cortex-M4 in deep-sleep) waiting for Cortex-M7 to
+	perform system initialization (system clock config, external memory configuration.. )   
+	*/
+	HAL_PWREx_ClearPendingEvent();
+	HAL_PWREx_EnterSTOPMode(PWR_MAINREGULATOR_ON, PWR_STOPENTRY_WFE, PWR_D2_DOMAIN);
 
-  /* Clear HSEM flag */
-  __HAL_HSEM_CLEAR_FLAG(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
+	/* Clear HSEM flag */
+	__HAL_HSEM_CLEAR_FLAG(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
+#endif
 
  /* STM32H7xx HAL library initialization:
        - Systick timer is configured by default as source of time base, but user 
@@ -70,19 +87,21 @@ int main(void)
        - Set NVIC Group Priority to 4
        - Low Level Initialization
      */
-  HAL_Init();
+	HAL_Init();
   
   /* -1- Initialize LEDs mounted on STM32H747I-EVAL board */
-  BSP_LED_Init(LED1);
+	BSP_LED_Init(LED1);
   
-  /* Enable and set EXTI lines 15 to 10 Interrupt to the lowest priority */
-  HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);
-  HAL_NVIC_EnableIRQ(EXTI15_10_IRQn); 
+	/* Enable and set EXTI lines 15 to 10 Interrupt to the lowest priority */
+//	HAL_NVIC_SetPriority(EXTI15_10_IRQn, 2, 0);
+//	HAL_NVIC_EnableIRQ(EXTI15_10_IRQn); 
 
-  /* Infinite loop */
-  while (1)
-  {
-  }
+	/* Infinite loop */
+	while (1)
+	{
+		BSP_LED_Toggle(LED1);
+		HAL_Delay(200);
+	}
 }
 
 

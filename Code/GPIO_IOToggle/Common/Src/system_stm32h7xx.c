@@ -220,28 +220,26 @@ void SystemInit (void)
 
 #ifdef CORE_CM4
 
-  /* Configure the Vector Table location add offset address ------------------*/
-#ifdef VECT_TAB_SRAM
-  SCB->VTOR = D2_AHBSRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
-#else
-  SCB->VTOR = FLASH_BANK2_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
-#endif  
+	/* Configure the Vector Table location add offset address ------------------*/
+	#ifdef VECT_TAB_SRAM
+	SCB->VTOR = D2_AHBSRAM_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal SRAM */
+	#else
+	SCB->VTOR = FLASH_BANK2_BASE | VECT_TAB_OFFSET; /* Vector Table Relocation in Internal FLASH */
+	#endif  
 
 #else
-#ifdef CORE_CM7
+	#ifdef CORE_CM7
 
-  /* Configure the Vector Table location add offset address ------------------*/
-#ifdef VECT_TAB_SRAM
-  SCB->VTOR = D1_AXISRAM_BASE  | VECT_TAB_OFFSET;       /* Vector Table Relocation in Internal SRAM */
-#else
-  SCB->VTOR = FLASH_BANK1_BASE | VECT_TAB_OFFSET;       /* Vector Table Relocation in Internal FLASH */
-#endif  
-
-#else
-#error Please #define CORE_CM4 or CORE_CM7
-#endif                       
+	/* Configure the Vector Table location add offset address ------------------*/
+		#ifdef VECT_TAB_SRAM
+	SCB->VTOR = D1_AXISRAM_BASE  | VECT_TAB_OFFSET;       /* Vector Table Relocation in Internal SRAM */
+		#else
+	SCB->VTOR = FLASH_BANK1_BASE | VECT_TAB_OFFSET;       /* Vector Table Relocation in Internal FLASH */
+		#endif
+	#else
+		#error Please #define CORE_CM4 or CORE_CM7
+	#endif
 #endif
-
 }
 
 /**

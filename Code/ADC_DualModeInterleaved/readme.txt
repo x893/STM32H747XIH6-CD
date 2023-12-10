@@ -9,13 +9,12 @@
   ******************************************************************************
   * @attention
   *
-  * <h2><center>&copy; Copyright (c) 2019 STMicroelectronics.
-  * All rights reserved.</center></h2>
+  * Copyright (c) 2019 STMicroelectronics.
+  * All rights reserved.
   *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
+  * This software is licensed under terms that can be found in the LICENSE file
+  * in the root directory of this software component.
+  * If no LICENSE file comes with this software, it is provided AS-IS.
   *
   ******************************************************************************
   @endverbatim
@@ -91,12 +90,12 @@ Board settings:
   If compilation switch "WAVEFORM_VOLTAGE_GENERATION_FOR_TEST" is defined, the voltage input on ADC channel comes 
   from the DAC channel. This means that, if they are different, ADC pin and DAC pin must be connected by a wire. 
 
-STM32H747I-EVAL board LEDs are used to monitor the program execution status:
+STM32H747I-DISCO board LEDs are used to monitor the program execution status:
  - Normal operation: LED1 is turned-on/off in function of ADC conversion
    status:
     - Turned-off if ADC conversions have just filled up half of the buffer (DMA half-transfer interrupt has been triggered)
     - Turned-on if ADC conversions have filled up the complete buffer (DMA transfer complete interrupt has been triggered)
-   The buffer fill up carries on indefinitively. 
+   The buffer fill up carries on indefinitely. 
  - Error: In case of error, LED3 is toggling at a frequency of 1Hz.
 
 
@@ -123,6 +122,10 @@ STM32H747I-EVAL board LEDs are used to monitor the program execution status:
       Please refer to the AN4838 "Managing memory protection unit (MPU) in STM32 MCUs"
       Please refer to the AN4839 "Level 1 cache on STM32F7 Series"
 
+@par Keywords
+
+Analog, ADC, Analog to Digital, Dual mode, Interleaved, Continuous conversion, Software Trigger, DMA, Measurement
+
 @par Directory contents 
 
   - ADC/ADC_DualModeInterleaved/Common/Src/system_stm32h7xx.c     STM32H7xx system configuration file
@@ -145,19 +148,21 @@ STM32H747I-EVAL board LEDs are used to monitor the program execution status:
 
   - This example runs on STM32H747xx devices.
 
-  - This example has been tested with STM32H747I-EVAL rev.E board with SMPS (SD Converter) power supply 
-   config and can be easily tailored to any other supported device and development board.
+  - This example has been tested with STMicroelectronics STM32H747I-DISCO
+    boards and can be easily tailored to any other supported device 
+    and development board.
 
 @par How to use it ? 
 
 In order to make the program work, you must do the following :
 
+In order to make the program work, you must do the following :
  - Open your preferred toolchain 
- - For each target configuration (STM32H747_EVAL_CM7 and STM32H747_EVAL_CM4) : 
+ - For each target configuration (STM32H747I_DISCO_CM7 and STM32H747I_DISCO_CM4) : 
      - Rebuild all files 
      - Load images into target memory
  - After loading the two images, you have to reset the board in order to boot (Cortex-M7) and CPU2 (Cortex-M4) at once.
  - Run the example
 
- * <h3><center>&copy; COPYRIGHT STMicroelectronics</center></h3>
+
  */

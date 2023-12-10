@@ -48,15 +48,26 @@ static void Error_Handler(void);
   */
 int main(void)
 {
+	HAL_EnableDBGSleepMode();
+	HAL_EnableDBGStopMode();
+	HAL_EnableDBGStandbyMode();
+/*
+	HAL_EnableDomain2DBGSleepMode();
+	HAL_EnableDomain2DBGStopMode();
+	HAL_EnableDomain2DBGStandbyMode();
+
+	HAL_EnableDomain3DBGStopMode();
+	HAL_EnableDomain3DBGStandbyMode();
+*/
+	
   /* System Init, System clock, voltage scaling and L1-Cache configuration are done by CPU1 (Cortex-M7) 
      in the meantime Domain D2 is put in STOP mode(Cortex-M4 in deep-sleep)
   */
   
-  /* Enable the CPU Cache */
-  CPU_CACHE_Enable();
+	/* Enable the CPU Cache */
+	CPU_CACHE_Enable();
   
-  
- /* STM32H7xx HAL library initialization:
+	/* STM32H7xx HAL library initialization:
        - Systick timer is configured by default as source of time base, but user 
          can eventually implement his proper time base source (a general purpose 
          timer for example or other time source), keeping in mind that Time base 
@@ -65,34 +76,33 @@ int main(void)
        - Set NVIC Group Priority to 4
        - Low Level Initialization
      */
-  HAL_Init();
+	HAL_Init();
 
-  /* Configure the system clock to 400 MHz */
-  SystemClock_Config();  
+	/* Configure the system clock to 400 MHz */
+	SystemClock_Config();
   
   /* When system initialization is finished, Cortex-M7 will release (wakeup) Cortex-M4  by means of 
      HSEM notification. Cortex-M4 release could be also ensured by any Domain D2 wakeup source (SEV,EXTI..).
   */
   
-   /*HW semaphore Clock enable*/
-  __HAL_RCC_HSEM_CLK_ENABLE();
-  
-    /*Take HSEM */
-    HAL_HSEM_FastTake(HSEM_ID_0);   
-   /*Release HSEM in order to notify the CPU2(CM4)*/     
-    HAL_HSEM_Release(HSEM_ID_0,0);
-  
-  /* -1- Initialize LEDs mounted on STM32H747I-EVAL board */
-  BSP_LED_Init(LED1);
-  
-  /* Infinite loop */
-  while (1)
-  {
-		BSP_LED_Toggle(LED1);
-		HAL_Delay(100);
-  }
-}
+	/* HW semaphore Clock enable */
+	__HAL_RCC_HSEM_CLK_ENABLE();
 
+	/* Take HSEM */
+	HAL_HSEM_FastTake( HSEM_ID_0 );
+	/* Release HSEM in order to notify the CPU2(CM4) */
+    HAL_HSEM_Release( HSEM_ID_0, 0 );
+
+	/* -1- Initialize LEDs mounted on STM32H747I-EVAL board */
+//	BSP_LED_Init(LED1);
+
+	/* Infinite loop */
+	while (1)
+	{
+//		BSP_LED_Toggle(LED1);
+		HAL_Delay(1000);
+	}
+}
  
 /**
   * @brief  System Clock Configuration
@@ -118,12 +128,12 @@ int main(void)
   */
 static void SystemClock_Config(void)
 {
-  RCC_ClkInitTypeDef RCC_ClkInitStruct;
-  RCC_OscInitTypeDef RCC_OscInitStruct;
-  HAL_StatusTypeDef ret = HAL_OK;
-  
-  /*!< Supply configuration update enable */
-	HAL_PWREx_ConfigSupply(PWR_SMPS_1V8_SUPPLIES_EXT_AND_LDO);
+	RCC_ClkInitTypeDef RCC_ClkInitStruct;
+	RCC_OscInitTypeDef RCC_OscInitStruct;
+	HAL_StatusTypeDef ret = HAL_OK;
+
+	/*!< Supply configuration update enable */
+	HAL_PWREx_ConfigSupply(PWR_SMPS_1V8_SUPPLIES_EXT_AND_LDO); // PWR_LDO_SUPPLY
 
   /* The voltage scaling allows optimizing the power consumption when the device is 
      clocked below the maximum system frequency, to update the voltage scaling value 

@@ -1,80 +1,130 @@
-T5FBC 000:006.438   SEGGER J-Link V7.22b Log File
-T5FBC 000:006.543   DLL Compiled: Jun 17 2021 17:22:49
-T5FBC 000:006.550   Logging started @ 2022-08-27 04:06
-T5FBC 000:006.555 - 6.558ms
-T5FBC 000:006.568 JLINK_SetWarnOutHandler(...)
-T5FBC 000:006.576 - 0.011ms
-T5FBC 000:006.584 JLINK_OpenEx(...)
-T5FBC 000:258.966   Firmware: J-Link V12 compiled Jul 27 2020 14:00:11
-T5FBC 000:259.336   Firmware: J-Link V12 compiled Jul 27 2020 14:00:11
-T5FBC 000:261.836   Hardware: V10.10
-T5FBC 000:261.857   S/N: 4294967295
-T5FBC 000:261.868   OEM: SEGGER
-T5FBC 000:261.877   Feature(s): GDB, RDI, FlashBP, FlashDL, JFlash
-T5FBC 000:269.469   TELNET listener socket opened on port 19021
-T5FBC 000:269.845   WEBSRV Starting webserver
-T5FBC 000:269.975   WEBSRV Failed to put socket into listener state (port 19080)
-T5FBC 000:270.018   WEBSRV Failed to put socket into listener state (port 19081)
-T5FBC 000:270.151   WEBSRV Webserver running on local port 19082
-T5FBC 000:270.185 - 263.603ms returns "O.K."
-T5FBC 000:270.199 JLINK_GetEmuCaps()
-T5FBC 000:270.207 - 0.011ms returns 0xB9FF7BBF
-T5FBC 000:270.237 JLINK_TIF_GetAvailable(...)
-T5FBC 000:270.587 - 0.358ms
-T5FBC 000:270.603 JLINK_SetErrorOutHandler(...)
-T5FBC 000:270.609 - 0.008ms
-T5FBC 000:270.632 JLINK_ExecCommand("ProjectFile = "E:\STM32_H7\STM32H747XIH6\STM32H747XIH6-CD\Code\ADC_DualModeInterleaved\MDK-ARM\JLinkSettings.ini"", ...). 
-T5FBC 000:284.425   Device "STM32H745XI_M4" selected.
-T5FBC 000:284.837 - 14.214ms returns 0x00
-T5FBC 000:285.964 JLINK_ExecCommand("Device = STM32H747XIHx:CM4", ...). 
-T5FBC 000:291.173   Device "STM32H745XI_M4" selected.
-T5FBC 000:291.762 - 5.791ms returns 0x00
-T5FBC 000:291.782 JLINK_GetHardwareVersion()
-T5FBC 000:291.789 - 0.010ms returns 101000
-T5FBC 000:291.796 JLINK_GetDLLVersion()
-T5FBC 000:291.802 - 0.009ms returns 72202
-T5FBC 000:291.809 JLINK_GetOEMString(...)
-T5FBC 000:291.816 JLINK_GetFirmwareString(...)
-T5FBC 000:291.827 - 0.013ms
-T5FBC 000:294.855 JLINK_GetDLLVersion()
-T5FBC 000:294.868 - 0.016ms returns 72202
-T5FBC 000:294.875 JLINK_GetCompileDateTime()
-T5FBC 000:294.881 - 0.009ms
-T5FBC 000:296.584 JLINK_GetFirmwareString(...)
-T5FBC 000:296.598 - 0.017ms
-T5FBC 000:298.646 JLINK_GetHardwareVersion()
-T5FBC 000:298.659 - 0.016ms returns 101000
-T5FBC 000:299.743 JLINK_GetSN()
-T5FBC 000:299.757 - 0.017ms returns -1
-T5FBC 000:299.764 JLINK_GetOEMString(...)
-T5FBC 000:301.778 JLINK_TIF_Select(JLINKARM_TIF_JTAG)
-T5FBC 000:302.748 - 0.978ms returns 0x00
-T5FBC 000:302.763 JLINK_HasError()
-T5FBC 000:302.780 JLINK_SetSpeed(5000)
-T5FBC 000:302.875 - 0.102ms
-T5FBC 000:302.891 JLINK_GetIdData(pIdData)
-T5FBC 000:304.736   ConfigTargetSettings() start
-T5FBC 000:304.756    J-Link Script File: Executing ConfigTargetSettings()
-T5FBC 000:305.762   J-Link script: ConfigTargetSettings()
-T5FBC 000:306.774   ConfigTargetSettings() end
-T5FBC 000:308.620   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-T5FBC 000:309.833   STM32 (connect): Can not attach to CPU. Trying connect under reset.
-T5FBC 000:362.674   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-T5FBC 000:362.902   
-  ***** Error: 
-T5FBC 000:362.916   STM32: Connecting to CPU via connect under reset failed.
-T5FBC 000:476.710   ConfigTargetSettings() start
-T5FBC 000:476.747    J-Link Script File: Executing ConfigTargetSettings()
-T5FBC 000:477.827   J-Link script: ConfigTargetSettings()
-T5FBC 000:478.925   ConfigTargetSettings() end
-T5FBC 000:481.497   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-T5FBC 000:483.240   STM32 (connect): Can not attach to CPU. Trying connect under reset.
-T5FBC 000:535.684   TotalIRLen = ?, IRPrint = 0x..000000000000000000000000
-T5FBC 000:535.892   
-  ***** Error: 
-T5FBC 000:535.909   STM32: Connecting to CPU via connect under reset failed.
-T5FBC 000:587.802 - 284.932ms
-T5FBC 002:738.062 JLINK_Close()
-T5FBC 002:743.703 - 5.666ms
-T5FBC 002:743.732   
-T5FBC 002:743.739   Closed
+T3620 000:154.406   SEGGER J-Link V7.86e Log File
+T3620 000:154.546   DLL Compiled: Mar 22 2023 16:22:22
+T3620 000:154.573   Logging started @ 2023-12-08 20:39
+T3620 000:154.589 - 154.598ms
+T3620 000:154.611 JLINK_SetWarnOutHandler(...)
+T3620 000:154.630 - 0.026ms
+T3620 000:154.647 JLINK_OpenEx(...)
+T3620 000:157.292   Firmware: J-Link V9 compiled May  7 2021 16:26:12
+T3620 000:158.024   Firmware: J-Link V9 compiled May  7 2021 16:26:12
+T3620 000:158.268   Decompressing FW timestamp took 183 us
+T3620 000:167.674   Hardware: V9.20
+T3620 000:167.742   S/N: 20281410
+T3620 000:167.767   OEM: SEGGER
+T3620 000:167.790   Feature(s): GDB, RDI, FlashBP, FlashDL, JFlash
+T3620 000:171.096   TELNET listener socket opened on port 19021
+T3620 000:171.263   WEBSRV WEBSRV_Init(): Starting webserver thread(s)
+T3620 000:171.489   WEBSRV Webserver running on local port 19080
+T3620 000:186.156 - 31.579ms returns "O.K."
+T3620 000:186.289 JLINK_GetEmuCaps()
+T3620 000:186.329 - 0.058ms returns 0xB9FF7BBF
+T3620 000:186.381 JLINK_TIF_GetAvailable(...)
+T3620 000:187.111 - 0.772ms
+T3620 000:187.188 JLINK_SetErrorOutHandler(...)
+T3620 000:187.226 - 0.056ms
+T3620 000:187.301 JLINK_ExecCommand("ProjectFile = "G:\Downloads\STM32H747XIH6-CD\Code\ADC_DualModeInterleaved\MDK-ARM\JLinkSettings.ini"", ...). 
+T3620 000:201.234   Ref file found at: D:\Tools\Keil\ARM\Segger\JLinkDevices.ref
+T3620 000:201.378   REF file references invalid XML file: D:\Tools\JLink_V786e\JLinkDevices.xml
+T3620 000:202.643   Flash bank @ 0x90000000: SFL: Parsing sectorization info from ELF file
+T3620 000:202.703     FlashDevice.SectorInfo[0]: .SectorSize = 0x00010000, .SectorStartAddr = 0x00000000
+T3620 000:206.972   Device "STM32H745XI_M4" selected.
+T3620 000:207.548 - 20.262ms returns 0x00
+T3620 000:207.585 JLINK_ExecCommand("Device = STM32H747XIHx:CM7", ...). 
+T3620 000:210.992   Flash bank @ 0x90000000: SFL: Parsing sectorization info from ELF file
+T3620 000:211.047     FlashDevice.SectorInfo[0]: .SectorSize = 0x00010000, .SectorStartAddr = 0x00000000
+T3620 000:215.531   Device "STM32H745XI_M4" selected.
+T3620 000:216.120 - 8.530ms returns 0x00
+T3620 000:216.158 JLINK_ExecCommand("DisableConnectionTimeout", ...). 
+T3620 000:216.265 - 0.029ms returns 0x01
+T3620 000:216.306 JLINK_GetHardwareVersion()
+T3620 000:216.327 - 0.031ms returns 92000
+T3620 000:216.349 JLINK_GetDLLVersion()
+T3620 000:216.369 - 0.029ms returns 78605
+T3620 000:216.389 JLINK_GetOEMString(...)
+T3620 000:216.418 JLINK_GetFirmwareString(...)
+T3620 000:216.437 - 0.027ms
+T3620 000:216.458 JLINK_GetDLLVersion()
+T3620 000:216.474 - 0.023ms returns 78605
+T3620 000:216.491 JLINK_GetCompileDateTime()
+T3620 000:216.507 - 0.023ms
+T3620 000:216.526 JLINK_GetFirmwareString(...)
+T3620 000:216.542 - 0.023ms
+T3620 000:216.560 JLINK_GetHardwareVersion()
+T3620 000:216.576 - 0.023ms returns 92000
+T3620 000:216.594 JLINK_GetSN()
+T3620 000:216.611 - 0.024ms returns 20281410
+T3620 000:216.628 JLINK_GetOEMString(...)
+T3620 000:216.648 JLINK_TIF_Select(JLINKARM_TIF_SWD)
+T3620 000:219.319 - 2.697ms returns 0x00
+T3620 000:219.360 JLINK_HasError()
+T3620 000:219.394 JLINK_SetSpeed(5000)
+T3620 000:220.035 - 0.667ms
+T3620 000:220.428 JLINK_HasError()
+T3620 000:220.458 JLINK_SetResetType(JLINKARM_RESET_TYPE_SAM7)
+T3620 000:220.475 - 0.024ms returns JLINKARM_RESET_TYPE_NORMAL
+T3620 000:220.494 JLINK_Reset()
+T3620 000:221.098   ConfigTargetSettings() start
+T3620 000:221.143    J-Link Script File: Executing ConfigTargetSettings()
+T3620 000:221.184   ConfigTargetSettings() end - Took 38us
+T3620 000:221.213   InitTarget() start
+T3620 000:221.236    J-Link Script File: Executing InitTarget()
+T3620 000:221.807   SWD selected. Executing JTAG -> SWD switching sequence.
+T3620 000:225.861   DAP initialized successfully.
+T3620 000:251.527   InitTarget() end - Took 30.2ms
+T3620 000:252.665   Found SW-DP with ID 0x6BA02477
+T3620 000:256.274   DPIDR: 0x6BA02477
+T3620 000:256.319   CoreSight SoC-400 or earlier
+T3620 000:256.346   AP map detection skipped. Manually configured AP map found.
+T3620 000:256.442   AP[0]: AHB-AP (IDR: Not set)
+T3620 000:256.467   AP[1]: AHB-AP (IDR: Not set)
+T3620 000:256.491   AP[2]: APB-AP (IDR: Not set)
+T3620 000:256.515   AP[3]: AHB-AP (IDR: Not set)
+T3620 000:256.539   AP[3]: Skipped ROMBASE read. CoreBaseAddr manually set by user
+T3620 000:257.243   AP[3]: Core found
+T3620 000:257.962   CPUID register: 0x410FC241. Implementer code: 0x41 (ARM)
+T3620 000:257.995   Found Cortex-M4 r0p1, Little endian.
+T3620 000:259.002   -- Max. mem block: 0x00010E60
+T3620 000:260.163   CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T3620 000:260.725   CPU_ReadMem(4 bytes @ 0xE0002000)
+T3620 000:261.341   FPUnit: 6 code (BP) slots and 2 literal slots
+T3620 000:261.376   CPU_ReadMem(4 bytes @ 0xE000EDFC)
+T3620 000:262.032   CPU_WriteMem(4 bytes @ 0xE000EDFC)
+T3620 000:262.731   CPU_ReadMem(4 bytes @ 0xE0001000)
+T3620 000:263.329   CPU_WriteMem(4 bytes @ 0xE0001000)
+T3620 000:263.990   CPU_ReadMem(4 bytes @ 0xE000ED88)
+T3620 000:264.727   CPU_WriteMem(4 bytes @ 0xE000ED88)
+T3620 000:265.398   CPU_ReadMem(4 bytes @ 0xE000ED88)
+T3620 000:266.084   CPU_WriteMem(4 bytes @ 0xE000ED88)
+T3620 000:266.606   ROM table scan skipped. CoreBaseAddr manually set by user: 0xE00FF000
+T3620 000:266.689   CPU is running
+T3620 000:266.719   CPU_WriteMem(4 bytes @ 0xE000EDF0)
+T3620 000:267.221   CPU is running
+T3620 000:267.251   CPU_WriteMem(4 bytes @ 0xE000EDFC)
+T3620 000:267.844   Reset: Halt core after reset via DEMCR.VC_CORERESET.
+T3620 000:268.906   Reset: Reset device via AIRCR.SYSRESETREQ.
+T3620 000:268.938   CPU is running
+T3620 000:268.964   CPU_WriteMem(4 bytes @ 0xE000ED0C)
+T3620 000:324.741   CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T3620 000:325.485   CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T3620 000:328.951   CPU_WriteMem(4 bytes @ 0xE000EDFC)
+T3620 000:335.299   CPU_ReadMem(4 bytes @ 0xE000EDF0)
+T3620 000:338.806   CPU_WriteMem(4 bytes @ 0xE0002000)
+T3620 000:339.602   CPU_ReadMem(4 bytes @ 0xE000EDFC)
+T3620 000:340.275   CPU_ReadMem(4 bytes @ 0xE0001000)
+T3620 000:341.071 - 120.603ms
+T3620 000:341.123 JLINK_GetId()
+T3620 000:341.746 - 0.653ms returns 0x6BA02477
+T3620 000:346.108 JLINK_GetFirmwareString(...)
+T3620 000:346.169 - 0.070ms
+T3620 003:198.766 JLINK_Close()
+T3620 003:199.995   OnDisconnectTarget() start
+T3620 003:200.046    J-Link Script File: Executing OnDisconnectTarget()
+T3620 003:200.082   CPU_WriteMem(4 bytes @ 0x5C001004)
+T3620 003:200.747   CPU_WriteMem(4 bytes @ 0x5C001040)
+T3620 003:201.518   CPU_WriteMem(4 bytes @ 0x5C001058)
+T3620 003:202.276   OnDisconnectTarget() end - Took 2.22ms
+T3620 003:202.321   CPU_ReadMem(4 bytes @ 0xE0001000)
+T3620 003:203.129   CPU_WriteMem(4 bytes @ 0xE0001004)
+T3620 003:237.690 - 38.989ms
+T3620 003:237.768   
+T3620 003:237.791   Closed

@@ -68,14 +68,28 @@
   */
 
 GPIO_TypeDef* GPIO_PORT[LEDn] = {LED1_GPIO_PORT,
+#ifdef LED2_GPIO_PORT
                                  LED2_GPIO_PORT,
+#endif
+#ifdef LED3_GPIO_PORT
                                  LED3_GPIO_PORT,
-                                 LED4_GPIO_PORT};
+#endif
+#ifdef LED4_GPIO_PORT
+                                 LED4_GPIO_PORT
+#endif
+};
 
 const uint32_t GPIO_PIN[LEDn] = {LED1_PIN,
+#ifdef LED2_PIN
                                  LED2_PIN,
+#endif
+#ifdef LED3_PIN
                                  LED3_PIN,
-                                 LED4_PIN};
+#endif
+#ifdef LED4_PIN
+                                 LED4_PIN
+#endif
+};
 
 GPIO_TypeDef* BUTTON_PORT[BUTTONn] = {WAKEUP_BUTTON_GPIO_PORT,
                                       TAMPER_BUTTON_GPIO_PORT,
@@ -232,7 +246,7 @@ void BSP_LED_Init(Led_TypeDef Led)
   HAL_GPIO_Init(GPIO_PORT[Led], &GPIO_InitStruct);
 
   /* By default, turn off LED */
-  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIO_PORT[Led], GPIO_PIN[Led], GPIO_PIN_RESET);
 }
 
 

@@ -51,12 +51,14 @@ typedef enum
 {
 LED1 = 0,
 LED_GREEN = LED1,
+	/*
 LED2 = 1,
 LED_ORANGE = LED2,
 LED3 = 2,
 LED_RED = LED3,
 LED4 = 3,
 LED_BLUE = LED4
+	*/
 }Led_TypeDef;
 
 typedef enum
@@ -110,11 +112,12 @@ typedef enum
  #define USE_STM32H747I_EVAL
 #endif
 
-#define LEDn                             ((uint32_t)4)
+#define LEDn                             ((uint32_t)1)
 
 #define LED1_GPIO_PORT                   GPIOG
 #define LED1_PIN                         GPIO_PIN_10
 
+#if 0
 #define LED2_GPIO_PORT                   GPIOG
 #define LED2_PIN                         GPIO_PIN_10
 
@@ -123,6 +126,7 @@ typedef enum
 
 #define LED4_GPIO_PORT                   GPIOG
 #define LED4_PIN                         GPIO_PIN_10
+#endif
 
 #define LEDx_GPIO_CLK_ENABLE()           __HAL_RCC_GPIOG_CLK_ENABLE()
 #define LEDx_GPIO_CLK_DISABLE()          __HAL_RCC_GPIOG_CLK_DISABLE()
