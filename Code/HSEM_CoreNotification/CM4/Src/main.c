@@ -44,53 +44,51 @@ volatile uint32_t Notif_Recieved;
   */
 int main(void)
 {
+	/*HW semaphore Clock enable*/
+	__HAL_RCC_HSEM_CLK_ENABLE();
 
-  /*HW semaphore Clock enable*/
-  __HAL_RCC_HSEM_CLK_ENABLE();
+	/* Activate HSEM notification for Cortex-M4*/
+	HAL_HSEM_ActivateNotification(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
 
-  /* Activate HSEM notification for Cortex-M4*/
-  HAL_HSEM_ActivateNotification(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
+	/* 
+	Domain D2 goes to STOP mode (Cortex-M4 in deep-sleep) waiting for Cortex-M7 to
+	perform system initialization (system clock config, external memory configuration.. )   
+	*/
+	HAL_PWREx_ClearPendingEvent();
+	HAL_PWREx_EnterSTOPMode(PWR_MAINREGULATOR_ON, PWR_STOPENTRY_WFE, PWR_D2_DOMAIN);
 
-  /* 
-  Domain D2 goes to STOP mode (Cortex-M4 in deep-sleep) waiting for Cortex-M7 to
-  perform system initialization (system clock config, external memory configuration.. )   
-  */
-  HAL_PWREx_ClearPendingEvent();
-  HAL_PWREx_EnterSTOPMode(PWR_MAINREGULATOR_ON, PWR_STOPENTRY_WFE, PWR_D2_DOMAIN);
+	/* STM32H7xx HAL library initialization:
+		- Systick timer is configured by default as source of time base, but user 
+			can eventually implement his proper time base source (a general purpose 
+			timer for example or other time source), keeping in mind that Time base 
+			duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
+			handled in milliseconds basis.
+		- Set NVIC Group Priority to 4
+		- Low Level Initialization
+	*/
+	HAL_Init();
 
-  /* STM32H7xx HAL library initialization:
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-  */
-  HAL_Init();
+	/* Add Cortex-M4 user application code here */ 
+	/* Enable HSEM Interrupt */
+	HAL_NVIC_SetPriority(HSEM2_IRQn, 10, 0);
+	HAL_NVIC_EnableIRQ(HSEM2_IRQn);  
+	/* Initialize LED 3 */
 
-  /* Add Cortex-M4 user application code here */ 
-  /* Enable HSEM Interrupt */
-  HAL_NVIC_SetPriority(HSEM2_IRQn, 10, 0);
-  HAL_NVIC_EnableIRQ(HSEM2_IRQn);  
-  /* Initialize LED 3 */
-  BSP_LED_Init(LED3);  
-  BSP_LED_On(LED3);  
-  while (1)
-  {
-    Notif_Recieved = 0;
-    /* HSEM Activate Notification*/
-    HAL_HSEM_ActivateNotification(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
-    /* Wait for Notification from CPU1(CM7)*/
-    while( Notif_Recieved == 0)
-    {
-    }
-    /* Notification received from CPU1(CM7)*/
-    /* CM4 toggles LED3 */
-    BSP_LED_Toggle(LED3);         
-
-  }
-
+	BSP_LED_Init(LED1);
+	BSP_LED_On(LED1);
+	while (1)
+	{
+		Notif_Recieved = 0;
+		/* HSEM Activate Notification*/
+		HAL_HSEM_ActivateNotification(__HAL_HSEM_SEMID_TO_MASK(HSEM_ID_0));
+		/* Wait for Notification from CPU1(CM7)*/
+		while( Notif_Recieved == 0)
+		{
+		}
+		/* Notification received from CPU1(CM7)*/
+		/* CM4 toggles LED3 */
+		BSP_LED_Toggle(LED1);
+	}
 }
 
 
@@ -103,7 +101,7 @@ int main(void)
   */
 void HAL_HSEM_FreeCallback(uint32_t SemMask)
 {
-  Notif_Recieved = 1;
+	Notif_Recieved = 1;
 } 
 
 #ifdef  USE_FULL_ASSERT

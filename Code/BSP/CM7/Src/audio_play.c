@@ -141,10 +141,10 @@ void AudioPlay_demo (void)
   BSP_LCD_SetTextColor(LCD_COLOR_BLUE);
   BSP_LCD_DisplayStringAt(0, BSP_LCD_GetYSize() - 80, (uint8_t *)"       PLAYING...     ", CENTER_MODE);
 
-  sprintf((char*)FreqStr, "       VOL:    %3lu     ", uwVolume);
+  sprintf((char*)FreqStr, "       VOL:    %3u     ", uwVolume);
   BSP_LCD_DisplayStringAt(0, BSP_LCD_GetYSize() - 65, (uint8_t *)FreqStr, CENTER_MODE);
 
-  sprintf((char*)FreqStr, "      FREQ: %6lu     ", *AudioFreq_ptr);
+  sprintf((char*)FreqStr, "      FREQ: %6u     ", *AudioFreq_ptr);
   BSP_LCD_DisplayStringAt(0, BSP_LCD_GetYSize() - 50, (uint8_t *)FreqStr, CENTER_MODE);
   BSP_LCD_DisplayStringAt(0, LINE(15), (uint8_t *)"Hear nothing ?", CENTER_MODE);
   BSP_LCD_DisplayStringAt(0, LINE(16), (uint8_t *)"Have you copied the audio file with STM-LINK UTILITY ?", CENTER_MODE);

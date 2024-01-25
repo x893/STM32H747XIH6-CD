@@ -198,6 +198,8 @@ uint8_t BSP_TS_GetState(TS_StateTypeDef *TS_State)
   uint32_t event = 0;
 #endif /* TS_MULTI_TOUCH_SUPPORTED == 1 */
 
+	return ts_status;
+
   /* Check and update the number of touches active detected */
   TS_State->touchDetected = tsDriver->DetectTouch(I2cAddress);
   

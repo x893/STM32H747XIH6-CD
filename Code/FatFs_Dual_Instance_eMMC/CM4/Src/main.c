@@ -87,8 +87,8 @@ int main(void)
      Error_Handler();
    }
 
-   BSP_LED_Init(LED_ORANGE);
-   BSP_LED_Init(LED_BLUE);
+//!!!   BSP_LED_Init(LED_ORANGE);
+//!!!   BSP_LED_Init(LED_BLUE);
 
    /*##-1- Init Host Library ################################################*/
    USBH_Init(&hUSB_Host, USBH_UserProcess, 0);
@@ -130,7 +130,7 @@ static void Error_Handler(void)
 {
   while(1)
   {
-    BSP_LED_Toggle(LED_ORANGE);
+//!!!    BSP_LED_Toggle(LED_ORANGE);
     HAL_Delay(200);
   }
 }
@@ -181,8 +181,8 @@ static void FS_FileOperations(void)
           if(Buffercmp(rtext, wtext, byteswritten) == 0)
           {
             /* Success of the demo: no error occurrence */
-            BSP_LED_On(LED_BLUE);
-            BSP_LED_Off(LED_ORANGE);
+//!!!            BSP_LED_On(LED_BLUE);
+//!!!            BSP_LED_Off(LED_ORANGE);
 
             return;
           }
@@ -219,8 +219,8 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
     {
       Error_Handler();
     }
-    BSP_LED_Off(LED_BLUE);
-    BSP_LED_On(LED_ORANGE);
+//!!!    BSP_LED_Off(LED_BLUE);
+//!!!    BSP_LED_On(LED_ORANGE);
     break;
 
   case HOST_USER_CLASS_ACTIVE:
@@ -228,7 +228,7 @@ static void USBH_UserProcess(USBH_HandleTypeDef *phost, uint8_t id)
     break;
 
   case HOST_USER_CONNECTION:
-    BSP_LED_Off(LED_ORANGE);
+//!!!    BSP_LED_Off(LED_ORANGE);
     if (FATFS_LinkDriver(&USBH_Driver, USBDISKPath) == 0)
     {
       if (f_mount(&USBDISKFatFs, (TCHAR const*)USBDISKPath, 0) != FR_OK)

@@ -16,8 +16,8 @@
         <TargetCommonOption>
           <Device>STM32H747XIHx:CM7</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7xx_DFP.2.7.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32H7xx_DFP.3.1.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IROM_ML(0x08000000-0x803FFFF) IROM_STEW(0x08040000-0x809FFFF) IROM_EWIZ(0x080A0000-0x80FFFFF) IROM_STFW(0x08100000-0x813FFFF) IROM_TGFX(0x08140000-0x81DFFFF) IROM_CUC(0x081E0000-0x81FFFFF) IRAM2(0x00000000-0xFFFF) IRAM(0x20000000-0x2001FFFF) IRAM(0x24000000-0x2407FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -48,14 +48,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>STemWin-STM32H747I-EVAL_OoB\Exe\</OutputDirectory>
+          <OutputDirectory>.\STemWin-STM32H747I-EVAL_OoB\</OutputDirectory>
           <OutputName>STemWin-STM32H747I-EVAL_OoB_V1.0.0</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>0</BrowseInformation>
-          <ListingPath></ListingPath>
+          <ListingPath>.\STemWin-STM32H747I-EVAL_OoB\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -159,11 +159,11 @@
             <ldmm>1</ldmm>
             <ldXref>1</ldXref>
             <BigEnd>0</BigEnd>
-            <AdsALst>1</AdsALst>
+            <AdsALst>0</AdsALst>
             <AdsACrf>1</AdsACrf>
             <AdsANop>0</AdsANop>
             <AdsANot>0</AdsANot>
-            <AdsLLst>1</AdsLLst>
+            <AdsLLst>0</AdsLLst>
             <AdsLmap>1</AdsLmap>
             <AdsLcgr>1</AdsLcgr>
             <AdsLsym>1</AdsLsym>
@@ -186,6 +186,7 @@
             <RvdsVP>3</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -313,7 +314,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -339,7 +340,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H747xx,USE_STM32H747I_EVAL,USE_STM32H747I_EVAL_OOB,CORE_CM7,BSP_USE_CMSIS_OS,DEBUG_HW_JPEG__N,USE_SDCARD,USE_USB_HS</Define>
               <Undefine></Undefine>
-              <IncludePath>../Gui/STemWin_Addons;../Config;../Core/inc;../../../Utilities/CPU;../../../Drivers/CMSIS/Include;../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../Drivers/STM32H7xx_HAL_Driver/Inc;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components/Common;../../../Middlewares/ST/STemWin/inc;../../../Middlewares/Third_Party/FatFs/src;../../../Middlewares/Third_Party/FatFs/src/drivers;../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM7/r0p1;../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Modules/Common;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../Gui/Target;../Gui/Core/video_player;../Modules/audio_player;../Modules/audio_player/Inc;../Modules/audio_player/App;../Modules/audio_player/Addons/Common/Inc;../Modules/audio_player/Addons/SRC236/Inc;../Modules/audio_player/Addons/SRC441/Inc;../Modules/video_player;../Modules/dual_core;../../extra_modules/STIPC/Core/Common/Inc</IncludePath>
+              <IncludePath>../Gui/STemWin_Addons;../Config;../Core/inc;../../../Utilities/CPU;../../../Drivers/CMSIS/Include;../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../Drivers/STM32H7xx_HAL_Driver/Inc;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components/Common;../../../Middlewares/ST/STemWin/inc;../../../Middlewares/Third_Party/FatFs/src;../../../Middlewares/Third_Party/FatFs/src/drivers;../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1;../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Modules/Common;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../Gui/Target;../Gui/Core/video_player;../Modules/audio_player;../Modules/audio_player/Inc;../Modules/audio_player/App;../Modules/audio_player/Addons/Common/Inc;../Modules/audio_player/Addons/SRC236/Inc;../Modules/audio_player/Addons/SRC441/Inc;../Modules/video_player;../Modules/dual_core;../../extra_modules/STIPC/Core/Common/Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -1224,7 +1225,7 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM7/r0p1/port.c</FilePath>
+              <FilePath>../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -1337,14 +1338,14 @@
       <TargetName>STemWin-STM32H747I-EVAL_TSC2007</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>5060750::V5.06 update 6 (build 750)::ARMCC</pCCUsed>
-      <uAC6>0</uAC6>
+      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32H747XIHx:CM7</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7xx_DFP.2.7.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32H7xx_DFP.3.1.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IROM_ML(0x08000000-0x803FFFF) IROM_STEW(0x08040000-0x809FFFF) IROM_EWIZ(0x080A0000-0x80FFFFF) IROM_STFW(0x08100000-0x813FFFF) IROM_TGFX(0x08140000-0x81DFFFF) IROM_CUC(0x081E0000-0x81FFFFF) IRAM2(0x00000000-0xFFFF) IRAM(0x20000000-0x2001FFFF) IRAM(0x24000000-0x2407FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -1375,14 +1376,14 @@
             <NotGenerated>0</NotGenerated>
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
-          <OutputDirectory>STemWin-STM32H747I-EVAL\Exe\</OutputDirectory>
+          <OutputDirectory>.\STemWin-STM32H747I-EVAL\</OutputDirectory>
           <OutputName>STemWin-STM32H747I-EVAL_V1.0.0</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
-          <BrowseInformation>0</BrowseInformation>
-          <ListingPath></ListingPath>
+          <BrowseInformation>1</BrowseInformation>
+          <ListingPath>.\STemWin-STM32H747I-EVAL\</ListingPath>
           <HexFormatSelection>1</HexFormatSelection>
           <Merge32K>0</Merge32K>
           <CreateBatchFile>0</CreateBatchFile>
@@ -1486,11 +1487,11 @@
             <ldmm>1</ldmm>
             <ldXref>1</ldXref>
             <BigEnd>0</BigEnd>
-            <AdsALst>1</AdsALst>
+            <AdsALst>0</AdsALst>
             <AdsACrf>1</AdsACrf>
             <AdsANop>0</AdsANop>
             <AdsANot>0</AdsANot>
-            <AdsLLst>1</AdsLLst>
+            <AdsLLst>0</AdsLLst>
             <AdsLmap>1</AdsLmap>
             <AdsLcgr>1</AdsLcgr>
             <AdsLsym>1</AdsLsym>
@@ -1513,6 +1514,7 @@
             <RvdsVP>3</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -1640,7 +1642,7 @@
           </ArmAdsMisc>
           <Cads>
             <interw>1</interw>
-            <Optim>4</Optim>
+            <Optim>1</Optim>
             <oTime>0</oTime>
             <SplitLS>0</SplitLS>
             <OneElfS>1</OneElfS>
@@ -1649,14 +1651,14 @@
             <PlainCh>0</PlainCh>
             <Ropi>0</Ropi>
             <Rwpi>0</Rwpi>
-            <wLevel>2</wLevel>
+            <wLevel>3</wLevel>
             <uThumb>0</uThumb>
             <uSurpInc>0</uSurpInc>
             <uC99>1</uC99>
             <uGnu>0</uGnu>
             <useXO>0</useXO>
-            <v6Lang>1</v6Lang>
-            <v6LangP>1</v6LangP>
+            <v6Lang>3</v6Lang>
+            <v6LangP>5</v6LangP>
             <vShortEn>1</vShortEn>
             <vShortWch>1</vShortWch>
             <v6Lto>0</v6Lto>
@@ -1666,7 +1668,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H747xx,USE_STM32H747I_EVAL,USE_PWR_LDO_SUPPLY,CORE_CM7,BSP_USE_CMSIS_OS,DEBUG_HW_JPEG__N,USE_SDCARD,USE_USB_HS,USE_800x480</Define>
               <Undefine></Undefine>
-              <IncludePath>../Gui/STemWin_Addons;../Config;../Core/inc;../../../Utilities/CPU;../../../Drivers/CMSIS/Include;../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../Drivers/STM32H7xx_HAL_Driver/Inc;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components/Common;../../../Middlewares/ST/STemWin/inc;../../../Middlewares/Third_Party/FatFs/src;../../../Middlewares/Third_Party/FatFs/src/drivers;../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM7/r0p1;../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../Middlewares/Third_Party/LwIP/src/include/;../../../Middlewares/Third_Party/LwIP/system;../../../Middlewares/Third_Party/LwIP/system/OS;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Modules/Common;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../Gui/Target;../Gui/Core/video_player;../Modules/audio_player;../Modules/audio_player/Inc;../Modules/audio_player/App;../Modules/audio_player/Addons/Common/Inc;../Modules/audio_player/Addons/SRC236/Inc;../Modules/audio_player/Addons/SRC441/Inc;../Modules/video_player;../Modules/dual_core;../../extra_modules/STIPC/Core/Common/Inc</IncludePath>
+              <IncludePath>../Gui/STemWin_Addons;../Config;../Core/inc;../../../Utilities/CPU;../../../Drivers/CMSIS/Include;../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../Drivers/STM32H7xx_HAL_Driver/Inc;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components/Common;../../../Middlewares/ST/STemWin/inc;../../../Middlewares/Third_Party/FatFs/src;../../../Middlewares/Third_Party/FatFs/src/drivers;..\..\..\Middlewares\Third_Party\FreeRTOS\Source\portable\GCC\ARM_CM7\r0p1;../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../Middlewares/Third_Party/LwIP/src/include/;../../../Middlewares/Third_Party/LwIP/system;../../../Middlewares/Third_Party/LwIP/system/OS;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Modules/Common;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../Gui/Target;../Gui/Core/video_player;../Modules/audio_player;../Modules/audio_player/Inc;../Modules/audio_player/App;../Modules/audio_player/Addons/Common/Inc;../Modules/audio_player/Addons/SRC236/Inc;../Modules/audio_player/Addons/SRC441/Inc;../Modules/video_player;../Modules/dual_core;../../extra_modules/STIPC/Core/Common/Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -2072,6 +2074,57 @@
               <FileName>otm8009a.c</FileName>
               <FileType>1</FileType>
               <FilePath>../../../Drivers/BSP/Components/otm8009a/otm8009a.c</FilePath>
+              <FileOption>
+                <CommonProperty>
+                  <UseCPPCompiler>2</UseCPPCompiler>
+                  <RVCTCodeConst>0</RVCTCodeConst>
+                  <RVCTZI>0</RVCTZI>
+                  <RVCTOtherData>0</RVCTOtherData>
+                  <ModuleSelection>0</ModuleSelection>
+                  <IncludeInBuild>0</IncludeInBuild>
+                  <AlwaysBuild>2</AlwaysBuild>
+                  <GenerateAssemblyFile>2</GenerateAssemblyFile>
+                  <AssembleAssemblyFile>2</AssembleAssemblyFile>
+                  <PublicsOnly>2</PublicsOnly>
+                  <StopOnExitCode>11</StopOnExitCode>
+                  <CustomArgument></CustomArgument>
+                  <IncludeLibraryModules></IncludeLibraryModules>
+                  <ComprImg>1</ComprImg>
+                </CommonProperty>
+                <FileArmAds>
+                  <Cads>
+                    <interw>2</interw>
+                    <Optim>0</Optim>
+                    <oTime>2</oTime>
+                    <SplitLS>2</SplitLS>
+                    <OneElfS>2</OneElfS>
+                    <Strict>2</Strict>
+                    <EnumInt>2</EnumInt>
+                    <PlainCh>2</PlainCh>
+                    <Ropi>2</Ropi>
+                    <Rwpi>2</Rwpi>
+                    <wLevel>0</wLevel>
+                    <uThumb>2</uThumb>
+                    <uSurpInc>2</uSurpInc>
+                    <uC99>2</uC99>
+                    <uGnu>2</uGnu>
+                    <useXO>2</useXO>
+                    <v6Lang>0</v6Lang>
+                    <v6LangP>0</v6LangP>
+                    <vShortEn>2</vShortEn>
+                    <vShortWch>2</vShortWch>
+                    <v6Lto>2</v6Lto>
+                    <v6WtE>2</v6WtE>
+                    <v6Rtti>2</v6Rtti>
+                    <VariousControls>
+                      <MiscControls></MiscControls>
+                      <Define></Define>
+                      <Undefine></Undefine>
+                      <IncludePath></IncludePath>
+                    </VariousControls>
+                  </Cads>
+                </FileArmAds>
+              </FileOption>
             </File>
             <File>
               <FileName>wm8994.c</FileName>
@@ -2757,7 +2810,7 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM7/r0p1/port.c</FilePath>
+              <FilePath>../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -2876,8 +2929,8 @@
         <TargetCommonOption>
           <Device>STM32H747XIHx:CM7</Device>
           <Vendor>STMicroelectronics</Vendor>
-          <PackID>Keil.STM32H7xx_DFP.2.7.0</PackID>
-          <PackURL>http://www.keil.com/pack/</PackURL>
+          <PackID>Keil.STM32H7xx_DFP.3.1.1</PackID>
+          <PackURL>https://www.keil.com/pack/</PackURL>
           <Cpu>IROM_ML(0x08000000-0x803FFFF) IROM_STEW(0x08040000-0x809FFFF) IROM_EWIZ(0x080A0000-0x80FFFFF) IROM_STFW(0x08100000-0x813FFFF) IROM_TGFX(0x08140000-0x81DFFFF) IROM_CUC(0x081E0000-0x81FFFFF) IRAM2(0x00000000-0xFFFF) IRAM(0x20000000-0x2001FFFF) IRAM(0x24000000-0x2407FFFF) CLOCK(12000000) FPU3(DFPU) CPUTYPE("Cortex-M7") ELITTLE</Cpu>
           <FlashUtilSpec></FlashUtilSpec>
           <StartupFile></StartupFile>
@@ -3046,6 +3099,7 @@
             <RvdsVP>3</RvdsVP>
             <RvdsMve>0</RvdsMve>
             <RvdsCdeCp>0</RvdsCdeCp>
+            <nBranchProt>0</nBranchProt>
             <hadIRAM2>1</hadIRAM2>
             <hadIROM2>0</hadIROM2>
             <StupSel>8</StupSel>
@@ -3199,7 +3253,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HAL_DRIVER,STM32H747xx,USE_STM32H747I_EVAL,CORE_CM7,BSP_USE_CMSIS_OS,DEBUG_HW_JPEG__N,USE_SDCARD,USE_PWR_LDO_SUPPLY,USE_USB_HS,USE_800x480,USE_FT5426</Define>
               <Undefine></Undefine>
-              <IncludePath>../Gui/STemWin_Addons;../Config;../Core/inc;../../../Utilities/CPU;../../../Drivers/CMSIS/Include;../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../Drivers/STM32H7xx_HAL_Driver/Inc;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components/Common;../../../Middlewares/ST/STemWin/inc;../../../Middlewares/Third_Party/FatFs/src;../../../Middlewares/Third_Party/FatFs/src/drivers;../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM7/r0p1;../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../Middlewares/Third_Party/LwIP/src/include/;../../../Middlewares/Third_Party/LwIP/system;../../../Middlewares/Third_Party/LwIP/system/OS;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Modules/Common;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../Gui/Target;../Gui/Core/video_player;../Modules/audio_player;../Modules/audio_player/Inc;../Modules/audio_player/App;../Modules/audio_player/Addons/Common/Inc;../Modules/audio_player/Addons/SRC236/Inc;../Modules/audio_player/Addons/SRC441/Inc;../Modules/video_player;../Modules/dual_core;../../extra_modules/STIPC/Core/Common/Inc</IncludePath>
+              <IncludePath>../Gui/STemWin_Addons;../Config;../Core/inc;../../../Utilities/CPU;../../../Drivers/CMSIS/Include;../../../Drivers/CMSIS/Device/ST/STM32H7xx/Include;../../../Drivers/STM32H7xx_HAL_Driver/Inc;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components;../../../Drivers/BSP/STM32H747I_EVAL;../../../Drivers/BSP/Components/Common;../../../Middlewares/ST/STemWin/inc;../../../Middlewares/Third_Party/FatFs/src;../../../Middlewares/Third_Party/FatFs/src/drivers;../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1;../../../Middlewares/Third_Party/FreeRTOS/Source/include;../../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS;../../../Middlewares/Third_Party/LwIP/src/include/;../../../Middlewares/Third_Party/LwIP/system;../../../Middlewares/Third_Party/LwIP/system/OS;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Core/Inc;../../../Middlewares/ST/STM32_USB_Host_Library/Class/MSC/Inc;../Modules/Common;../../../Middlewares/ST/STM32_Audio/Addons/PDM/Inc;../Gui/Target;../Gui/Core/video_player;../Modules/audio_player;../Modules/audio_player/Inc;../Modules/audio_player/App;../Modules/audio_player/Addons/Common/Inc;../Modules/audio_player/Addons/SRC236/Inc;../Modules/audio_player/Addons/SRC441/Inc;../Modules/video_player;../Modules/dual_core;../../extra_modules/STIPC/Core/Common/Inc</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -4290,7 +4344,7 @@
             <File>
               <FileName>port.c</FileName>
               <FileType>1</FileType>
-              <FilePath>../../../Middlewares/Third_Party/FreeRTOS/Source/portable/RVDS/ARM_CM7/r0p1/port.c</FilePath>
+              <FilePath>../../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM7/r0p1/port.c</FilePath>
             </File>
           </Files>
         </Group>
@@ -4404,8 +4458,8 @@
   <RTE>
     <apis/>
     <components>
-      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="4.3.0" condition="CMSIS Core">
-        <package name="CMSIS" schemaVersion="1.3" url="http://www.keil.com/pack/" vendor="ARM" version="4.5.0"/>
+      <component Cclass="CMSIS" Cgroup="CORE" Cvendor="ARM" Cversion="5.6.0" condition="ARMv6_7_8-M Device">
+        <package name="CMSIS" schemaVersion="1.7.7" url="http://www.keil.com/pack/" vendor="ARM" version="5.9.0"/>
         <targetInfos>
           <targetInfo name="STemWin-STM32H747I-EVAL_FT5426"/>
           <targetInfo name="STemWin-STM32H747I-EVAL_OoB"/>

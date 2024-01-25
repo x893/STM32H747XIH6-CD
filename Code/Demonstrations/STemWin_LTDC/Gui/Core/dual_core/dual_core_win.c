@@ -1008,7 +1008,7 @@ static void MeasurementsTask(void const *pvParameters)
   {
     if(hWinDualCore)
     {
-      sprintf(buf , "%lu fps", CPU2DrawingFPS);
+      sprintf(buf , "%u fps", CPU2DrawingFPS);
       CPU2DrawingFPS = 0;
       hItem = WM_GetDialogItem(hWinDualCore, ID_TEXT_FPS_0);
       TEXT_SetText(hItem, buf);
@@ -1019,7 +1019,7 @@ static void MeasurementsTask(void const *pvParameters)
 
       for(i = 0; i < VIDEO_COUNT; i++)
       {
-        sprintf(buf , "%lu fps", AVIContext[i].fps);
+        sprintf(buf , "%u fps", AVIContext[i].fps);
         AVIContext[i].fps = 0;
         hItem = WM_GetDialogItem(hWinDualCore, ID_TEXT_FPS_1+i);
         TEXT_SetText(hItem, buf);

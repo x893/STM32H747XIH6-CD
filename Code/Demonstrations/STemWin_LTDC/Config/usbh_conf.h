@@ -55,8 +55,7 @@
 
 /* DEBUG macros */
 #if (USBH_DEBUG_LEVEL > 0)
-#define USBH_UsrLog(...)   printf(__VA_ARGS__);\
-                           printf("\n");
+#define USBH_UsrLog(...)   do { printf(__VA_ARGS__); printf("\n"); } while(0)
 #else
 #define USBH_UsrLog(...)
 #endif

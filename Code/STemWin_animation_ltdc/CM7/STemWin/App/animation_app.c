@@ -286,19 +286,19 @@ static void _AnimationDemo(void)
   */
 void MainTask(void) 
 {	  
-  /* Infinite loop on the animation demo */
+	/* Infinite loop on the animation demo */
 	GUI_SetLayerVisEx (1, 0);
-  GUI_SetBkColor(GUI_BLACK);
-  GUI_Clear();
-  while (1) 
-  {
-    GUI_Delay(5);
-    /* Change Animation direction every time */
-    for (AnimDirection = 1; AnimDirection >= -1; AnimDirection -= 2) 
-    {
-      _AnimationDemo();    
-    }
-  }
+	GUI_SetBkColor(GUI_BLACK);
+	GUI_Clear();
+	while (1) 
+	{
+		GUI_Delay(5);
+		/* Change Animation direction every time */
+		for (AnimDirection = 1; AnimDirection >= -1; AnimDirection -= 2) 
+		{
+			_AnimationDemo();    
+		}
+	}
 }
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

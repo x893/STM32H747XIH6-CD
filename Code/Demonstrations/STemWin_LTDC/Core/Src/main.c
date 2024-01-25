@@ -169,7 +169,7 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
     case WAKEUP_BUTTON_PIN :
     {
       /* Turn LEDs off */
-      BSP_LED_Off(LED_RED);
+
 #if defined (DEBUG_HW_JPEG)
       BSP_LED_Off(LED_ORANGE);
       BSP_LED_Off(LED_BLUE);
@@ -196,146 +196,139 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin)
  */
 int main(void)
 {
-  uint32_t timeout = 0xFFFF;
+	uint32_t timeout = 0xFFFF;
 #if defined (USE_STM32H747I_EVAL_OOB)
-  static __IO uint32_t BckRegValue = 0;
+	static __IO uint32_t BckRegValue = 0;
 #endif /* USE_STM32H747I_EVAL_OOB */
 
-  /* Enable RCC PWR */
-  __HAL_RCC_RTC_ENABLE();
+	/* Enable RCC PWR */
+	__HAL_RCC_RTC_ENABLE();
 
-  /* Enable RTC back-up registers access */
-  __HAL_RCC_RTC_CLK_ENABLE();
-  HAL_PWR_EnableBkUpAccess();
+	/* Enable RTC back-up registers access */
+	__HAL_RCC_RTC_CLK_ENABLE();
+	HAL_PWR_EnableBkUpAccess();
 
-  /* Read Power Configuration status */
+	/* Read Power Configuration status */
 #if defined (USE_STM32H747I_EVAL_OOB)
-  power_config = (uint32_t )READ_REG(BKP_REG_PWR_CFG);
+	power_config = (uint32_t )READ_REG(BKP_REG_PWR_CFG);
 #endif /* USE_STM32H747I_EVAL_OOB */
 
-  /* Read calibration values */
-  TouchScreen_GetValue();
+	/* Read calibration values */
+	TouchScreen_GetValue();
 
 #if defined (USE_STM32H747I_EVAL_OOB)
-  /* Read SW Configuration */
-  BckRegValue       = READ_REG(BKP_REG_SW_CFG);
-  AutoDemoId        = (((BckRegValue & 0x0000FF00) >>  8) & 0xFF);
-  AutoDemoTimeOutMs = (((BckRegValue & 0xFFFF0000) >> 16) & 0xFFFF);
-  if(AutoDemoTimeOutMs == 0)
-  {
-    AutoDemoTimeOutMs = AUTO_DEMO_TIMEOUT_0;
-  }
+	/* Read SW Configuration */
+	BckRegValue       = READ_REG(BKP_REG_SW_CFG);
+	AutoDemoId        = (((BckRegValue & 0x0000FF00) >>  8) & 0xFF);
+	AutoDemoTimeOutMs = (((BckRegValue & 0xFFFF0000) >> 16) & 0xFFFF);
+	if(AutoDemoTimeOutMs == 0)
+	{
+		AutoDemoTimeOutMs = AUTO_DEMO_TIMEOUT_0;
+	}
 #endif /* USE_STM32H747I_EVAL_OOB */
 
-  HAL_PWR_DisableBkUpAccess();
+	HAL_PWR_DisableBkUpAccess();
 
-  /* Wait until CPU2 boots and enters in stop mode or timeout*/
-  while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) != RESET) && (timeout-- > 0));
-  if ( timeout == 0 )
-  {
-    DualCoreEnabled = 0;
-  }
-  else
-  {
-    DualCoreEnabled = 1;
-  }
+	/* Wait until CPU2 boots and enters in stop mode or timeout*/
+	while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) != RESET) && (timeout-- > 0));
+	DualCoreEnabled = (timeout == 0) ? 0 : 1;
 
-  /* Configure the MPU attributes as Write Through */
-  MPU_Config();
+	/* Configure the MPU attributes as Write Through */
+	MPU_Config();
+
+	CPU_CACHE_Enable();
   
-  CPU_CACHE_Enable();
-  
-  /* STM32H7xx HAL library initialization:
-  - Configure the Flash ART accelerator on ITCM interface
-  - Configure the Systick to generate an interrupt each 1 msec
-  - Set NVIC Group Priority to 4
-  - Global MSP (MCU Support Package) initialization
-  */
-  HAL_Init();
+	/* STM32H7xx HAL library initialization:
+	- Configure the Flash ART accelerator on ITCM interface
+	- Configure the Systick to generate an interrupt each 1 msec
+	- Set NVIC Group Priority to 4
+	- Global MSP (MCU Support Package) initialization
+	*/
+	HAL_Init();
 
-  /* Configure the system clock */
-  SystemClock_Config();
+	/* Configure the system clock */
+	SystemClock_Config();
 
-  /* cxialize RTC */
-  k_CalendarBkupInit();
+	/* Iniialize RTC */
+	k_CalendarBkupInit();
 
 #if defined (USE_STM32H747I_EVAL_OOB)
-  HAL_PWR_EnableBkUpAccess();
-  if(AutoDemoId)
-  {
-    /* Set SW Reset value to 2 : Pressing SW Reset button will do SW reset with this value */
-    WRITE_REG(BKP_REG_SW_CFG, ((BckRegValue & 0xFFFFFF00) | 0x2));
-  }
-  else
-  {
-    WRITE_REG(BKP_REG_SW_CFG, ((BckRegValue & 0xFFFFFF00) | 0x1));
-  }
-  HAL_PWR_DisableBkUpAccess();
+	HAL_PWR_EnableBkUpAccess();
+	if(AutoDemoId)
+	{
+		/* Set SW Reset value to 2 : Pressing SW Reset button will do SW reset with this value */
+		WRITE_REG(BKP_REG_SW_CFG, ((BckRegValue & 0xFFFFFF00) | 0x2));
+	}
+	else
+	{
+		WRITE_REG(BKP_REG_SW_CFG, ((BckRegValue & 0xFFFFFF00) | 0x1));
+	}
+	HAL_PWR_DisableBkUpAccess();
 #endif /* USE_STM32H747I_EVAL_OOB */
 
-  /* Configure the board */
-  BSP_Initialized = k_BspInit(); 
+	/* Configure the board */
+	BSP_Initialized = k_BspInit(); 
 
-  /* Initialise MFX IO */
-  MfxInit();
+	/* Initialise MFX IO */
+	MfxInit();
 
-  /* Create TS Thread */
-  osThreadDef(TS_Task, TouchScreenTask, TS_TaskPRIORITY, 0, TS_TaskSTACK_SIZE);
-  osThreadCreate(osThread(TS_Task), NULL);
+	/* Create TS Thread */
+	osThreadDef(TS_Task, TouchScreenTask, TS_TaskPRIORITY, 0, TS_TaskSTACK_SIZE);
+	osThreadCreate(osThread(TS_Task), NULL);
 	
 	/* Create Touch screen Timer */
-  osTimerDef(TS_Timer, TimerCallback);
-  lcd_timer =  osTimerCreate(osTimer(TS_Timer), osTimerPeriodic, (void *)0);
+	osTimerDef(TS_Timer, TimerCallback);
+	lcd_timer =  osTimerCreate(osTimer(TS_Timer), osTimerPeriodic, (void *)0);
 	
 	/* Start the TS Timer */
-  osTimerStart(lcd_timer, 40); 
+	osTimerStart(lcd_timer, 40);
 
-  /* Create GUI task */
-  osThreadDef(GUI_Thread, GUIThread, GUI_TaskPRIORITY, 0, GUI_TaskSTACK_SIZE);
-  osThreadCreate (osThread(GUI_Thread), NULL);
-  
-  /* Initialise Modules function */
-  k_ModuleInit();
-  
-  /* Link modules */ 
-  k_ModuleAdd(&audio_player_board);       
-  k_ModuleAdd(&video_player_board); 
-  k_ModuleAdd(&rocket_game_board);
-  k_ModuleAdd(&analog_clock_board);
-  k_ModuleAdd(&graphic_effects_board);
-  k_ModuleAdd(&dual_core_board);  
+	/* Create GUI task */
+	osThreadDef(GUI_Thread, GUIThread, GUI_TaskPRIORITY, 0, GUI_TaskSTACK_SIZE);
+	osThreadCreate (osThread(GUI_Thread), NULL);
 
-  if(DualCoreEnabled)
-  {
-    /* Initialize FreeRTOS/AMP IPC */
-    ipc_init();
+	/* Initialise Modules function */
+	k_ModuleInit();
 
-    printf("Resuming CPU2 : ");
-    /*HW semaphore Clock enable*/
-    __HAL_RCC_HSEM_CLK_ENABLE();
-    /*Take HSEM */
-    HAL_HSEM_FastTake(HSEM_ID_0);   
-    /*Release HSEM in order to notify the CPU2(CM4)*/     
-    HAL_HSEM_Release(HSEM_ID_0, 0);
-    /* Wait until CPU2 boots and enters in stop mode or timeout*/
-    timeout = 0xFFFF;
-    while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) == RESET) && (timeout-- > 0));
-    if ( timeout == 0 )
-      printf("KO\n");
-    else
-      printf("OK\n");
-  }
+	/* Link modules */ 
+	k_ModuleAdd(&audio_player_board);       
+	k_ModuleAdd(&video_player_board); 
+	k_ModuleAdd(&rocket_game_board);
+	k_ModuleAdd(&analog_clock_board);
+	k_ModuleAdd(&graphic_effects_board);
+	k_ModuleAdd(&dual_core_board);  
 
-  /* Initialize Storage Units */
-  k_StorageInit();
+	if(DualCoreEnabled)
+	{
+		/* Initialize FreeRTOS/AMP IPC */
+		ipc_init();
+
+		printf("Resuming CPU2 : ");
+		/*HW semaphore Clock enable*/
+		__HAL_RCC_HSEM_CLK_ENABLE();
+		/*Take HSEM */
+		HAL_HSEM_FastTake(HSEM_ID_0);   
+		/*Release HSEM in order to notify the CPU2(CM4)*/     
+		HAL_HSEM_Release(HSEM_ID_0, 0);
+		/* Wait until CPU2 boots and enters in stop mode or timeout*/
+		timeout = 0xFFFF;
+		while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) == RESET) && (timeout-- > 0));
+		if ( timeout == 0 )
+			printf("KO\n");
+		else
+			printf("OK\n");
+	}
+
+	/* Initialize Storage Units */
+	k_StorageInit();
 	
 	OSReady = 1;
 
-  /* Start scheduler */
-  osKernelStart ();
+	/* Start scheduler */
+	osKernelStart ();
 
-  /* We should never get here as control is now taken by the scheduler */
-  for( ;; );
+	/* We should never get here as control is now taken by the scheduler */
+	for( ;; );
 }
 
 /**
@@ -356,24 +349,24 @@ static void TimerCallback(void const *n)
   */
 static void GUIThread(void const * argument)
 {  
-  /* Initialize GUI */
-  GUI_Init();
+	/* Initialize GUI */
+	GUI_Init();
 
-  /* Enable Multibuffereing and set Layer0 as the default display layer */ 
-  WM_MULTIBUF_Enable(1);
-  GUI_SetLayerVisEx (1, 0);
-  GUI_SelectLayer(0);
+	/* Enable Multibuffereing and set Layer0 as the default display layer */ 
+	WM_MULTIBUF_Enable(1);
+	GUI_SetLayerVisEx(1, 0);
+	GUI_SelectLayer(0);
 
-  /* Show the main menu */
-  k_InitMenu();  
-  
-  /* Display immediatly the Menu */
-  GUI_Exec();
+	/* Show the main menu */
+	k_InitMenu();  
 
-  /* Gui background Task */
-  while(1) {
-    GUI_Delay(10);
-  }
+	/* Display immediatly the Menu */
+	GUI_Exec();
+
+	/* Gui background Task */
+	while(1) {
+		GUI_Delay(10);
+	}
 }
 
 /**

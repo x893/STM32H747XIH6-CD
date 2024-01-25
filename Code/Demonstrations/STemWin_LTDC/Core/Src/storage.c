@@ -463,10 +463,9 @@ uint8_t Storage_GetStatus (uint8_t unit)
   */
 const char *Storage_GetDrive (uint8_t unit)
 {
-  if(StorageStatus[unit] == STORAGE_MOUNTED)
-    return StorageDISK_Drive[unit];
-  else
-    return '\0';
+	if(StorageStatus[unit] == STORAGE_MOUNTED)
+		return StorageDISK_Drive[unit];
+	return NULL;
 }
 
 /**

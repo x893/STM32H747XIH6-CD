@@ -75,7 +75,7 @@ U32 aMemory[GUI_NUMBYTES / 4] __attribute__((section(".GUI_NUMBYTES_section")));
 */
 void GUI_X_Config(void) 
 {
-  GUI_ALLOC_AssignMemory(aMemory, GUI_NUMBYTES);
+	GUI_ALLOC_AssignMemory(aMemory, GUI_NUMBYTES);
 }
 //void GUI_X_Config(void) 
 //{

@@ -1575,7 +1575,7 @@ static void _cbAlarmClock(WM_MESSAGE * pMsg)
             SetAlarmOnRTC();
             
             hItem = WM_GetDialogItem(pMsg->hWin, ID_CLOCK_ALARM1);
-            sprintf((char *)TempStr, "%02lu : %02lu", hour_listwheel , minute_listwheel);
+            sprintf((char *)TempStr, "%02u : %02u", hour_listwheel , minute_listwheel);
             TEXT_SetText     (hItem, TempStr); 
           }      
           

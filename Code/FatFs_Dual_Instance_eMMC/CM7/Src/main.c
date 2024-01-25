@@ -140,7 +140,7 @@ int main(void)
   UART_Config();
 
   BSP_LED_Init(LED_GREEN);
-  BSP_LED_Init(LED_RED);
+//!!!  BSP_LED_Init(LED_RED);
 
   LOCK_HSEM(UART_HSEM_ID);
 
@@ -198,7 +198,7 @@ static void FS_FileOperations(void)
   }
 
   LOCK_HSEM(UART_HSEM_ID);
-  printf("[CM7]:\t'%s' '%lu' bytes written...\n\r", CM7_FILE, byteswritten);
+  printf("[CM7]:\t'%s' '%u' bytes written...\n\r", CM7_FILE, byteswritten);
   UNLOCK_HSEM(UART_HSEM_ID);
 
   /* Close the open text file */
@@ -236,7 +236,7 @@ static void FS_FileOperations(void)
     UNLOCK_HSEM(UART_HSEM_ID);
     while(1)
     {
-      BSP_LED_Toggle(LED_RED);
+//!!!      BSP_LED_Toggle(LED_RED);
       HAL_Delay(250);
     }
   }

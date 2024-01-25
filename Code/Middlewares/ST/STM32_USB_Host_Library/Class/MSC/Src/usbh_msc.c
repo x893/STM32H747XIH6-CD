@@ -287,7 +287,7 @@ static USBH_StatusTypeDef USBH_MSC_ClassRequest(USBH_HandleTypeDef *phost)
       if (status == USBH_OK)
       {
         MSC_Handle->max_lun = ((MSC_Handle->max_lun & 0xFFU) > MAX_SUPPORTED_LUN) ? MAX_SUPPORTED_LUN : ((MSC_Handle->max_lun & 0xFFU) + 1U);
-        USBH_UsrLog("Number of supported LUN: %lu", MSC_Handle->max_lun);
+        USBH_UsrLog("Number of supported LUN: %u", MSC_Handle->max_lun);
 
         for (i = 0U; i < MSC_Handle->max_lun; i++)
         {
@@ -417,10 +417,10 @@ static USBH_StatusTypeDef USBH_MSC_Process(USBH_HandleTypeDef *phost)
             {
               if (MSC_Handle->unit[MSC_Handle->current_lun].state_changed == 1U)
               {
-                USBH_UsrLog("MSC Device capacity : %lu Bytes", \
+                USBH_UsrLog("MSC Device capacity : %u Bytes", \
                             (int32_t)(MSC_Handle->unit[MSC_Handle->current_lun].capacity.block_nbr * MSC_Handle->unit[MSC_Handle->current_lun].capacity.block_size));
-                USBH_UsrLog("Block number : %lu", (int32_t)(MSC_Handle->unit[MSC_Handle->current_lun].capacity.block_nbr));
-                USBH_UsrLog("Block Size   : %lu", (int32_t)(MSC_Handle->unit[MSC_Handle->current_lun].capacity.block_size));
+                USBH_UsrLog("Block number : %u", (int32_t)(MSC_Handle->unit[MSC_Handle->current_lun].capacity.block_nbr));
+                USBH_UsrLog("Block Size   : %u", (int32_t)(MSC_Handle->unit[MSC_Handle->current_lun].capacity.block_size));
               }
               MSC_Handle->unit[MSC_Handle->current_lun].state = MSC_IDLE;
               MSC_Handle->unit[MSC_Handle->current_lun].error = MSC_OK;

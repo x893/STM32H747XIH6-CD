@@ -32,8 +32,8 @@
 /* Private define ------------------------------------------------------------*/
 /* Private macro -------------------------------------------------------------*/
 /* Private variables ---------------------------------------------------------*/
-extern ADC_HandleTypeDef    AdcHandle_master;
-extern ADC_HandleTypeDef    AdcHandle_slave;
+extern ADC_HandleTypeDef    Adc1_Handle;
+extern ADC_HandleTypeDef    Adc2_Handle;
 
 #if defined(WAVEFORM_VOLTAGE_GENERATION_FOR_TEST)
 extern DAC_HandleTypeDef    DacForWaveformTestHandle;
@@ -171,8 +171,8 @@ void EXTI15_10_IRQHandler(void)
 /*       and managed by IRQ handler "ADCx_IRQHandler()".                      */
 void ADCx_IRQHandler(void)
 {
-  HAL_ADC_IRQHandler(&AdcHandle_master);
-  HAL_ADC_IRQHandler(&AdcHandle_slave);
+	HAL_ADC_IRQHandler(&Adc1_Handle);
+	HAL_ADC_IRQHandler(&Adc2_Handle);
 }
 
 /**
@@ -182,12 +182,12 @@ void ADCx_IRQHandler(void)
 */
 void ADCx_DMA_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(AdcHandle_master.DMA_Handle);
+	HAL_DMA_IRQHandler(Adc1_Handle.DMA_Handle);
 }
 
 void ADCy_DMA_IRQHandler(void)
 {
-  HAL_DMA_IRQHandler(AdcHandle_slave.DMA_Handle);
+	HAL_DMA_IRQHandler(Adc2_Handle.DMA_Handle);
 }
 
 

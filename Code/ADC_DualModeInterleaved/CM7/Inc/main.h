@@ -41,7 +41,7 @@
 /*    (this avoid to user the need of an external signal generator).          */
 /*  - If this literal is not defined: User has to connect an external signal  */
 /*    generator on the selected ADC input to run this example.                */
-#define WAVEFORM_VOLTAGE_GENERATION_FOR_TEST
+//!!! #define WAVEFORM_VOLTAGE_GENERATION_FOR_TEST
 
 
 /* User can use this section to tailor ADCx instance under use and associated
@@ -49,50 +49,55 @@
 
 /* ## Definition of ADC related resources ################################### */
 /* Definition of ADCx clock resources */
-#define ADCx                            ADC1
-#define ADCx_CLK_ENABLE()               __HAL_RCC_ADC12_CLK_ENABLE()
+#define ADCx							ADC1
+#define ADCx_CLK_ENABLE()				__HAL_RCC_ADC12_CLK_ENABLE()
 
-#define ADCx_FORCE_RESET()              __HAL_RCC_ADC12_FORCE_RESET()
-#define ADCx_RELEASE_RESET()            __HAL_RCC_ADC12_RELEASE_RESET()
+#define ADCx_FORCE_RESET()				__HAL_RCC_ADC12_FORCE_RESET()
+#define ADCx_RELEASE_RESET()			__HAL_RCC_ADC12_RELEASE_RESET()
 
 /* Definition of ADCx channels */
-#define ADCx_CHANNELa                   ADC_CHANNEL_18
+#define ADCx_CHANNELa					ADC_CHANNEL_18
 
 /* Definition of ADCx channels pins */
-#define ADCx_CHANNELa_GPIO_CLK_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
-#define ADCx_CHANNELa_GPIO_PORT         GPIOA
-#define ADCx_CHANNELa_PIN               GPIO_PIN_4
+#define ADCx_CHANNELa_GPIO_CLK_ENABLE()	__HAL_RCC_GPIOA_CLK_ENABLE()
+#define ADCx_CHANNELa_GPIO_PORT			GPIOA
+#define ADCx_CHANNELa_PIN				GPIO_PIN_4
 
 /* Definition of ADCx DMA resources */
-#define ADCx_DMA_CLK_ENABLE()           __HAL_RCC_DMA1_CLK_ENABLE()
-#define ADCx_DMA                        DMA1_Stream1
+#define ADCx_DMA_CLK_ENABLE()			__HAL_RCC_DMA1_CLK_ENABLE()
+#define ADCx_DMA						DMA1_Stream1
 
-#define ADCx_DMA_IRQn                   DMA1_Stream1_IRQn
-#define ADCx_DMA_IRQHandler             DMA1_Stream1_IRQHandler
+#define ADCx_DMA_IRQn					DMA1_Stream1_IRQn
+#define ADCx_DMA_IRQHandler				DMA1_Stream1_IRQHandler
 
 /* Definition of ADCx NVIC resources */
-#define ADCx_IRQn                       ADC_IRQn
-#define ADCx_IRQHandler                 ADC_IRQHandler
-
+#define ADCx_IRQn						ADC_IRQn
+#define ADCx_IRQHandler					ADC_IRQHandler
 
 /* Definition of ADCy clock resources */
-#define ADCy                            ADC2
-#define ADCy_CLK_ENABLE()               __HAL_RCC_ADC12_CLK_ENABLE()
+#define ADCy							ADC2
 
-#define ADCy_FORCE_RESET()              __HAL_RCC_ADC12_FORCE_RESET()
-#define ADCy_RELEASE_RESET()            __HAL_RCC_ADC12_RELEASE_RESET()
+//!!!
+#if 0
+
+#define ADCy_CLK_ENABLE()				__HAL_RCC_ADC12_CLK_ENABLE()
+
+#define ADCy_FORCE_RESET()				__HAL_RCC_ADC12_FORCE_RESET()
+#define ADCy_RELEASE_RESET()			__HAL_RCC_ADC12_RELEASE_RESET()
 
 /* Definition of ADCy channels */
-#define ADCy_CHANNELa                   ADC_CHANNEL_18
+#define ADCy_CHANNELa					ADC_CHANNEL_18
 
 /* Definition of ADCy channels pins */
-#define ADCy_CHANNELa_GPIO_CLK_ENABLE() __HAL_RCC_GPIOA_CLK_ENABLE()
-#define ADCy_CHANNELa_GPIO_PORT         GPIOA
-#define ADCy_CHANNELa_PIN               GPIO_PIN_4
+#define ADCy_CHANNELa_GPIO_CLK_ENABLE()	__HAL_RCC_GPIOA_CLK_ENABLE()
+#define ADCy_CHANNELa_GPIO_PORT			GPIOA
+#define ADCy_CHANNELa_PIN				GPIO_PIN_4
 
 /* Definition of ADCy NVIC resources */
 #define ADCy_IRQn                       ADC_IRQn
 #define ADCy_IRQHandler                 ADC_IRQHandler
+
+#endif
 
 
 /* #if defined(ADC_TRIGGER_FROM_TIMER) */ /* Note: Line commented for compilation purpose in HAL MSP functions */

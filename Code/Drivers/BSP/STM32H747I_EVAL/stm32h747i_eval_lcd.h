@@ -60,37 +60,37 @@
 /** @defgroup STM32H747I_EVAL_LCD_Exported_Constants Exported Constants
   * @{
   */
-#define BSP_LCD_DMA2D_IRQHandler        DMA2D_IRQHandler
-#define BSP_LCD_DSI_IRQHandler          DSI_IRQHandler
-#define BSP_LCD_LTDC_IRQHandler         LTDC_IRQHandler
-#define BSP_LCD_LTDC_ER_IRQHandler      LTDC_ER_IRQHandler
+#define BSP_LCD_DMA2D_IRQHandler		DMA2D_IRQHandler
+#define BSP_LCD_DSI_IRQHandler			DSI_IRQHandler
+#define BSP_LCD_LTDC_IRQHandler			LTDC_IRQHandler
+#define BSP_LCD_LTDC_ER_IRQHandler		LTDC_ER_IRQHandler
 
     
-#define LCD_LayerCfgTypeDef    LTDC_LayerCfgTypeDef
+#define LCD_LayerCfgTypeDef				LTDC_LayerCfgTypeDef
 /** 
   * @brief  LCD FB_StartAddress  
   */
-#define LCD_FB_START_ADDRESS       ((uint32_t)0xD0000000)
+#define LCD_FB_START_ADDRESS			((uint32_t)0xD0000000)
    
 /** @brief Maximum number of LTDC layers
  */
-#define LTDC_MAX_LAYER_NUMBER             ((uint32_t) 2)
+#define LTDC_MAX_LAYER_NUMBER			((uint32_t) 2)
 
 /** @brief LTDC Background layer index
  */
-#define LTDC_ACTIVE_LAYER_BACKGROUND      ((uint32_t) 0)
+#define LTDC_ACTIVE_LAYER_BACKGROUND	((uint32_t) 0)
 
 /** @brief LTDC Foreground layer index
  */
-#define LTDC_ACTIVE_LAYER_FOREGROUND      ((uint32_t) 1)
+#define LTDC_ACTIVE_LAYER_FOREGROUND	((uint32_t) 1)
 
 /** @brief Number of LTDC layers
  */
-#define LTDC_NB_OF_LAYERS                 ((uint32_t) 2)
+#define LTDC_NB_OF_LAYERS				((uint32_t) 2)
 
 /** @brief LTDC Default used layer index
  */
-#define LTDC_DEFAULT_ACTIVE_LAYER         LTDC_ACTIVE_LAYER_FOREGROUND
+#define LTDC_DEFAULT_ACTIVE_LAYER		LTDC_ACTIVE_LAYER_FOREGROUND
 
 /** 
   * @brief  LCD status structure definition  
@@ -108,13 +108,13 @@
 /** 
   * @brief  HDMI ADV7533 DSI Virtual Channel  ID  
   */    
-#define HDMI_ADV7533_ID  ((uint32_t) 0) 
+	#define HDMI_ADV7533_ID		((uint32_t) 0) 
 
 /** 
   * @brief  HDMI Foramt   
   */   
-#define HDMI_FORMAT_720_480   ((uint8_t) 0x00) /*720_480 format choice of HDMI display */
-#define HDMI_FORMAT_720_576   ((uint8_t) 0x01) /*720_576 format choice of HDMI display*/    
+	#define HDMI_FORMAT_720_480	((uint8_t) 0x00) /*720_480 format choice of HDMI display */
+	#define HDMI_FORMAT_720_576	((uint8_t) 0x01) /*720_576 format choice of HDMI display*/    
 
 #endif /* USE_LCD_HDMI */
    
@@ -125,35 +125,35 @@
 
 /** @brief Blue value in ARGB8888 format
  */
-#define LCD_COLOR_BLUE          ((uint32_t) 0xFF0000FF)
+#define LCD_COLOR_BLUE			((uint32_t) 0xFF0000FF)
 
 /** @brief Green value in ARGB8888 format
  */
-#define LCD_COLOR_GREEN         ((uint32_t) 0xFF00FF00)
+#define LCD_COLOR_GREEN			((uint32_t) 0xFF00FF00)
 
 /** @brief Red value in ARGB8888 format
  */
-#define LCD_COLOR_RED           ((uint32_t) 0xFFFF0000)
+#define LCD_COLOR_RED			((uint32_t) 0xFFFF0000)
 
 /** @brief Cyan value in ARGB8888 format
  */
-#define LCD_COLOR_CYAN          ((uint32_t) 0xFF00FFFF)
+#define LCD_COLOR_CYAN			((uint32_t) 0xFF00FFFF)
 
 /** @brief Magenta value in ARGB8888 format
  */
-#define LCD_COLOR_MAGENTA       ((uint32_t) 0xFFFF00FF)
+#define LCD_COLOR_MAGENTA		((uint32_t) 0xFFFF00FF)
 
 /** @brief Yellow value in ARGB8888 format
  */
-#define LCD_COLOR_YELLOW        ((uint32_t) 0xFFFFFF00)
+#define LCD_COLOR_YELLOW		((uint32_t) 0xFFFFFF00)
 
 /** @brief Light Blue value in ARGB8888 format
  */
-#define LCD_COLOR_LIGHTBLUE     ((uint32_t) 0xFF8080FF)
+#define LCD_COLOR_LIGHTBLUE		((uint32_t) 0xFF8080FF)
 
 /** @brief Light Green value in ARGB8888 format
  */
-#define LCD_COLOR_LIGHTGREEN    ((uint32_t) 0xFF80FF80)
+#define LCD_COLOR_LIGHTGREEN	((uint32_t) 0xFF80FF80)
 
 /** @brief Light Red value in ARGB8888 format
  */
@@ -161,84 +161,84 @@
 
 /** @brief Light Cyan value in ARGB8888 format
  */
-#define LCD_COLOR_LIGHTCYAN     ((uint32_t) 0xFF80FFFF)
+#define LCD_COLOR_LIGHTCYAN		((uint32_t) 0xFF80FFFF)
 
 /** @brief Light Magenta value in ARGB8888 format
  */
-#define LCD_COLOR_LIGHTMAGENTA  ((uint32_t) 0xFFFF80FF)
+#define LCD_COLOR_LIGHTMAGENTA	((uint32_t) 0xFFFF80FF)
 
 /** @brief Light Yellow value in ARGB8888 format
  */
-#define LCD_COLOR_LIGHTYELLOW   ((uint32_t) 0xFFFFFF80)
+#define LCD_COLOR_LIGHTYELLOW	((uint32_t) 0xFFFFFF80)
 
 /** @brief Dark Blue value in ARGB8888 format
  */
-#define LCD_COLOR_DARKBLUE      ((uint32_t) 0xFF000080)
+#define LCD_COLOR_DARKBLUE		((uint32_t) 0xFF000080)
 
 /** @brief Light Dark Green value in ARGB8888 format
  */
-#define LCD_COLOR_DARKGREEN     ((uint32_t) 0xFF008000)
+#define LCD_COLOR_DARKGREEN		((uint32_t) 0xFF008000)
 
 /** @brief Light Dark Red value in ARGB8888 format
  */
-#define LCD_COLOR_DARKRED       ((uint32_t) 0xFF800000)
+#define LCD_COLOR_DARKRED		((uint32_t) 0xFF800000)
 
 /** @brief Dark Cyan value in ARGB8888 format
  */
-#define LCD_COLOR_DARKCYAN      ((uint32_t) 0xFF008080)
+#define LCD_COLOR_DARKCYAN		((uint32_t) 0xFF008080)
 
 /** @brief Dark Magenta value in ARGB8888 format
  */
-#define LCD_COLOR_DARKMAGENTA   ((uint32_t) 0xFF800080)
+#define LCD_COLOR_DARKMAGENTA	((uint32_t) 0xFF800080)
 
 /** @brief Dark Yellow value in ARGB8888 format
  */
-#define LCD_COLOR_DARKYELLOW    ((uint32_t) 0xFF808000)
+#define LCD_COLOR_DARKYELLOW	((uint32_t) 0xFF808000)
 
 /** @brief White value in ARGB8888 format
  */
-#define LCD_COLOR_WHITE         ((uint32_t) 0xFFFFFFFF)
+#define LCD_COLOR_WHITE			((uint32_t) 0xFFFFFFFF)
 
 /** @brief Light Gray value in ARGB8888 format
  */
-#define LCD_COLOR_LIGHTGRAY     ((uint32_t) 0xFFD3D3D3)
+#define LCD_COLOR_LIGHTGRAY		((uint32_t) 0xFFD3D3D3)
 
 /** @brief Gray value in ARGB8888 format
  */
-#define LCD_COLOR_GRAY          ((uint32_t) 0xFF808080)
+#define LCD_COLOR_GRAY			((uint32_t) 0xFF808080)
 
 /** @brief Dark Gray value in ARGB8888 format
  */
-#define LCD_COLOR_DARKGRAY      ((uint32_t) 0xFF404040)
+#define LCD_COLOR_DARKGRAY		((uint32_t) 0xFF404040)
 
 /** @brief Black value in ARGB8888 format
  */
-#define LCD_COLOR_BLACK         ((uint32_t) 0xFF000000)
+#define LCD_COLOR_BLACK			((uint32_t) 0xFF000000)
 
 /** @brief Brown value in ARGB8888 format
  */
-#define LCD_COLOR_BROWN         ((uint32_t) 0xFFA52A2A)
+#define LCD_COLOR_BROWN			((uint32_t) 0xFFA52A2A)
 
 /** @brief Orange value in ARGB8888 format
  */
-#define LCD_COLOR_ORANGE        ((uint32_t) 0xFFFFA500)
+#define LCD_COLOR_ORANGE		((uint32_t) 0xFFFFA500)
 
 /** @brief Transparent value in ARGB8888 format
  */
-#define LCD_COLOR_TRANSPARENT   ((uint32_t) 0xFF000000)
+#define LCD_COLOR_TRANSPARENT	((uint32_t) 0xFF000000)
 
 /**
   * @brief LCD default font
   */
-#define LCD_DEFAULT_FONT        Font24
+#define LCD_DEFAULT_FONT		Font24
 
 /**
  *  @brief  Possible values of
  *  pixel data format (ie color coding) transmitted on DSI Data lane in DSI packets
  */
 
-#define   LCD_DSI_PIXEL_DATA_FMT_RBG888  DSI_RGB888 /*!< DSI packet pixel format chosen is RGB888 : 24 bpp */
-#define   LCD_DSI_PIXEL_DATA_FMT_RBG565  DSI_RGB565 /*!< DSI packet pixel format chosen is RGB565 : 16 bpp */
+#define   LCD_DSI_PIXEL_DATA_FMT_RBG888		DSI_RGB888 /*!< DSI packet pixel format chosen is RGB888 : 24 bpp */
+#define   LCD_DSI_PIXEL_DATA_FMT_RBG565		DSI_RGB565 /*!< DSI packet pixel format chosen is RGB565 : 16 bpp */
 
 /**
   * @}
@@ -292,9 +292,9 @@ typedef enum
  */
 typedef enum
 {
-  LCD_ORIENTATION_PORTRAIT  = 0x00, /*!< Portrait orientation choice of LCD screen  */
-  LCD_ORIENTATION_LANDSCAPE = 0x01, /*!< Landscape orientation choice of LCD screen */
-  LCD_ORIENTATION_INVALID   = 0x02  /*!< Invalid orientation choice of LCD screen   */
+	LCD_ORIENTATION_PORTRAIT  = 0x00, /*!< Portrait orientation choice of LCD screen  */
+	LCD_ORIENTATION_LANDSCAPE = 0x01, /*!< Landscape orientation choice of LCD screen */
+	LCD_ORIENTATION_INVALID   = 0x02  /*!< Invalid orientation choice of LCD screen   */
 } LCD_OrientationTypeDef;
 
 

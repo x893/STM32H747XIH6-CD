@@ -126,45 +126,45 @@ static FMC_SDRAM_CommandTypeDef Command;
   */
 uint8_t BSP_SDRAM_Init(void)
 {
-  static uint8_t sdramstatus = SDRAM_OK;
-  /* SDRAM device configuration */
-  sdramHandle.Instance = FMC_SDRAM_DEVICE;
+	static uint8_t sdramstatus = SDRAM_OK;
+	/* SDRAM device configuration */
+	sdramHandle.Instance = FMC_SDRAM_DEVICE;
 
-  /* Timing configuration for 100Mhz as SDRAM clock frequency (System clock is up to 200Mhz) */
-  Timing.LoadToActiveDelay    = 2;
-  Timing.ExitSelfRefreshDelay = 7;
-  Timing.SelfRefreshTime      = 4;
-  Timing.RowCycleDelay        = 7;
-  Timing.WriteRecoveryTime    = 2;
-  Timing.RPDelay              = 2;
-  Timing.RCDDelay             = 2;
+	/* Timing configuration for 100Mhz as SDRAM clock frequency (System clock is up to 200Mhz) */
+	Timing.LoadToActiveDelay    = 2;
+	Timing.ExitSelfRefreshDelay = 7;
+	Timing.SelfRefreshTime      = 4;
+	Timing.RowCycleDelay        = 7;
+	Timing.WriteRecoveryTime    = 2;
+	Timing.RPDelay              = 2;
+	Timing.RCDDelay             = 2;
 
-  sdramHandle.Init.SDBank             = FMC_SDRAM_BANK2;
-  sdramHandle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_9;
-  sdramHandle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;
-  sdramHandle.Init.MemoryDataWidth    = SDRAM_MEMORY_WIDTH;
-  sdramHandle.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
-  sdramHandle.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
-  sdramHandle.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
-  sdramHandle.Init.SDClockPeriod      = SDCLOCK_PERIOD;
-  sdramHandle.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
-  sdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;
+	sdramHandle.Init.SDBank             = FMC_SDRAM_BANK2;
+	sdramHandle.Init.ColumnBitsNumber   = FMC_SDRAM_COLUMN_BITS_NUM_9;
+	sdramHandle.Init.RowBitsNumber      = FMC_SDRAM_ROW_BITS_NUM_12;
+	sdramHandle.Init.MemoryDataWidth    = SDRAM_MEMORY_WIDTH;
+	sdramHandle.Init.InternalBankNumber = FMC_SDRAM_INTERN_BANKS_NUM_4;
+	sdramHandle.Init.CASLatency         = FMC_SDRAM_CAS_LATENCY_3;
+	sdramHandle.Init.WriteProtection    = FMC_SDRAM_WRITE_PROTECTION_DISABLE;
+	sdramHandle.Init.SDClockPeriod      = SDCLOCK_PERIOD;
+	sdramHandle.Init.ReadBurst          = FMC_SDRAM_RBURST_ENABLE;
+	sdramHandle.Init.ReadPipeDelay      = FMC_SDRAM_RPIPE_DELAY_0;
 
-  /* SDRAM controller initialization */
+	/* SDRAM controller initialization */
 
-  BSP_SDRAM_MspInit(&sdramHandle, NULL); /* __weak function can be rewritten by the application */
+	BSP_SDRAM_MspInit(&sdramHandle, NULL); /* __weak function can be rewritten by the application */
 
-  if(HAL_SDRAM_Init(&sdramHandle, &Timing) != HAL_OK)
-  {
-    sdramstatus = SDRAM_ERROR;
-  }
-  else
-  {
-    /* SDRAM initialization sequence */
-    BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
-  }
+	if(HAL_SDRAM_Init(&sdramHandle, &Timing) != HAL_OK)
+	{
+		sdramstatus = SDRAM_ERROR;
+	}
+	else
+	{
+		/* SDRAM initialization sequence */
+		BSP_SDRAM_Initialization_sequence(REFRESH_COUNT);
+	}
 
-  return sdramstatus;
+	return sdramstatus;
 }
 
 /**
@@ -352,96 +352,141 @@ uint8_t BSP_SDRAM_Sendcmd(FMC_SDRAM_CommandTypeDef *SdramCmd)
   */
 __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
 {
-  static MDMA_HandleTypeDef mdma_handle;
-  GPIO_InitTypeDef gpio_init_structure;
+	static MDMA_HandleTypeDef mdma_handle;
+	GPIO_InitTypeDef gpio_init_structure;
 
-  /* Enable FMC clock */
-  __HAL_RCC_FMC_CLK_ENABLE();
+	/* Enable FMC clock */
+	__HAL_RCC_FMC_CLK_ENABLE();
 
-  /* Enable chosen MDMAx clock */
-  __MDMAx_CLK_ENABLE();
+	/* Enable chosen MDMAx clock */
+	__MDMAx_CLK_ENABLE();
 
-  /* Enable GPIOs clock */
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOE_CLK_ENABLE();
-  __HAL_RCC_GPIOF_CLK_ENABLE();
-  __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOH_CLK_ENABLE();
-  __HAL_RCC_GPIOI_CLK_ENABLE();
+	/* Enable GPIOs clock */
+	__HAL_RCC_GPIOD_CLK_ENABLE();
+	__HAL_RCC_GPIOE_CLK_ENABLE();
+	__HAL_RCC_GPIOF_CLK_ENABLE();
+	__HAL_RCC_GPIOG_CLK_ENABLE();
+	__HAL_RCC_GPIOH_CLK_ENABLE();
+	__HAL_RCC_GPIOI_CLK_ENABLE();
 
-  /* Common GPIO configuration */
-  gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
-  gpio_init_structure.Pull      = GPIO_PULLUP;
-  gpio_init_structure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-  gpio_init_structure.Alternate = GPIO_AF12_FMC;
+	/* Common GPIO configuration */
+	gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
+	gpio_init_structure.Pull      = GPIO_PULLUP;
+	gpio_init_structure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+	gpio_init_structure.Alternate = GPIO_AF12_FMC;
 
-  /* GPIOD configuration */
-  gpio_init_structure.Pin   = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_8| GPIO_PIN_9 | GPIO_PIN_10 |\
-                              GPIO_PIN_14 | GPIO_PIN_15;
+	/* GPIOD configuration */
+	gpio_init_structure.Pin   =
+		GPIO_PIN_0 |  /* PD0_FMC_D2 */
+		GPIO_PIN_1 |  /* PD1_FMC_D3 */
+		GPIO_PIN_8 |  /* PD8_FMC_D13 */
+		GPIO_PIN_9 |  /* PD9_FMC_D14 */
+		GPIO_PIN_10 | /* PD10_FMC_D15 */
+		GPIO_PIN_14 | /* PD14_FMC_D0 */
+		GPIO_PIN_15;  /* PD15_FMC_D1 */
+	HAL_GPIO_Init(GPIOD, &gpio_init_structure);
 
+	/* GPIOE configuration */
+	gpio_init_structure.Pin   =
+		GPIO_PIN_0 |  /* PE0_FMC_NBL0 */
+		GPIO_PIN_1 |  /* PE1_FMC_NBL1 */
+		GPIO_PIN_7 |  /* PE7_FMC_D4 */
+		GPIO_PIN_8 |  /* PE8_FMC_D5 */
+		GPIO_PIN_9 |  /* PE9_FMC_D6 */
+		GPIO_PIN_10 | /* PE10_FMC_D7 */
+		GPIO_PIN_11 | /* PE11_FMC_D8 */
+		GPIO_PIN_12 | /* PE12_FMC_D9 */
+		GPIO_PIN_13 | /* PE13_FMC_D10 */
+		GPIO_PIN_14 | /* PE14_FMC_D11 */
+		GPIO_PIN_15;  /* PE15_FMC_D12 */
+	HAL_GPIO_Init(GPIOE, &gpio_init_structure);
 
-  HAL_GPIO_Init(GPIOD, &gpio_init_structure);
+	/* GPIOF configuration */
+	gpio_init_structure.Pin =
+		GPIO_PIN_0 |  /* PF0_FMC_A0 */
+		GPIO_PIN_1 |  /* PF1_FMC_A1 */
+		GPIO_PIN_2 |  /* PF2_FMC_A2 */
+		GPIO_PIN_3 |  /* PF3_FMC_A3 */
+		GPIO_PIN_4 |  /* PF4_FMC_A4 */
+		GPIO_PIN_5 |  /* PF5_FMC_A5 */
+		GPIO_PIN_11 | /* PF11_FMC_SDNRAS */
+		GPIO_PIN_12 | /* PF12_FMC_A6 */
+		GPIO_PIN_13 | /* PF13_FMC_A7 */
+		GPIO_PIN_14 | /* PF14_FMC_A8 */
+		GPIO_PIN_15;  /* PF15_FMC_A9 */
+	HAL_GPIO_Init(GPIOF, &gpio_init_structure);
 
-  /* GPIOE configuration */
-  gpio_init_structure.Pin   = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_7| GPIO_PIN_8 | GPIO_PIN_9 |\
-                              GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 |\
-                              GPIO_PIN_15;
+	/* GPIOG configuration */
+	gpio_init_structure.Pin =
+		GPIO_PIN_0 | /* PG0_FMC_A10 */
+		GPIO_PIN_1 | /* PG1_FMC_A11 */
+		GPIO_PIN_2 | /* PG2_FMC_A12 */
+		GPIO_PIN_3 | /* PG3_FMC_A13 */
+		GPIO_PIN_4 | /* PG4_FMC_A14 */
+		GPIO_PIN_5 | /* PG5_FMC_A15 */
+		GPIO_PIN_8 | /* PG8_FMC_SDCLK */
+		GPIO_PIN_15; /* PG15_FMC_SDNCAS */
+	HAL_GPIO_Init(GPIOG, &gpio_init_structure);
 
-  HAL_GPIO_Init(GPIOE, &gpio_init_structure);
+	/* GPIOH configuration */
+	gpio_init_structure.Pin =
+		GPIO_PIN_5 |  /* PH5_FMC_SDNWE */
+		GPIO_PIN_6 |  /* PH6_FMC_SDNE1 */
+		GPIO_PIN_7 |  /* PH7_FMC_SDCKE1 */
+		GPIO_PIN_8 |  /* PH8_FMC_D16 */
+		GPIO_PIN_9 |  /* PH9_FMC_D17 */
+		GPIO_PIN_10 | /* PH10_FMC_D18 */
+		GPIO_PIN_11 | /* PH11_FMC_D19 */
+		GPIO_PIN_12 | /* PH12_FMC_D20 */
+		GPIO_PIN_13 | /* PH13_FMC_D21 */
+		GPIO_PIN_14 | /* PH14_FMC_D22 */
+		GPIO_PIN_15;  /* PH15_FMC_D23 */
+	HAL_GPIO_Init(GPIOH, &gpio_init_structure);
 
-  /* GPIOF configuration */
-  gpio_init_structure.Pin   = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2| GPIO_PIN_3 | GPIO_PIN_4 |\
-                              GPIO_PIN_5 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 |\
-                              GPIO_PIN_15;
+	/* GPIOI configuration */
+	gpio_init_structure.Pin =
+		GPIO_PIN_0 | /* PI0_FMC_D24 */
+		GPIO_PIN_1 | /* PI1_FMC_D25 */
+		GPIO_PIN_2 | /* PI2_FMC_D26 */
+		GPIO_PIN_3 | /* PI3_FMC_D27 */
+		GPIO_PIN_4 | /* PI4_FMC_NBL2 */
+		GPIO_PIN_5 | /* PI5_FMC_NBL3 */
+		GPIO_PIN_6 | /* PI6_FMC_D28 */
+		GPIO_PIN_7 | /* PI7_FMC_D29 */
+		GPIO_PIN_9 | /* PI9_FMC_D30 */
+		GPIO_PIN_10; /* PI10_FMC_D31 */
+	HAL_GPIO_Init(GPIOI, &gpio_init_structure);
 
-  HAL_GPIO_Init(GPIOF, &gpio_init_structure);
+	/* Configure common MDMA parameters */
+	mdma_handle.Init.Request = MDMA_REQUEST_SW;
+	mdma_handle.Init.TransferTriggerMode = MDMA_BLOCK_TRANSFER;
+	mdma_handle.Init.Priority = MDMA_PRIORITY_HIGH;
+	mdma_handle.Init.Endianness = MDMA_LITTLE_ENDIANNESS_PRESERVE;
+	mdma_handle.Init.SourceInc = MDMA_SRC_INC_WORD;
+	mdma_handle.Init.DestinationInc = MDMA_DEST_INC_WORD;
+	mdma_handle.Init.SourceDataSize = MDMA_SRC_DATASIZE_WORD;
+	mdma_handle.Init.DestDataSize = MDMA_DEST_DATASIZE_WORD;
+	mdma_handle.Init.DataAlignment = MDMA_DATAALIGN_PACKENABLE;
+	mdma_handle.Init.SourceBurst = MDMA_SOURCE_BURST_SINGLE;
+	mdma_handle.Init.DestBurst = MDMA_DEST_BURST_SINGLE;
+	mdma_handle.Init.BufferTransferLength = 128;
+	mdma_handle.Init.SourceBlockAddressOffset = 0;
+	mdma_handle.Init.DestBlockAddressOffset = 0;
 
-  /* GPIOG configuration */
-  gpio_init_structure.Pin   = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 |\
-                              GPIO_PIN_4 | GPIO_PIN_5 | GPIO_PIN_8 | GPIO_PIN_15;
-  HAL_GPIO_Init(GPIOG, &gpio_init_structure);
+	mdma_handle.Instance = SDRAM_MDMAx_CHANNEL;
 
-  /* GPIOH configuration */
-  gpio_init_structure.Pin   = GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_8 | GPIO_PIN_9 |\
-                              GPIO_PIN_10 | GPIO_PIN_11 | GPIO_PIN_12 | GPIO_PIN_13 | GPIO_PIN_14 |\
-                              GPIO_PIN_15;
-  HAL_GPIO_Init(GPIOH, &gpio_init_structure);
+	/* Associate the DMA handle */
+	__HAL_LINKDMA(hsdram, hmdma, mdma_handle);
 
-  /* GPIOI configuration */
-  gpio_init_structure.Pin   = GPIO_PIN_0 | GPIO_PIN_1 | GPIO_PIN_2 | GPIO_PIN_3 | GPIO_PIN_4 |\
-                              GPIO_PIN_5 | GPIO_PIN_6 | GPIO_PIN_7 | GPIO_PIN_9 | GPIO_PIN_10;
-  HAL_GPIO_Init(GPIOI, &gpio_init_structure);
+	/* Deinitialize the stream for new transfer */
+	HAL_MDMA_DeInit(&mdma_handle);
 
-  /* Configure common MDMA parameters */
-  mdma_handle.Init.Request = MDMA_REQUEST_SW;
-  mdma_handle.Init.TransferTriggerMode = MDMA_BLOCK_TRANSFER;
-  mdma_handle.Init.Priority = MDMA_PRIORITY_HIGH;
-  mdma_handle.Init.Endianness = MDMA_LITTLE_ENDIANNESS_PRESERVE;
-  mdma_handle.Init.SourceInc = MDMA_SRC_INC_WORD;
-  mdma_handle.Init.DestinationInc = MDMA_DEST_INC_WORD;
-  mdma_handle.Init.SourceDataSize = MDMA_SRC_DATASIZE_WORD;
-  mdma_handle.Init.DestDataSize = MDMA_DEST_DATASIZE_WORD;
-  mdma_handle.Init.DataAlignment = MDMA_DATAALIGN_PACKENABLE;
-  mdma_handle.Init.SourceBurst = MDMA_SOURCE_BURST_SINGLE;
-  mdma_handle.Init.DestBurst = MDMA_DEST_BURST_SINGLE;
-  mdma_handle.Init.BufferTransferLength = 128;
-  mdma_handle.Init.SourceBlockAddressOffset = 0;
-  mdma_handle.Init.DestBlockAddressOffset = 0;
+	/* Configure the DMA stream */
+	HAL_MDMA_Init(&mdma_handle);
 
-  mdma_handle.Instance = SDRAM_MDMAx_CHANNEL;
-
-   /* Associate the DMA handle */
-  __HAL_LINKDMA(hsdram, hmdma, mdma_handle);
-
-  /* Deinitialize the stream for new transfer */
-  HAL_MDMA_DeInit(&mdma_handle);
-
-  /* Configure the DMA stream */
-  HAL_MDMA_Init(&mdma_handle);
-
-  /* NVIC configuration for DMA transfer complete interrupt */
-  HAL_NVIC_SetPriority(SDRAM_MDMAx_IRQn, 0x0F, 0);
-  HAL_NVIC_EnableIRQ(SDRAM_MDMAx_IRQn);
+	/* NVIC configuration for DMA transfer complete interrupt */
+	HAL_NVIC_SetPriority(SDRAM_MDMAx_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(SDRAM_MDMAx_IRQn);
 }
 
 /**
@@ -452,17 +497,17 @@ __weak void BSP_SDRAM_MspInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
   */
 __weak void BSP_SDRAM_MspDeInit(SDRAM_HandleTypeDef  *hsdram, void *Params)
 {
-    static MDMA_HandleTypeDef mdma_handle;
+	static MDMA_HandleTypeDef mdma_handle;
 
-    /* Disable NVIC configuration for DMA interrupt */
-    HAL_NVIC_DisableIRQ(SDRAM_MDMAx_IRQn);
+	/* Disable NVIC configuration for DMA interrupt */
+	HAL_NVIC_DisableIRQ(SDRAM_MDMAx_IRQn);
 
-    /* Deinitialize the stream for new transfer */
-    mdma_handle.Instance = SDRAM_MDMAx_CHANNEL;
-    HAL_MDMA_DeInit(&mdma_handle);
+	/* Deinitialize the stream for new transfer */
+	mdma_handle.Instance = SDRAM_MDMAx_CHANNEL;
+	HAL_MDMA_DeInit(&mdma_handle);
 
-    /* GPIO pins clock, FMC clock and MDMA clock can be shut down in the applications
-       by surcharging this __weak function */
+	/*	GPIO pins clock, FMC clock and MDMA clock can be shut down in the applications
+		by surcharging this __weak function */
 }
 
 /**

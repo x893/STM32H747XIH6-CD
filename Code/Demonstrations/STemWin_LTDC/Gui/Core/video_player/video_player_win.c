@@ -719,7 +719,7 @@ static void _cbplaybackwin(WM_MESSAGE * pMsg)
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_DURATION);
                 NewTime = SLIDER_GetValue(hItem);
 
-                sprintf((char *)tmp , "%02lu:%02lu", NewTime/60, NewTime%60 );
+                sprintf((char *)tmp , "%02u:%02u", NewTime/60, NewTime%60 );
                 hItem = WM_GetDialogItem(pMsg->hWin, ID_ELAPSED_TIME);
                 TEXT_SetText(hItem, tmp);
               }
@@ -994,7 +994,7 @@ void _cbNotify(GUI_HMEM hMem, int Notification, U32 SkipNFrames)
       if(((osKernelSysTick() - InitTick ) > 1000) || (InitTick == 0))
       {
         hItem = WM_GetDialogItem(playbackwin, ID_FPS);
-        sprintf(tmp, "Rate : %lu fps", 1000/FrameDuration);
+        sprintf(tmp, "Rate : %u fps", 1000/FrameDuration);
         TEXT_SetText(hItem, tmp);
         WM_InvalidateWindow(hItem);
         WM_Paint(hItem);
@@ -1014,7 +1014,7 @@ void _cbNotify(GUI_HMEM hMem, int Notification, U32 SkipNFrames)
           hItem = WM_GetDialogItem(playbackwin, ID_ELAPSED_TIME);
           if(WM_IsVisible(hItem))
           {
-            sprintf((char *)tmp , "%02lu:%02lu", elapsed_time/60, elapsed_time%60 );
+            sprintf((char *)tmp , "%02u:%02u", elapsed_time/60, elapsed_time%60 );
             TEXT_SetText(hItem, tmp);
             WM_InvalidateWindow(hItem);
             WM_Paint(hItem);
@@ -1092,7 +1092,7 @@ static uint8_t _StartPlay(char * filename, FIL * file, uint16_t x0, uint16_t y0)
     ms = Video_Info.msPerFrame;
     frames = Video_Info.NumFrames;
     duration = (frames * ms)/1000;
-    sprintf((char *)tmp , "%02lu:%02lu", duration/60, duration%60 );
+    sprintf((char *)tmp , "%02u:%02u", duration/60, duration%60 );
     TEXT_SetText(hItem, tmp);          
     
     hItem = WM_GetDialogItem(playbackwin, ID_ELAPSED_TIME);

@@ -511,8 +511,9 @@ static AUDIO_ErrorTypeDef PlayerGetFileInfo(PLAYER_Instance_t *Instance, char * 
     return AUDIO_ERROR_IO;
   }
 
-  /* Select Audio Decoder with Abs Layer */
-  sprintf((char *)Instance->InputFileInfo.FilePath, file_name);
+	/* Select Audio Decoder with Abs Layer */
+	//!!! sprintf((char *)Instance->InputFileInfo.FilePath, file_name);
+	strcpy((char *)Instance->InputFileInfo.FilePath, file_name);
 
   /* Get the extension of audio file */
   Instance->InputFileInfo.FileExtension =  Instance->InputFileInfo.FilePath[strlen(Instance->InputFileInfo.FilePath) - 1];

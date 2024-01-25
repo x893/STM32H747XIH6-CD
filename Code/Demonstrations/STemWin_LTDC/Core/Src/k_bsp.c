@@ -52,7 +52,7 @@ extern void       k_MenuResetAutoDemo(void);
   #define PUTCHAR_PROTOTYPE int fputc(int ch, FILE *f)
 #endif /* __GNUC__ */
 
-#define GET_DEMO_VERSION_STR(tag)  "V%lu.%lu.%lu"
+#define GET_DEMO_VERSION_STR(tag)  "V%u.%u.%u"
 #define GET_DEMO_VERSION_P(tag)    ((tag  &0x00FF0000) >> 16), ((tag  &0x0000FF00) >> 8), (tag  &0x000000FF)
 
 /* Private variables ---------------------------------------------------------*/
@@ -156,7 +156,7 @@ uint8_t k_BspInit(void)
 
   /* Configure LEDs */
   BSP_LED_Init(LED_GREEN);
-  BSP_LED_Init(LED_RED);
+
 #if defined (DEBUG_HW_JPEG)
   BSP_LED_Init(LED_BLUE);
   BSP_LED_Init(LED_ORANGE);
@@ -167,8 +167,16 @@ uint8_t k_BspInit(void)
 
   BSP_ConfigSerial();
 
-  printf( "\n\n%s: %s " GET_DEMO_VERSION_STR(IntThirdPartyHeader.demo_id) " (Build %s at %s)\n", BOARD_NAME, IntThirdPartyHeader.demo_descr, GET_DEMO_VERSION_P(IntThirdPartyHeader.demo_id), __DATE__, __TIME__ );
-  printf( "CPU running at %luMHz, Peripherals at %luMHz/%luMHz\n", (HAL_RCCEx_GetD1SysClockFreq()/1000000U), (HAL_RCC_GetPCLK1Freq()/1000000U), (HAL_RCC_GetPCLK2Freq()/1000000U) );
+	printf( "\n\n%s: %s " GET_DEMO_VERSION_STR(IntThirdPartyHeader.demo_id) " (Build %s at %s)\n",
+		BOARD_NAME, IntThirdPartyHeader.demo_descr,
+		GET_DEMO_VERSION_P(IntThirdPartyHeader.demo_id),
+		__DATE__, __TIME__
+		);
+	printf( "CPU running at %uMHz, Peripherals at %uMHz/%uMHz\n",
+		(HAL_RCCEx_GetD1SysClockFreq() / 1000000U),
+		(HAL_RCC_GetPCLK1Freq() / 1000000U),
+		(HAL_RCC_GetPCLK2Freq() / 1000000U)
+		);
 
   /* Initialize the SDRAM memory */
   if ((RetVal = BSP_SDRAM_Init()) != SDRAM_OK)

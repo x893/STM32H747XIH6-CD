@@ -72,12 +72,12 @@ and delay function. Default time unit (tick), normally is
 
 int GUI_X_GetTime(void)
 {
-  return ((int) osKernelSysTick());
+	return ((int) osKernelSysTick());
 }
 
 void GUI_X_Delay(int ms)
 {
-  osDelay( ms );
+	osDelay( ms );
 }
 
 /*********************************************************************
@@ -90,9 +90,7 @@ void GUI_X_Delay(int ms)
 * If not required, leave this routine blank.
 */
 
-void GUI_X_Init(void) {
-}
-
+void GUI_X_Init(void) { }
 
 /*********************************************************************
 *
@@ -102,7 +100,7 @@ void GUI_X_Init(void) {
 * Called if WM is in idle state
 */
 
-void GUI_X_ExecIdle(void) {}
+void GUI_X_ExecIdle(void) { }
 
 /*********************************************************************
 *
@@ -125,45 +123,45 @@ void GUI_X_ExecIdle(void) {}
 /* Init OS */
 void GUI_X_InitOS(void)
 { 
-  /* Create Mutex lock */
-  osMutexDef(MUTEX);
-  
-  /* Create the Mutex used by the two threads */
-  osMutex = osMutexCreate(osMutex(MUTEX));
-  
-  /* Create Semaphore lock */
-  osSemaphoreDef(SEM);
-  
-  /* Create the Semaphore used by the two threads */
-  osSemaphore= osSemaphoreCreate(osSemaphore(SEM), 1);  
+	/* Create Mutex lock */
+	osMutexDef(MUTEX);
+
+	/* Create the Mutex used by the two threads */
+	osMutex = osMutexCreate(osMutex(MUTEX));
+
+	/* Create Semaphore lock */
+	osSemaphoreDef(SEM);
+
+	/* Create the Semaphore used by the two threads */
+	osSemaphore= osSemaphoreCreate(osSemaphore(SEM), 1);  
 }
 
 void GUI_X_Unlock(void)
-{ 
-  osMutexRelease(osMutex);
+{
+	osMutexRelease(osMutex);
 }
 
 void GUI_X_Lock(void)
 {
-  osMutexWait(osMutex , osWaitForever) ;
+	osMutexWait(osMutex , osWaitForever) ;
 }
 
 /* Get Task handle */
 U32 GUI_X_GetTaskId(void) 
-{ 
-  return ((U32) osThreadGetId());
+{
+	return ((U32) osThreadGetId());
 }
 
 
 void GUI_X_WaitEvent (void) 
 {
-  osSemaphoreWait(osSemaphore , osWaitForever) ;
+	osSemaphoreWait(osSemaphore , osWaitForever) ;
 }
 
 
 void GUI_X_SignalEvent (void) 
 {
-  osMutexRelease(osSemaphore);
+	osMutexRelease(osSemaphore);
 }
 
 /*********************************************************************

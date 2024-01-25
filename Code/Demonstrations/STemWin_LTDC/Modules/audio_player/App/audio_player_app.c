@@ -57,8 +57,8 @@ static char FileName[MAX_FILE_NAME_LENGHT];
   */
 AUDIO_ErrorTypeDef  AUDIOPLAYER_Init(uint8_t volume)
 {
-  memset(FileName, 0, sizeof(FileName));
-  return PLAYER_Init(volume, &hPlayerHandle);
+	memset(FileName, 0, sizeof(FileName));
+	return PLAYER_Init(volume, &hPlayerHandle);
 }
 
 /**
@@ -116,12 +116,11 @@ AUDIO_ErrorTypeDef  AUDIOPLAYER_Play(uint32_t frequency)
   /* Prevent unused argument(s) compilation warning */
   UNUSED(frequency);
 
-  if((strlen(FileName) > 0) && (strcmp(FileName, "") != 0))
-  {
-    Error = PLAYER_Start(hPlayerHandle, FileName);
-  }
-
-  return Error;
+	if((strlen(FileName) > 0) && (strcmp(FileName, "") != 0))
+	{
+		Error = PLAYER_Start(hPlayerHandle, FileName);
+	}
+	return Error;
 }
 
 /**
@@ -134,11 +133,11 @@ AUDIO_ErrorTypeDef  AUDIOPLAYER_DeInit(void)
   AUDIO_ErrorTypeDef ErrorCode = AUDIO_ERROR_INVALID_PARAMS;
 
   ErrorCode = PLAYER_DeInit(hPlayerHandle);
-  if(ErrorCode == AUDIO_ERROR_NONE)
-  {
-    memset(FileName, 0, sizeof(FileName));
-    hPlayerHandle = 0;
-  }
+	if(ErrorCode == AUDIO_ERROR_NONE)
+	{
+		memset(FileName, 0, sizeof(FileName));
+		hPlayerHandle = 0;
+	}
 
   return ErrorCode;
 }
@@ -152,11 +151,11 @@ AUDIO_ErrorTypeDef  AUDIOPLAYER_Stop(void)
 {
   AUDIO_ErrorTypeDef ErrorCode = AUDIO_ERROR_NONE;
 
-  if((strlen(FileName) > 0) && (strcmp(FileName, "") != 0))
-  {
-    memset(FileName, 0, sizeof(FileName));
-    ErrorCode = PLAYER_Stop(hPlayerHandle);
-  }
+	if((strlen(FileName) > 0) && (strcmp(FileName, "") != 0))
+	{
+		memset(FileName, 0, sizeof(FileName));
+		ErrorCode = PLAYER_Stop(hPlayerHandle);
+	}
 
   return ErrorCode;
 }
@@ -232,15 +231,15 @@ AUDIO_ErrorTypeDef  AUDIOPLAYER_GetFileInfo(char* file, AUDIO_FILE_InfoTypeDef* 
   */
 AUDIO_ErrorTypeDef  AUDIOPLAYER_SelectFile(char* file)
 {
-  AUDIO_ErrorTypeDef Error = AUDIO_ERROR_INVALID_PARAMS;
+	AUDIO_ErrorTypeDef Error = AUDIO_ERROR_INVALID_PARAMS;
 
-  Error = PLAYER_SelectFile(hPlayerHandle, file);
-  if(Error  == AUDIO_ERROR_NONE)
-  {
-    sprintf(FileName, file);    
-  }
-    
-  return Error;
+	Error = PLAYER_SelectFile(hPlayerHandle, file);
+	if(Error == AUDIO_ERROR_NONE)
+	{
+		strcpy(FileName, file);
+		//!!! sprintf(FileName, file);    
+	}
+	return Error;
 }
 
 /**

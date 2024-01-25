@@ -93,24 +93,17 @@
 
 /* Width and Height in Portrait mode */
 #define  MIPI_LCD_480X800_WIDTH             ((uint16_t)480)     /* LCD PIXEL WIDTH   */
-#define  MIPI_LCD_480X800_HEIGHT            ((uint16_t)854)     /* LCD PIXEL HEIGHT  */
+#define  MIPI_LCD_480X800_HEIGHT            ((uint16_t)800)     /* LCD PIXEL HEIGHT  */
 
 /**
   * @brief  MIPI_LCD_480X800 Timing parameters for Portrait orientation mode
   */
-#define  MIPI_LCD_480X800_HSYNC             ((uint16_t)2)      /* Horizontal synchronization */
-#define  MIPI_LCD_480X800_HBP               ((uint16_t)46)     /* Horizontal back porch      */
-#define  MIPI_LCD_480X800_HFP               ((uint16_t)38)     /* Horizontal front porch     */
-#define  MIPI_LCD_480X800_VSYNC             ((uint16_t)2)      /* Vertical synchronization   */
-#define  MIPI_LCD_480X800_VBP               ((uint16_t)2)      /* Vertical back porch        */
-#define  MIPI_LCD_480X800_VFP               ((uint16_t)12)      /* Vertical front porch       */
-
-//#define  MIPI_LCD_720X1280_HSYNC             ((uint16_t)2)      /* Horizontal synchronization */
-//#define  MIPI_LCD_720X1280_HBP               ((uint16_t)46)     /* Horizontal back porch      */
-//#define  MIPI_LCD_720X1280_HFP               ((uint16_t)38)     /* Horizontal front porch     */
-//#define  MIPI_LCD_720X1280_VSYNC             ((uint16_t)1)      /* Vertical synchronization   */
-//#define  MIPI_LCD_720X1280_VBP               ((uint16_t)16)      /* Vertical back porch        */
-//#define  MIPI_LCD_720X1280_VFP               ((uint16_t)12)      /* Vertical front porch       */
+#define  MIPI_LCD_480X800_HSYNC             ((uint16_t)20)      /* Horizontal synchronization */
+#define  MIPI_LCD_480X800_HBP               ((uint16_t)20)     /* Horizontal back porch      */
+#define  MIPI_LCD_480X800_HFP               ((uint16_t)20)     /* Horizontal front porch     */
+#define  MIPI_LCD_480X800_VSYNC             ((uint16_t)4)      /* Vertical synchronization   */
+#define  MIPI_LCD_480X800_VBP               ((uint16_t)18)      /* Vertical back porch        */
+#define  MIPI_LCD_480X800_VFP               ((uint16_t)16)      /* Vertical front porch       */
 
 /**
   * @brief  MIPI_LCD_480X800 Timing parameters for Landscape orientation mode

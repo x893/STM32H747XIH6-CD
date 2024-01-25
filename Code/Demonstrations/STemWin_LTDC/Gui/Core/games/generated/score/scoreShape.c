@@ -28,7 +28,7 @@
   #define GUI_CONST_STORAGE const
 #endif
 
-extern GUI_CONST_STORAGE GUI_BITMAP bmscoreShape;
+//!!! extern GUI_CONST_STORAGE GUI_BITMAP bmscoreShape;
 
 #if defined ( __ICCARM__ )
 #pragma location="ExtQSPIFlashSection" 

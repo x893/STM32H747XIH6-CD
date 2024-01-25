@@ -315,14 +315,12 @@ uint8_t pCols[ZONES][4] =
   {0x00, 0x00, 0x01, 0x8F}, /*   0 -> 399 */
   {0x01, 0x90, 0x03, 0x1F}  
 #elif (ZONES == 1 )
-  {0x00, 0x00, 0x01, 0x3F}, /*   0 -> 799 */
+	{0x00, 0x00, 0x01, 0x3F}, /*   0 -> 799 */
 #endif  
 };
 
 volatile int32_t LCD_ActiveRegion    = 1;
 volatile int32_t LCD_Refershing      = 0;
-
-
 
 /* Array for speeding up nibble conversion for A4 bitmaps */
 static const U8 _aMirror[] = {
@@ -345,8 +343,14 @@ static const U8 _aMirror[] = {
 };
 
 /* Frame buffer tables to be used */
-static const U32      _aAddr[]   = { LCD_FRAME_BUFFER, LCD_FRAME_BUFFER + XSIZE_PHYS * YSIZE_PHYS * sizeof(U32) * NUM_VSCREENS * NUM_BUFFERS };
-U32                   LCD_Addr[] = { LCD_FRAME_BUFFER, LCD_FRAME_BUFFER + XSIZE_PHYS * YSIZE_PHYS * sizeof(U32) * NUM_VSCREENS * NUM_BUFFERS };
+static const U32      _aAddr[]   = {
+	LCD_FRAME_BUFFER,
+	LCD_FRAME_BUFFER + XSIZE_PHYS * YSIZE_PHYS * sizeof(U32) * NUM_VSCREENS * NUM_BUFFERS
+};
+U32 LCD_Addr[] = {
+	LCD_FRAME_BUFFER,
+	LCD_FRAME_BUFFER + XSIZE_PHYS * YSIZE_PHYS * sizeof(U32) * NUM_VSCREENS * NUM_BUFFERS
+};
 
 static int _aPendingBuffer[2] = { -1, -1 };
 static int _aBufferIndex[GUI_NUM_LAYERS];

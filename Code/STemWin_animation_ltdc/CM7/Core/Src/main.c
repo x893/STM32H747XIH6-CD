@@ -47,108 +47,109 @@ extern void MainTask(void);
   */ 
 int main(void)
 {  
-  int32_t timeout;
-    
-  /* This project calls firstly two functions in order to configure MPU feature
-  and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable()*/
+	int32_t timeout;
 
-  /* Configure the MPU attributes as Write Through for SDRAM*/
-  MPU_Config();
-  
-  /* Enable the CPU Cache */
-  CPU_CACHE_Enable();
+	/* This project calls firstly two functions in order to configure MPU feature
+	and to enable the CPU Cache, respectively MPU_Config() and CPU_CACHE_Enable()*/
 
-  /* Wait until CPU2 boots and enters in stop mode or timeout*/
-  timeout = 0xFFFF;
-  while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) != RESET) && (timeout-- > 0));
-  if ( timeout < 0 )
-  {
-    Error_Handler();
-  }  
-  
-  /* STM32H7xx HAL library initialization:
+	/* Configure the MPU attributes as Write Through for SDRAM*/
+	MPU_Config();
+
+	/* Enable the CPU Cache */
+	CPU_CACHE_Enable();
+
+	/* Wait until CPU2 boots and enters in stop mode or timeout*/
+	timeout = 0xFFFF;
+	while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) != RESET) && (timeout-- > 0))
+		;
+	if ( timeout < 0 )
+	{
+		Error_Handler();
+	}
+
+	/* STM32H7xx HAL library initialization:
        - Configure the Systick to generate an interrupt each 1 msec
        - Set NVIC Group Priority to 4
        - Global MSP (MCU Support Package) initialization
      */
-  HAL_Init();  
+	HAL_Init();  
   
-  /* Configure the system clock to 400 MHz */
-  SystemClock_Config();
+	/* Configure the system clock to 400 MHz */
+	SystemClock_Config();
   
-  /* When system initialization is finished, Cortex-M7 will release (wakeup) Cortex-M4  by means of 
-  HSEM notification. Cortex-M4 release could be also ensured by any Domain D2 wakeup source (SEV,EXTI..).
-  */
+	/* When system initialization is finished, Cortex-M7 will release (wakeup) Cortex-M4  by means of 
+		HSEM notification. Cortex-M4 release could be also ensured by any Domain D2 wakeup source (SEV,EXTI..).
+	*/
   
-  /*HW semaphore Clock enable*/
-  __HAL_RCC_HSEM_CLK_ENABLE();
-  
-  /*Take HSEM */
-  HAL_HSEM_FastTake(HSEM_ID_0);   
-  /*Release HSEM in order to notify the CPU2(CM4)*/     
-  HAL_HSEM_Release(HSEM_ID_0,0);
-  
-  /* wait until CPU2 wakes up from stop mode */
-  timeout = 0xFFFF;
-  while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) == RESET) && (timeout-- > 0));
-  if ( timeout < 0 )
-  {
-    Error_Handler();
-  }
-    
-  /* Initialize LCD and LEDs */
-  BSP_Config();
-  
-  /***********************************************************/
-  
-  /* Compute the prescaler value to have TIM3 counter clock equal to 10 KHz */
-  uwPrescalerValue = (uint32_t) ((SystemCoreClock /2) / 10000) - 1;
-  
-  /* Set TIMx instance */
-  TimHandle.Instance = TIM3;
-   
-  /* Initialize TIM3 peripheral as follows:
-       + Period = 500 - 1
-       + Prescaler = ((SystemCoreClock/2)/10000) - 1
-       + ClockDivision = 0
-       + Counter direction = Up
-  */
-  TimHandle.Init.Period = 500 - 1;
-  TimHandle.Init.Prescaler = uwPrescalerValue;
-  TimHandle.Init.ClockDivision = 0;
-  TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
-  TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
-  if(HAL_TIM_Base_Init(&TimHandle) != HAL_OK)
-  {
-    while(1) 
-    {
-    }
-  }
-  
-  /*##-2- Start the TIM Base generation in interrupt mode ####################*/
-  /* Start Channel1 */
-  if(HAL_TIM_Base_Start_IT(&TimHandle) != HAL_OK)
-  {
-    while(1) 
-    {
-    }
-  }
+	/*HW semaphore Clock enable*/
+	__HAL_RCC_HSEM_CLK_ENABLE();
 
-  /***********************************************************/
-  
-  /* Init the STemWin GUI Library */
-  BSP_SDRAM_Init(); /* Initializes the SDRAM device */
-  __HAL_RCC_CRC_CLK_ENABLE(); /* Enable the CRC Module */
-  
-  GUI_Init();
+	/*Take HSEM */
+	HAL_HSEM_FastTake(HSEM_ID_0);   
+	/*Release HSEM in order to notify the CPU2(CM4)*/     
+	HAL_HSEM_Release(HSEM_ID_0,0);
 
-  /* Enable Window Manager Multibuffering */
-  WM_MULTIBUF_Enable(1);
-    
-  MainTask();
+	/* wait until CPU2 wakes up from stop mode */
+	timeout = 0xFFFF;
+	while((__HAL_RCC_GET_FLAG(RCC_FLAG_D2CKRDY) == RESET) && (timeout-- > 0))
+		;
+	if ( timeout < 0 )
+	{
+		Error_Handler();
+	}
+
+	/* Initialize LCD and LEDs */
+	BSP_Config();
+
+	/***********************************************************/
   
-  /* Infinite loop */
-  for(;;);
+	/* Compute the prescaler value to have TIM3 counter clock equal to 10 KHz */
+	uwPrescalerValue = (uint32_t) ((SystemCoreClock /2) / 10000) - 1;
+
+	/* Set TIMx instance */
+	TimHandle.Instance = TIM3;
+
+	/* Initialize TIM3 peripheral as follows:
+	+ Period = 500 - 1
+	+ Prescaler = ((SystemCoreClock/2)/10000) - 1
+	+ ClockDivision = 0
+	+ Counter direction = Up
+	*/
+	TimHandle.Init.Period = 500 - 1;
+	TimHandle.Init.Prescaler = uwPrescalerValue;
+	TimHandle.Init.ClockDivision = 0;
+	TimHandle.Init.CounterMode = TIM_COUNTERMODE_UP;
+	TimHandle.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
+	if(HAL_TIM_Base_Init(&TimHandle) != HAL_OK)
+	{
+		while(1) 
+		{ }
+	}
+  
+	/*##-2- Start the TIM Base generation in interrupt mode ####################*/
+	/* Start Channel1 */
+	if(HAL_TIM_Base_Start_IT(&TimHandle) != HAL_OK)
+	{
+		while(1) 
+		{ }
+	}
+
+	/***********************************************************/
+  
+	/* Init the STemWin GUI Library */
+	BSP_SDRAM_Init(); /* Initializes the SDRAM device */
+	__HAL_RCC_CRC_CLK_ENABLE(); /* Enable the CRC Module */
+
+	GUI_Init();
+
+	/* Enable Window Manager Multibuffering */
+	WM_MULTIBUF_Enable(1);
+    
+	MainTask();
+  
+	/* Infinite loop */
+	for(;;)
+	{ }
 }
 
 /**
@@ -158,7 +159,7 @@ int main(void)
   */
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-  BSP_Background();
+	BSP_Background();
 }
 
 /**
@@ -171,16 +172,16 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   */
 void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
 {
-  /*##-1- Enable peripherals and GPIO Clocks #################################*/
-  /* TIMx Peripheral clock enable */
-  __HAL_RCC_TIM3_CLK_ENABLE();
+	/*##-1- Enable peripherals and GPIO Clocks #################################*/
+	/* TIMx Peripheral clock enable */
+	__HAL_RCC_TIM3_CLK_ENABLE();
 
-  /*##-2- Configure the NVIC for TIMx #########################################*/
-  /* Set the TIMx priority */
-  HAL_NVIC_SetPriority(TIM3_IRQn, 0, 1);
-  
-  /* Enable the TIMx global Interrupt */
-  HAL_NVIC_EnableIRQ(TIM3_IRQn);
+	/*##-2- Configure the NVIC for TIMx #########################################*/
+	/* Set the TIMx priority */
+	HAL_NVIC_SetPriority(TIM3_IRQn, 0, 1);
+
+	/* Enable the TIMx global Interrupt */
+	HAL_NVIC_EnableIRQ(TIM3_IRQn);
 }
 
 /**
@@ -190,8 +191,8 @@ void HAL_TIM_Base_MspInit(TIM_HandleTypeDef *htim)
   */
 static void BSP_Config(void)
 {
-  /* Initialize STM32H747I-EVAL's LEDs */
-  BSP_LED_Init(LED1);
+	/* Initialize STM32H747I-EVAL's LEDs */
+	BSP_LED_Init(LED1);
 }
 
 /**

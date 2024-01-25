@@ -87,21 +87,21 @@
 /* Audio codec driver structure initialization */  
 AUDIO_DrvTypeDef wm8994_drv = 
 {
-  wm8994_Init,
-  wm8994_DeInit,
-  wm8994_ReadID,
+	wm8994_Init,
+	wm8994_DeInit,
+	wm8994_ReadID,
 
-  wm8994_Play,
-  wm8994_Pause,
-  wm8994_Resume,
-  wm8994_Stop,  
+	wm8994_Play,
+	wm8994_Pause,
+	wm8994_Resume,
+	wm8994_Stop,  
 
-  wm8994_SetFrequency,
-  wm8994_SetVolume,
-  wm8994_SetMute,  
-  wm8994_SetOutputMode,
+	wm8994_SetFrequency,
+	wm8994_SetVolume,
+	wm8994_SetMute,  
+	wm8994_SetOutputMode,
 
-  wm8994_Reset
+	wm8994_Reset
 };
 
 static uint32_t outputEnabled = 0;

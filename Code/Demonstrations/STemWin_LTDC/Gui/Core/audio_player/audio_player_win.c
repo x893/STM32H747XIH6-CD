@@ -454,7 +454,7 @@ static void _PlayFile(char *filename)
 
           /* Total Time */
           duration = AUDIOPLAYER_GetDuration();
-          sprintf((char *)tmp , "%02lu:%02lu", duration/60, duration%60 );
+          sprintf((char *)tmp , "%02u:%02u", duration/60, duration%60 );
           hItem = WM_GetDialogItem(hWinAudioPlayer, ID_TOTAL_TIME);
           TEXT_SetText(hItem, tmp);
 
@@ -504,7 +504,7 @@ void  AUDIOPLAYER_NotifyEndOfFile(void)
   /* Get the total stream duration and elapsed duration */
   duration = AUDIOPLAYER_GetDuration();
 
-  sprintf((char *)duration_string , "%02lu:%02lu", duration/60, duration%60 );
+  sprintf((char *)duration_string , "%02u:%02u", duration/60, duration%60 );
   hItem = WM_GetDialogItem(hWinAudioPlayer, ID_ELAPSED_TIME);
   TEXT_SetText(hItem, duration_string);
 
@@ -724,7 +724,7 @@ static void _cbMainListDialog(WM_MESSAGE * pMsg)
             FILEMGR_GetFileOnly (tmp, (char *)WavList.file[ItemNbr].name);
             LISTVIEW_SetItemText(hItem, 0,ItemNbr, tmp);
 
-            sprintf((char *)tmp , "%02lu:%02lu", AudioInfo.Duration/60, AudioInfo.Duration%60 );
+            sprintf((char *)tmp , "%02u:%02u", AudioInfo.Duration/60, AudioInfo.Duration%60 );
             LISTVIEW_SetItemText(hItem, 1, ItemNbr, tmp);
             LISTVIEW_SetItemTextColor(hItem, 1, ItemNbr, LISTVIEW_CI_UNSEL, 0x0039A9DC); /* GUI_STCOLOR_DARKBLUE */
             LISTVIEW_SetItemTextColor(hItem, 0, ItemNbr, LISTVIEW_CI_UNSEL, 0x0039A9DC); /* GUI_STCOLOR_DARKBLUE */
@@ -1394,7 +1394,7 @@ static void _cbMainDialog(WM_MESSAGE * pMsg)
             hItem = WM_GetDialogItem(pMsg->hWin, ID_SLIDER_DURATION);
             NewTime = SLIDER_GetValue(hItem);
 
-            sprintf((char *)tmp , "%02lu:%02lu", NewTime/60, NewTime%60 );
+            sprintf((char *)tmp , "%02u:%02u", NewTime/60, NewTime%60 );
             hItem = WM_GetDialogItem(pMsg->hWin, ID_ELAPSED_TIME);
             TEXT_SetText(hItem, tmp);
           }

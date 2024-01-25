@@ -80,13 +80,14 @@
   */
 
 #if defined(USE_LCD_HDMI)
-#define HDMI_ASPECT_RATIO_16_9  ADV7533_ASPECT_RATIO_16_9
-#define HDMI_ASPECT_RATIO_4_3   ADV7533_ASPECT_RATIO_4_3
+	#define HDMI_ASPECT_RATIO_16_9  ADV7533_ASPECT_RATIO_16_9
+	#define HDMI_ASPECT_RATIO_4_3   ADV7533_ASPECT_RATIO_4_3
 #endif /* USE_LCD_HDMI */
+
 #define LCD_DSI_ID              0x11
 #define LCD_DSI_ID_REG          0xA8
-#define LCD_BL_Pin 							GPIO_PIN_8
-#define LCD_BL_GPIO_Port 				GPIOA
+#define LCD_BL_Pin 				GPIO_PIN_8
+#define LCD_BL_GPIO_Port 		GPIOA
 static DSI_VidCfgTypeDef hdsivideo_handle;
 /**
   * @}
@@ -147,9 +148,9 @@ typedef struct
 /** @defgroup STM32H747I_EVAL_LCD_Private_Macros Private Macros
   * @{
   */
-#define ABS(X)                 ((X) > 0 ? (X) : -(X))
-#define POLY_X(Z)              ((int32_t)((Points + (Z))->X))
-#define POLY_Y(Z)              ((int32_t)((Points + (Z))->Y))
+#define ABS(X)		((X) > 0 ? (X) : -(X))
+#define POLY_X(Z)	((int32_t)((Points + (Z))->X))
+#define POLY_Y(Z)	((int32_t)((Points + (Z))->Y))
 /**
   * @}
   */
@@ -289,25 +290,25 @@ uint8_t BSP_LCD_InitEx(LCD_OrientationTypeDef orientation)
   uint32_t                   HFP; /*!< Horizontal Front Porch time in units of lcdClk */
   uint32_t                   HACT; /*!< Horizontal Active time in units of lcdClk = imageSize X in pixels to display */
 
-  /* Toggle Hardware Reset of the DSI LCD using
-  * its XRES signal (active low) */
-  BSP_LCD_Reset();
+	/* Toggle Hardware Reset of the DSI LCD using
+	 * its XRES signal (active low) */
+	BSP_LCD_Reset();
 	
 	BSP_LCD_BackLighInit();
-	HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET);//turn on backlight
+	HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET); //turn on backlight
 
   /* Check the connected monitor */
   read_id = LCD_IO_GetID();
 
 #if defined(USE_LCD_HDMI)
-  if(read_id == ADV7533_ID)
-  {
-    return BSP_LCD_HDMIInitEx(HDMI_FORMAT_720_576);
-  }
-  else if(read_id != LCD_DSI_ID)
-  {
-    return LCD_ERROR;
-  }
+	if(read_id == ADV7533_ID)
+	{
+		return BSP_LCD_HDMIInitEx(HDMI_FORMAT_720_576);
+	}
+	else if(read_id != LCD_DSI_ID)
+	{
+		return LCD_ERROR;
+	}
 #else
   if(read_id != LCD_DSI_ID)
   {
@@ -339,7 +340,7 @@ uint8_t BSP_LCD_InitEx(LCD_OrientationTypeDef orientation)
   hdsi_eval.Init.NumberOfLanes = DSI_TWO_DATA_LANES;
 
   /* TXEscapeCkdiv = f(LaneByteClk)/15.62 = 4 */
-  hdsi_eval.Init.TXEscapeCkdiv = laneByteClk_kHz/15620;
+  hdsi_eval.Init.TXEscapeCkdiv = laneByteClk_kHz / 15620;
 
   HAL_DSI_Init(&(hdsi_eval), &(dsiPllInit));
   /* Timing parameters for all Video modes
@@ -689,28 +690,28 @@ uint8_t BSP_LCD_HDMIInitEx(uint8_t format)
   */
 void BSP_LCD_Reset(void)
 {
-  GPIO_InitTypeDef  gpio_init_structure;
+	GPIO_InitTypeDef  gpio_init_structure;
 
-  __HAL_RCC_GPIOF_CLK_ENABLE();
+	__HAL_RCC_GPIOF_CLK_ENABLE();
 
-    /* Configure the GPIO on PF10 */
-    gpio_init_structure.Pin   = GPIO_PIN_10;
-    gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_PP;
-    gpio_init_structure.Pull  = GPIO_PULLUP;
-    gpio_init_structure.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+	/* Configure the GPIO on PF10 */
+	gpio_init_structure.Pin   = GPIO_PIN_10;
+	gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_OD;
+	gpio_init_structure.Pull  = GPIO_NOPULL;
+	gpio_init_structure.Speed = GPIO_SPEED_FREQ_LOW;
 
-    HAL_GPIO_Init(GPIOF, &gpio_init_structure);
+	HAL_GPIO_Init(GPIOF, &gpio_init_structure);
 
-    /* Activate XRES active low */
-    HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, GPIO_PIN_RESET);
+	/* Activate XRES active low */
+	HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, GPIO_PIN_RESET);
 
-    HAL_Delay(20); /* wait 20 ms */
+    HAL_Delay(2); /* wait 2 ms */
 
     /* Desactivate XRES */
     HAL_GPIO_WritePin(GPIOF, GPIO_PIN_10, GPIO_PIN_SET);
 
-    /* Wait for 10ms after releasing XRES before sending commands */
-    HAL_Delay(10);
+    /* Wait for 150ms after releasing XRES before sending commands */
+    HAL_Delay(150);
 }
 
 /**
@@ -1553,22 +1554,19 @@ void BSP_LCD_FillEllipse(int Xpos, int Ypos, int XRadius, int YRadius)
 void BSP_LCD_DisplayOn(void)
 {
 #if defined(USE_LCD_HDMI)
-  if(ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR))
-  {
-    return ; /* Not supported for HDMI display */
-  }
-  else
+	if ( ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR) )
+		return ; /* Not supported for HDMI display */
+	else
 #endif /* USE_LCD_HDMI */
-  {
-
-    /* Send Display on DCS command to display */
-    HAL_DSI_ShortWrite(&(hdsi_eval),
-                       hdsivideo_handle.VirtualChannelID,
-                       DSI_DCS_SHORT_PKT_WRITE_P1,
-                       OTM8009A_CMD_DISPON,
-                       0x00);
-  }
-
+	{
+		/* Send Display on DCS command to display */
+		HAL_DSI_ShortWrite( &hdsi_eval,
+							hdsivideo_handle.VirtualChannelID,
+							DSI_DCS_SHORT_PKT_WRITE_P1,
+							OTM8009A_CMD_DISPON,
+							0x00
+		);
+	}
 }
 
 /**
@@ -1578,21 +1576,19 @@ void BSP_LCD_DisplayOn(void)
 void BSP_LCD_DisplayOff(void)
 {
 #if defined(USE_LCD_HDMI)
-  if(ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR))
-  {
-    return ; /* Not supported for HDMI yet */
-  }
-  else
+	if (ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR) )
+		return ; /* Not supported for HDMI yet */
+	else
 #endif /* USE_LCD_HDMI */
-  {
-    /* Send Display off DCS Command to display */
-    HAL_DSI_ShortWrite(&(hdsi_eval),
-                       hdsivideo_handle.VirtualChannelID,
-                       DSI_DCS_SHORT_PKT_WRITE_P1,
-                       OTM8009A_CMD_DISPOFF,
-                       0x00);
-  }
-
+	{
+		/* Send Display off DCS Command to display */
+		HAL_DSI_ShortWrite( &hdsi_eval,
+							hdsivideo_handle.VirtualChannelID,
+							DSI_DCS_SHORT_PKT_WRITE_P1,
+							OTM8009A_CMD_DISPOFF,
+							0x00
+		);
+	}
 }
 
 /**
@@ -1602,20 +1598,19 @@ void BSP_LCD_DisplayOff(void)
 void BSP_LCD_SetBrightness(uint8_t BrightnessValue)
 {
 #if defined(USE_LCD_HDMI)
-  if(ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR))
-  {
-    return ;  /* Not supported for HDMI display */
-  }
-  else
+	if(ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR))
+		return ;  /* Not supported for HDMI display */
+	else
 #endif /* USE_LCD_HDMI */
-  {
-    /* Send Display on DCS command to display */
-    HAL_DSI_ShortWrite(&hdsi_eval,
-                       LCD_OTM8009A_ID,
-                       DSI_DCS_SHORT_PKT_WRITE_P1,
-                       OTM8009A_CMD_WRDISBV, (uint16_t)(BrightnessValue * 255)/100);
-  }
-
+	{
+		/* Send Display on DCS command to display */
+		HAL_DSI_ShortWrite( &hdsi_eval,
+							LCD_OTM8009A_ID,
+							DSI_DCS_SHORT_PKT_WRITE_P1,
+							OTM8009A_CMD_WRDISBV,
+							(uint16_t)(BrightnessValue * 255)/100
+		);
+	}
 }
 
 /**
@@ -1627,14 +1622,14 @@ void BSP_LCD_SetBrightness(uint8_t BrightnessValue)
   */
 void DSI_IO_WriteCmd(uint32_t NbrParams, uint8_t *pParams)
 {
-  if(NbrParams <= 1)
-  {
-   HAL_DSI_ShortWrite(&hdsi_eval, LCD_OTM8009A_ID, DSI_DCS_SHORT_PKT_WRITE_P1, pParams[0], pParams[1]);
-  }
-  else
-  {
-   HAL_DSI_LongWrite(&hdsi_eval,  LCD_OTM8009A_ID, DSI_DCS_LONG_PKT_WRITE, NbrParams, pParams[NbrParams], pParams);
-  }
+	if(NbrParams <= 1)
+	{
+		HAL_DSI_ShortWrite( &hdsi_eval, LCD_OTM8009A_ID, DSI_DCS_SHORT_PKT_WRITE_P1, pParams[0], pParams[1] );
+	}
+	else
+	{
+		HAL_DSI_LongWrite( &hdsi_eval,  LCD_OTM8009A_ID, DSI_DCS_LONG_PKT_WRITE, NbrParams, pParams[NbrParams], pParams );
+	}
 }
 
 /**
@@ -1645,27 +1640,19 @@ void DSI_IO_WriteCmd(uint32_t NbrParams, uint8_t *pParams)
 static uint16_t LCD_IO_GetID(void)
 {
 #if defined(USE_LCD_HDMI)
-  HDMI_IO_Init();
+	HDMI_IO_Init();
+	HDMI_IO_Delay(120);
 
-  HDMI_IO_Delay(120);
-
-  if(ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR))
-  {
-    return ADV7533_ID;
-  }
-  else if(((HDMI_IO_Read(LCD_DSI_ADDRESS, LCD_DSI_ID_REG) == LCD_DSI_ID)) || \
-           (HDMI_IO_Read(LCD_DSI_ADDRESS_A02, LCD_DSI_ID_REG) == LCD_DSI_ID))
-  {
-    return LCD_DSI_ID;
-  }
-  else
-  {
-    return 0;
-  }
+	if(ADV7533_ID == adv7533_drv.ReadID(ADV7533_CEC_DSI_I2C_ADDR))
+		return ADV7533_ID;
+	else if(((HDMI_IO_Read(LCD_DSI_ADDRESS, LCD_DSI_ID_REG) == LCD_DSI_ID)) ||
+			(HDMI_IO_Read(LCD_DSI_ADDRESS_A02, LCD_DSI_ID_REG) == LCD_DSI_ID))
+		return LCD_DSI_ID;
+	else
+		return 0;
 #else
-  return LCD_DSI_ID;
+	return LCD_DSI_ID;
 #endif /* USE_LCD_HDMI */
-
 }
 
 /*******************************************************************************
@@ -1677,24 +1664,24 @@ static uint16_t LCD_IO_GetID(void)
   */
 __weak void BSP_LCD_MspDeInit(void)
 {
-  /** @brief Disable IRQ of LTDC IP */
-  HAL_NVIC_DisableIRQ(LTDC_IRQn);
+	/** @brief Disable IRQ of LTDC IP */
+	HAL_NVIC_DisableIRQ(LTDC_IRQn);
 
-  /** @brief Disable IRQ of DMA2D IP */
-  HAL_NVIC_DisableIRQ(DMA2D_IRQn);
+	/** @brief Disable IRQ of DMA2D IP */
+	HAL_NVIC_DisableIRQ(DMA2D_IRQn);
 
-  /** @brief Disable IRQ of DSI IP */
-  HAL_NVIC_DisableIRQ(DSI_IRQn);
+	/** @brief Disable IRQ of DSI IP */
+	HAL_NVIC_DisableIRQ(DSI_IRQn);
 
-  /** @brief Force and let in reset state LTDC, DMA2D and DSI Host + Wrapper IPs */
-  __HAL_RCC_LTDC_FORCE_RESET();
-  __HAL_RCC_DMA2D_FORCE_RESET();
-  __HAL_RCC_DSI_FORCE_RESET();
+	/** @brief Force and let in reset state LTDC, DMA2D and DSI Host + Wrapper IPs */
+	__HAL_RCC_LTDC_FORCE_RESET();
+	__HAL_RCC_DMA2D_FORCE_RESET();
+	__HAL_RCC_DSI_FORCE_RESET();
 
-  /** @brief Disable the LTDC, DMA2D and DSI Host and Wrapper clocks */
-  __HAL_RCC_LTDC_CLK_DISABLE();
-  __HAL_RCC_DMA2D_CLK_DISABLE();
-  __HAL_RCC_DSI_CLK_DISABLE();
+	/** @brief Disable the LTDC, DMA2D and DSI Host and Wrapper clocks */
+	__HAL_RCC_LTDC_CLK_DISABLE();
+	__HAL_RCC_DMA2D_CLK_DISABLE();
+	__HAL_RCC_DSI_CLK_DISABLE();
 }
 
 /**
@@ -1703,38 +1690,38 @@ __weak void BSP_LCD_MspDeInit(void)
   */
 __weak void BSP_LCD_MspInit(void)
 {
-  /** @brief Enable the LTDC clock */
-  __HAL_RCC_LTDC_CLK_ENABLE();
+	/** @brief Enable the LTDC clock */
+	__HAL_RCC_LTDC_CLK_ENABLE();
 
-  /** @brief Toggle Sw reset of LTDC IP */
-  __HAL_RCC_LTDC_FORCE_RESET();
-  __HAL_RCC_LTDC_RELEASE_RESET();
+	/** @brief Toggle Sw reset of LTDC IP */
+	__HAL_RCC_LTDC_FORCE_RESET();
+	__HAL_RCC_LTDC_RELEASE_RESET();
 
-  /** @brief Enable the DMA2D clock */
-  __HAL_RCC_DMA2D_CLK_ENABLE();
+	/** @brief Enable the DMA2D clock */
+	__HAL_RCC_DMA2D_CLK_ENABLE();
 
-  /** @brief Toggle Sw reset of DMA2D IP */
-  __HAL_RCC_DMA2D_FORCE_RESET();
-  __HAL_RCC_DMA2D_RELEASE_RESET();
+	/** @brief Toggle Sw reset of DMA2D IP */
+	__HAL_RCC_DMA2D_FORCE_RESET();
+	__HAL_RCC_DMA2D_RELEASE_RESET();
 
-  /** @brief Enable DSI Host and wrapper clocks */
-  __HAL_RCC_DSI_CLK_ENABLE();
+	/** @brief Enable DSI Host and wrapper clocks */
+	__HAL_RCC_DSI_CLK_ENABLE();
 
-  /** @brief Soft Reset the DSI Host and wrapper */
-  __HAL_RCC_DSI_FORCE_RESET();
-  __HAL_RCC_DSI_RELEASE_RESET();
+	/** @brief Soft Reset the DSI Host and wrapper */
+	__HAL_RCC_DSI_FORCE_RESET();
+	__HAL_RCC_DSI_RELEASE_RESET();
 
-  /** @brief NVIC configuration for LTDC interrupt that is now enabled */
-  HAL_NVIC_SetPriority(LTDC_IRQn, 0x0F, 0);
-  HAL_NVIC_EnableIRQ(LTDC_IRQn);
+	/** @brief NVIC configuration for LTDC interrupt that is now enabled */
+	HAL_NVIC_SetPriority(LTDC_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(LTDC_IRQn);
 
-  /** @brief NVIC configuration for DMA2D interrupt that is now enabled */
-  HAL_NVIC_SetPriority(DMA2D_IRQn, 0x0F, 0);
-  HAL_NVIC_EnableIRQ(DMA2D_IRQn);
+	/** @brief NVIC configuration for DMA2D interrupt that is now enabled */
+	HAL_NVIC_SetPriority(DMA2D_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(DMA2D_IRQn);
 
-  /** @brief NVIC configuration for DSI interrupt that is now enabled */
-  HAL_NVIC_SetPriority(DSI_IRQn, 0x0F, 0);
-  HAL_NVIC_EnableIRQ(DSI_IRQn);
+	/** @brief NVIC configuration for DSI interrupt that is now enabled */
+	HAL_NVIC_SetPriority(DSI_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(DSI_IRQn);
 }
 
 /**
@@ -1770,51 +1757,48 @@ void BSP_LCD_DrawPixel(uint16_t Xpos, uint16_t Ypos, uint32_t RGB_Code)
   */
 static void DrawChar(uint16_t Xpos, uint16_t Ypos, const uint8_t *c)
 {
-  uint32_t i = 0, j = 0;
-  uint16_t height, width;
-  uint8_t  offset;
-  uint8_t  *pchar;
-  uint32_t line;
+	uint32_t i = 0, j = 0;
+	uint16_t height, width;
+	uint8_t  offset;
+	uint8_t  *pchar;
+	uint32_t line;
 
-  height = DrawProp[ActiveLayer].pFont->Height;
-  width  = DrawProp[ActiveLayer].pFont->Width;
+	height = DrawProp[ActiveLayer].pFont->Height;
+	width  = DrawProp[ActiveLayer].pFont->Width;
 
-  offset =  8 *((width + 7)/8) -  width ;
+	offset =  8 *((width + 7)/8) -  width ;
 
-  for(i = 0; i < height; i++)
-  {
-    pchar = ((uint8_t *)c + (width + 7)/8 * i);
+	for(i = 0; i < height; i++)
+	{
+		pchar = ((uint8_t *)c + (width + 7)/8 * i);
 
-    switch(((width + 7)/8))
-    {
+		switch(((width + 7)/8))
+		{
+		case 1:
+			line =  pchar[0];
+			break;
+		case 2:
+			line =  (pchar[0]<< 8) | pchar[1];
+			break;
+		case 3:
+		default:
+			line =  (pchar[0]<< 16) | (pchar[1]<< 8) | pchar[2];
+			break;
+		}
 
-    case 1:
-      line =  pchar[0];
-      break;
-
-    case 2:
-      line =  (pchar[0]<< 8) | pchar[1];
-      break;
-
-    case 3:
-    default:
-      line =  (pchar[0]<< 16) | (pchar[1]<< 8) | pchar[2];
-      break;
-    }
-
-    for (j = 0; j < width; j++)
-    {
-      if(line & (1 << (width- j + offset- 1)))
-      {
-        BSP_LCD_DrawPixel((Xpos + j), Ypos, DrawProp[ActiveLayer].TextColor);
-      }
-      else
-      {
-        BSP_LCD_DrawPixel((Xpos + j), Ypos, DrawProp[ActiveLayer].BackColor);
-      }
-    }
-    Ypos++;
-  }
+		for (j = 0; j < width; j++)
+		{
+			if(line & (1 << (width- j + offset- 1)))
+			{
+				BSP_LCD_DrawPixel((Xpos + j), Ypos, DrawProp[ActiveLayer].TextColor);
+			}
+			else
+			{
+				BSP_LCD_DrawPixel((Xpos + j), Ypos, DrawProp[ActiveLayer].BackColor);
+			}
+		}
+		Ypos++;
+	}
 }
 
 /**
@@ -1905,25 +1889,25 @@ static void FillTriangle(uint16_t x1, uint16_t x2, uint16_t x3, uint16_t y1, uin
   */
 static void LL_FillBuffer(uint32_t LayerIndex, void *pDst, uint32_t xSize, uint32_t ySize, uint32_t OffLine, uint32_t ColorIndex)
 {
-  /* Register to memory mode with ARGB8888 as color Mode */
-  hdma2d_eval.Init.Mode         = DMA2D_R2M;
-  hdma2d_eval.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
-  hdma2d_eval.Init.OutputOffset = OffLine;
+	/* Register to memory mode with ARGB8888 as color Mode */
+	hdma2d_eval.Init.Mode         = DMA2D_R2M;
+	hdma2d_eval.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
+	hdma2d_eval.Init.OutputOffset = OffLine;
 
-  hdma2d_eval.Instance = DMA2D;
+	hdma2d_eval.Instance = DMA2D;
 
-  /* DMA2D Initialization */
-  if(HAL_DMA2D_Init(&hdma2d_eval) == HAL_OK)
-  {
-    if(HAL_DMA2D_ConfigLayer(&hdma2d_eval, 1) == HAL_OK)
-    {
-      if (HAL_DMA2D_Start(&hdma2d_eval, ColorIndex, (uint32_t)pDst, xSize, ySize) == HAL_OK)
-      {
-        /* Polling For DMA transfer */
-        HAL_DMA2D_PollForTransfer(&hdma2d_eval, 25);
-      }
-    }
-  }
+	/* DMA2D Initialization */
+	if(HAL_DMA2D_Init(&hdma2d_eval) == HAL_OK)
+	{
+		if(HAL_DMA2D_ConfigLayer(&hdma2d_eval, 1) == HAL_OK)
+		{
+			if (HAL_DMA2D_Start(&hdma2d_eval, ColorIndex, (uint32_t)pDst, xSize, ySize) == HAL_OK)
+			{
+				/* Polling For DMA transfer */
+				HAL_DMA2D_PollForTransfer(&hdma2d_eval, 25);
+			}
+		}
+	}
 }
 
 /**
@@ -1935,31 +1919,31 @@ static void LL_FillBuffer(uint32_t LayerIndex, void *pDst, uint32_t xSize, uint3
   */
 static void LL_ConvertLineToARGB8888(void *pSrc, void *pDst, uint32_t xSize, uint32_t ColorMode)
 {
-  /* Configure the DMA2D Mode, Color Mode and output offset */
-  hdma2d_eval.Init.Mode         = DMA2D_M2M_PFC;
-  hdma2d_eval.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
-  hdma2d_eval.Init.OutputOffset = 0;
+	/* Configure the DMA2D Mode, Color Mode and output offset */
+	hdma2d_eval.Init.Mode         = DMA2D_M2M_PFC;
+	hdma2d_eval.Init.ColorMode    = DMA2D_OUTPUT_ARGB8888;
+	hdma2d_eval.Init.OutputOffset = 0;
 
-  /* Foreground Configuration */
-  hdma2d_eval.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
-  hdma2d_eval.LayerCfg[1].InputAlpha = 0xFF;
-  hdma2d_eval.LayerCfg[1].InputColorMode = ColorMode;
-  hdma2d_eval.LayerCfg[1].InputOffset = 0;
+	/* Foreground Configuration */
+	hdma2d_eval.LayerCfg[1].AlphaMode = DMA2D_NO_MODIF_ALPHA;
+	hdma2d_eval.LayerCfg[1].InputAlpha = 0xFF;
+	hdma2d_eval.LayerCfg[1].InputColorMode = ColorMode;
+	hdma2d_eval.LayerCfg[1].InputOffset = 0;
 
-  hdma2d_eval.Instance = DMA2D;
+	hdma2d_eval.Instance = DMA2D;
 
-  /* DMA2D Initialization */
-  if(HAL_DMA2D_Init(&hdma2d_eval) == HAL_OK)
-  {
-    if(HAL_DMA2D_ConfigLayer(&hdma2d_eval, 1) == HAL_OK)
-    {
-      if (HAL_DMA2D_Start(&hdma2d_eval, (uint32_t)pSrc, (uint32_t)pDst, xSize, 1) == HAL_OK)
-      {
-        /* Polling For DMA transfer */
-        HAL_DMA2D_PollForTransfer(&hdma2d_eval, 25);
-      }
-    }
-  }
+	/* DMA2D Initialization */
+	if(HAL_DMA2D_Init(&hdma2d_eval) == HAL_OK)
+	{
+		if(HAL_DMA2D_ConfigLayer(&hdma2d_eval, 1) == HAL_OK)
+		{
+			if (HAL_DMA2D_Start(&hdma2d_eval, (uint32_t)pSrc, (uint32_t)pDst, xSize, 1) == HAL_OK)
+			{
+				/* Polling For DMA transfer */
+				HAL_DMA2D_PollForTransfer(&hdma2d_eval, 25);
+			}
+		}
+	}
 }
 
 /**

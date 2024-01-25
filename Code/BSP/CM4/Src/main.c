@@ -44,6 +44,8 @@
   */
 int main(void)
 {
+	GPIOA->BSRR = (1 << 1);
+	
  /*HW semaphore Clock enable*/
   __HAL_RCC_HSEM_CLK_ENABLE();
  

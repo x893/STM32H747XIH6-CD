@@ -205,7 +205,7 @@ void HAL_DSI_TearingEffectCallback(DSI_HandleTypeDef *hdsi)
   HAL_DSI_ShortWrite(hdsi, 0, DSI_DCS_SHORT_PKT_WRITE_P1, OTM8009A_CMD_TEOFF, 0x00);
   
   /* Refresh the right part of the display */
-  HAL_DSI_Refresh(hdsi);   
+  HAL_DSI_Refresh(hdsi);
 }
 
 /**
@@ -219,7 +219,7 @@ void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
   if(pending_buffer >= 0)
   {
     if(active_area == LEFT_AREA)
-    {     
+    {
       /* Disable DSI Wrapper */
       __HAL_DSI_WRAPPER_DISABLE(hdsi);
       /* Update LTDC configuaration */
@@ -246,9 +246,9 @@ void HAL_DSI_EndOfRefreshCallback(DSI_HandleTypeDef *hdsi)
       
       HAL_DSI_LongWrite(hdsi, 0, DSI_DCS_LONG_PKT_WRITE, 4, OTM8009A_CMD_CASET, pColLeft); 
       pending_buffer = -1;     
-    }
-  }
-  active_area = (active_area == LEFT_AREA)? RIGHT_AREA : LEFT_AREA; 
+    	}
+	}
+	active_area = (active_area == LEFT_AREA) ? RIGHT_AREA : LEFT_AREA;
 }
 
 /**
@@ -518,7 +518,7 @@ void LCD_LayertInit(uint16_t LayerIndex, uint32_t Address)
 
   /* Layer Init */
   Layercfg.WindowX0 = 0;
-  Layercfg.WindowX1 = BSP_LCD_GetXSize()/2;
+  Layercfg.WindowX1 = BSP_LCD_GetXSize() / 2;
   Layercfg.WindowY0 = 0;
   Layercfg.WindowY1 = BSP_LCD_GetYSize(); 
   Layercfg.PixelFormat = LTDC_PIXEL_FORMAT_ARGB8888;
@@ -530,7 +530,7 @@ void LCD_LayertInit(uint16_t LayerIndex, uint32_t Address)
   Layercfg.Backcolor.Red = 0;
   Layercfg.BlendingFactor1 = LTDC_BLENDING_FACTOR1_PAxCA;
   Layercfg.BlendingFactor2 = LTDC_BLENDING_FACTOR2_PAxCA;
-  Layercfg.ImageWidth = BSP_LCD_GetXSize()/2;
+  Layercfg.ImageWidth = BSP_LCD_GetXSize() / 2;
   Layercfg.ImageHeight = BSP_LCD_GetYSize();
   
   HAL_LTDC_ConfigLayer(&hltdc_eval, &Layercfg, LayerIndex);  

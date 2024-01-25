@@ -97,8 +97,8 @@
 /* Private variables ---------------------------------------------------------*/
 /* Peripherals handlers declaration */
 /* ADC handler declaration */
-ADC_HandleTypeDef    AdcHandle_master;
-ADC_HandleTypeDef    AdcHandle_slave;
+ADC_HandleTypeDef    Adc1_Handle;
+ADC_HandleTypeDef    Adc2_Handle;
 /* TIM handler declaration */
 TIM_HandleTypeDef    TimHandle;
 
@@ -141,6 +141,7 @@ static void CPU_CACHE_Enable(void);
 #if defined(ADC_TRIGGER_FROM_TIMER)
 static void TIM_Config(void);
 #endif /* ADC_TRIGGER_FROM_TIMER */
+
 #if defined(WAVEFORM_VOLTAGE_GENERATION_FOR_TEST)
 static void WaveformVoltageGenerationForTest(void);
 #endif /* WAVEFORM_VOLTAGE_GENERATION_FOR_TEST */
@@ -219,7 +220,7 @@ int main(void)
 	/*## Start ADC conversions #################################################*/
 
 	/* Start ADCx and ADCy multimode conversion on regular group with transfer by DMA */
-	if (HAL_ADCEx_MultiModeStart_DMA(&AdcHandle_master,
+	if (HAL_ADCEx_MultiModeStart_DMA(&Adc1_Handle,
 									(uint32_t *)aADCDualConvertedValues,
 									ADCCONVERTEDVALUES_BUFFER_SIZE
 									) != HAL_OK)
@@ -366,127 +367,123 @@ static void SystemClock_Config(void)
   */
 static void ADC_Config(void)
 {
-  ADC_ChannelConfTypeDef   sConfig;
-  ADC_MultiModeTypeDef     MultiModeInit;
+	ADC_ChannelConfTypeDef   sConfig;
+	ADC_MultiModeTypeDef     MultiModeInit;
 
-  /* Configuration of ADC (master) init structure: ADC parameters and regular group */
-  AdcHandle_master.Instance = ADCx;
+	/* Configuration of ADC (master) init structure: ADC parameters and regular group */
+	Adc1_Handle.Instance = ADCx;
 
-  if (HAL_ADC_DeInit(&AdcHandle_master) != HAL_OK)
-  {
-    /* ADC initialization error */
-    Error_Handler();
-  }
+	if (HAL_ADC_DeInit(&Adc1_Handle) != HAL_OK)
+	{
+		/* ADC initialization error */
+		Error_Handler();
+	}
   
-  AdcHandle_slave.Instance = ADCy;
-  if (HAL_ADC_DeInit(&AdcHandle_slave) != HAL_OK)
-  {
-    /* ADC initialization error */
-    Error_Handler();
-  }
+	Adc2_Handle.Instance = ADCy;
+	if (HAL_ADC_DeInit(&Adc2_Handle) != HAL_OK)
+	{
+		/* ADC initialization error */
+		Error_Handler();
+	}
 
-  AdcHandle_master.Init.ClockPrescaler           = ADC_CLOCK_ASYNC_DIV2;            /* Asynchronous clock mode, input ADC clock divided by 2*/
-  AdcHandle_master.Init.Resolution               = ADC_RESOLUTION_16B;              /* 16-bit resolution for converted data */
-  AdcHandle_master.Init.ScanConvMode             = DISABLE;                         /* Sequencer disabled (ADC conversion on only 1 channel: channel set on rank 1) */
-  AdcHandle_master.Init.EOCSelection             = ADC_EOC_SINGLE_CONV;             /* EOC flag picked-up to indicate conversion end */
-  AdcHandle_master.Init.LowPowerAutoWait         = DISABLE;                         /* Auto-delayed conversion feature disabled */
+	Adc1_Handle.Init.ClockPrescaler	= ADC_CLOCK_ASYNC_DIV2;            /* Asynchronous clock mode, input ADC clock divided by 2*/
+	Adc1_Handle.Init.Resolution		= ADC_RESOLUTION_16B;              /* 16-bit resolution for converted data */
+	Adc1_Handle.Init.ScanConvMode		= DISABLE;                         /* Sequencer disabled (ADC conversion on only 1 channel: channel set on rank 1) */
+	Adc1_Handle.Init.EOCSelection		= ADC_EOC_SINGLE_CONV;             /* EOC flag picked-up to indicate conversion end */
+	Adc1_Handle.Init.LowPowerAutoWait	= DISABLE;                         /* Auto-delayed conversion feature disabled */
 #if defined(ADC_TRIGGER_FROM_TIMER)
-  AdcHandle_master.Init.ContinuousConvMode       = DISABLE;                         /* Continuous mode disabled to have only 1 conversion at each conversion trig */
+	Adc1_Handle.Init.ContinuousConvMode		= DISABLE;                         /* Continuous mode disabled to have only 1 conversion at each conversion trig */
 #else
-  AdcHandle_master.Init.ContinuousConvMode       = ENABLE;                          /* Continuous mode to have maximum conversion speed (no delay between conversions) */
+	Adc1_Handle.Init.ContinuousConvMode		= ENABLE;                          /* Continuous mode to have maximum conversion speed (no delay between conversions) */
 #endif
-  AdcHandle_master.Init.NbrOfConversion          = 1;                               /* Parameter discarded because sequencer is disabled */
-  AdcHandle_master.Init.DiscontinuousConvMode    = DISABLE;                         /* Parameter discarded because sequencer is disabled */
-  AdcHandle_master.Init.NbrOfDiscConversion      = 1;                               /* Parameter discarded because sequencer is disabled */
+	Adc1_Handle.Init.NbrOfConversion			= 1;                               /* Parameter discarded because sequencer is disabled */
+	Adc1_Handle.Init.DiscontinuousConvMode		= DISABLE;                         /* Parameter discarded because sequencer is disabled */
+	Adc1_Handle.Init.NbrOfDiscConversion		= 1;                               /* Parameter discarded because sequencer is disabled */
 #if defined(ADC_TRIGGER_FROM_TIMER)
-  AdcHandle_master.Init.ExternalTrigConv         = ADC_EXTERNALTRIG_T3_TRGO;        /* Timer 3 external event triggering the conversion */
-  AdcHandle_master.Init.ExternalTrigConvEdge     = ADC_EXTERNALTRIGCONVEDGE_RISING;
+	Adc1_Handle.Init.ExternalTrigConv			= ADC_EXTERNALTRIG_T3_TRGO;        /* Timer 3 external event triggering the conversion */
+	Adc1_Handle.Init.ExternalTrigConvEdge		= ADC_EXTERNALTRIGCONVEDGE_RISING;
 #else
-  AdcHandle_master.Init.ExternalTrigConv         = ADC_SOFTWARE_START;              /* Software start to trigger the 1st conversion manually, without external event */
-  AdcHandle_master.Init.ExternalTrigConvEdge     = ADC_EXTERNALTRIGCONVEDGE_NONE;   /* Parameter discarded because trigger of conversion by software start (no external event) */
+	Adc1_Handle.Init.ExternalTrigConv			= ADC_SOFTWARE_START;              /* Software start to trigger the 1st conversion manually, without external event */
+	Adc1_Handle.Init.ExternalTrigConvEdge		= ADC_EXTERNALTRIGCONVEDGE_NONE;   /* Parameter discarded because trigger of conversion by software start (no external event) */
 #endif
-  AdcHandle_master.Init.ConversionDataManagement = ADC_CONVERSIONDATA_DMA_CIRCULAR; /* DMA circular mode selected */
-  AdcHandle_master.Init.Overrun                  = ADC_OVR_DATA_OVERWRITTEN;        /* DR register is overwritten with the last conversion result in case of overrun */
-  AdcHandle_master.Init.OversamplingMode         = DISABLE;                         /* No oversampling */
+	Adc1_Handle.Init.ConversionDataManagement	= ADC_CONVERSIONDATA_DMA_CIRCULAR; /* DMA circular mode selected */
+	Adc1_Handle.Init.Overrun					= ADC_OVR_DATA_OVERWRITTEN;        /* DR register is overwritten with the last conversion result in case of overrun */
+	Adc1_Handle.Init.OversamplingMode			= DISABLE;                         /* No oversampling */
   
-  if (HAL_ADC_Init(&AdcHandle_master) != HAL_OK)
-  {
-    /* ADC initialization error */
-    Error_Handler();
-  }
+	if (HAL_ADC_Init(&Adc1_Handle) != HAL_OK)
+	{
+		/* ADC initialization error */
+		Error_Handler();
+	}
 
-  /* Configuration of ADC (slave) init structure: ADC parameters and regular group */
-  AdcHandle_slave.Instance = ADCy;
+	/* Configuration of ADC (slave) init structure: ADC parameters and regular group */
+	Adc2_Handle.Instance = ADCy;
 
-  /* Same configuration as ADC master, with continuous mode and external      */
-  /* trigger disabled since ADC master is triggering the ADC slave            */
-  /* conversions                                                              */
-  AdcHandle_slave.Init = AdcHandle_master.Init;
-  AdcHandle_slave.Init.ContinuousConvMode    = DISABLE;
-  AdcHandle_slave.Init.ExternalTrigConv      = ADC_SOFTWARE_START;
+	/* Same configuration as ADC master, with continuous mode and external      */
+	/* trigger disabled since ADC master is triggering the ADC slave            */
+	/* conversions                                                              */
+	Adc2_Handle.Init = Adc1_Handle.Init;
+	Adc2_Handle.Init.ContinuousConvMode    = DISABLE;
+	Adc2_Handle.Init.ExternalTrigConv      = ADC_SOFTWARE_START;
 
-  if (HAL_ADC_Init(&AdcHandle_slave) != HAL_OK)
-  {
-    /* ADC initialization error */
-    Error_Handler();
-  }
-  
+	if (HAL_ADC_Init(&Adc2_Handle) != HAL_OK)
+	{
+		/* ADC initialization error */
+		Error_Handler();
+	}
 
-  /* Configuration of channel on ADC (master) regular group on sequencer rank 1 */
-  /* Note: Considering IT occurring after each number of                      */
-  /*       "ADCCONVERTEDVALUES_BUFFER_SIZE" ADC conversions (IT by DMA end    */
-  /*       of transfer), select sampling time and ADC clock with sufficient   */
-  /*       duration to not create an overhead situation in IRQHandler.        */
-  sConfig.Channel      = ADCx_CHANNELa;                /* Sampled channel number */
-  sConfig.Rank         = ADC_REGULAR_RANK_1;          /* Rank of sampled channel number ADCx_CHANNEL */
-  sConfig.SamplingTime = ADC_SAMPLETIME_2CYCLES_5;    /* Minimum sampling time */
-  sConfig.SingleDiff   = ADC_SINGLE_ENDED;            /* Single-ended input channel */
-  sConfig.OffsetNumber = ADC_OFFSET_NONE;             /* No offset subtraction */ 
-  sConfig.Offset = 0;                                 /* Parameter discarded because offset correction is disabled */
+	/* Configuration of channel on ADC (master) regular group on sequencer rank 1 */
+	/* Note: Considering IT occurring after each number of                      */
+	/*       "ADCCONVERTEDVALUES_BUFFER_SIZE" ADC conversions (IT by DMA end    */
+	/*       of transfer), select sampling time and ADC clock with sufficient   */
+	/*       duration to not create an overhead situation in IRQHandler.        */
+	sConfig.Channel			= ADCx_CHANNELa;               /* Sampled channel number */
+	sConfig.Rank			= ADC_REGULAR_RANK_1;          /* Rank of sampled channel number ADCx_CHANNEL */
+	sConfig.SamplingTime	= ADC_SAMPLETIME_2CYCLES_5;    /* Minimum sampling time */
+	sConfig.SingleDiff		= ADC_SINGLE_ENDED;            /* Single-ended input channel */
+	sConfig.OffsetNumber	= ADC_OFFSET_NONE;             /* No offset subtraction */ 
+	sConfig.Offset			= 0;                           /* Parameter discarded because offset correction is disabled */
+	if (HAL_ADC_ConfigChannel(&Adc1_Handle, &sConfig) != HAL_OK)
+	{
+		/* Channel Configuration Error */
+		Error_Handler();
+	}
 
-  if (HAL_ADC_ConfigChannel(&AdcHandle_master, &sConfig) != HAL_OK)
-  {
-    /* Channel Configuration Error */
-    Error_Handler();
-  }
+	/* Configuration of channel on ADC (slave) regular group on sequencer rank 1 */
+	/* Same channel as ADCx for dual mode interleaved: both ADC are converting  */
+	/* the same channel.                                                        */
+	sConfig.Channel = ADCx_CHANNELa;
+	if (HAL_ADC_ConfigChannel(&Adc2_Handle, &sConfig) != HAL_OK)
+	{
+		/* Channel Configuration Error */
+		Error_Handler();
+	}
 
-  /* Configuration of channel on ADC (slave) regular group on sequencer rank 1 */
-  /* Same channel as ADCx for dual mode interleaved: both ADC are converting  */
-  /* the same channel.                                                        */
-  sConfig.Channel = ADCx_CHANNELa;
-  
-  if (HAL_ADC_ConfigChannel(&AdcHandle_slave, &sConfig) != HAL_OK)
-  {
-    /* Channel Configuration Error */
-    Error_Handler();
-  }
-  
-  /* Run the ADC calibration in single-ended mode */
-  if (HAL_ADCEx_Calibration_Start(&AdcHandle_master, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED) != HAL_OK)
-  {
-    /* Calibration Error */
-    Error_Handler();
-  }
+	/* Run the ADC calibration in single-ended mode */
+	if (HAL_ADCEx_Calibration_Start(&Adc1_Handle, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED) != HAL_OK)
+	{
+		/* Calibration Error */
+		Error_Handler();
+	}
 
-  if (HAL_ADCEx_Calibration_Start(&AdcHandle_slave, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED) != HAL_OK)
-  {
-    /* Calibration Error */
-    Error_Handler();
-  }
+	if (HAL_ADCEx_Calibration_Start(&Adc2_Handle, ADC_CALIB_OFFSET_LINEARITY, ADC_SINGLE_ENDED) != HAL_OK)
+	{
+		/* Calibration Error */
+		Error_Handler();
+	}
 
-  /* Configuration of multimode */
-  /* Multimode parameters settings and set ADCy (slave) under control of      */
-  /* ADCx (master).                                                           */
-  MultiModeInit.Mode = ADC_DUALMODE_INTERL;
-  MultiModeInit.DualModeData = ADC_DUALMODEDATAFORMAT_32_10_BITS;  /* ADC and DMA configured in resolution 32 bits to match with both ADC master and slave resolution */
-  MultiModeInit.TwoSamplingDelay = ADC_TWOSAMPLINGDELAY_1CYCLE;
+	/* Configuration of multimode */
+	/* Multimode parameters settings and set ADCy (slave) under control of      */
+	/* ADCx (master).                                                           */
+	MultiModeInit.Mode = ADC_DUALMODE_INTERL;
+	MultiModeInit.DualModeData = ADC_DUALMODEDATAFORMAT_32_10_BITS;  /* ADC and DMA configured in resolution 32 bits to match with both ADC master and slave resolution */
+	MultiModeInit.TwoSamplingDelay = ADC_TWOSAMPLINGDELAY_1CYCLE;
 
-  if (HAL_ADCEx_MultiModeConfigChannel(&AdcHandle_master, &MultiModeInit) != HAL_OK)
-  {
-    /* Multimode Configuration Error */
-    Error_Handler();
-  }
-  
+	if (HAL_ADCEx_MultiModeConfigChannel(&Adc1_Handle, &MultiModeInit) != HAL_OK)
+	{
+		/* Multimode Configuration Error */
+		Error_Handler();
+	}
 }
 
 #if defined(ADC_TRIGGER_FROM_TIMER)
@@ -515,30 +512,27 @@ static void TIM_Config(void)
 
 	/* Retrieve timer clock source frequency */
 	HAL_RCC_GetClockConfig(&clk_init_struct, &latency);
+
 	/* If APB1 prescaler is different of 1, timers have a factor x2 on their    */
 	/* clock source.                                                            */
-	if (clk_init_struct.APB1CLKDivider == RCC_HCLK_DIV1)
-	{
-		timer_clock_frequency = HAL_RCC_GetPCLK1Freq();
-	}
-	else
-	{
-		timer_clock_frequency = HAL_RCC_GetPCLK1Freq() *2;
-	}
+	timer_clock_frequency =
+		(clk_init_struct.APB1CLKDivider == RCC_HCLK_DIV1)
+		? HAL_RCC_GetPCLK1Freq()
+		: HAL_RCC_GetPCLK1Freq() * 2;
 
 	/* Timer prescaler calculation */
 	/* (computation for timer 16 bits, additional + 1 to round the prescaler up) */
-	timer_prescaler = (timer_clock_frequency / (TIMER_PRESCALER_MAX_VALUE * TIMER_FREQUENCY_RANGE_MIN)) +1;
+	timer_prescaler = (timer_clock_frequency / (TIMER_PRESCALER_MAX_VALUE * TIMER_FREQUENCY_RANGE_MIN)) + 1;
 
 	/* Set timer instance */
 	TimHandle.Instance = TIMx;
 
 	/* Configure timer parameters */
-	TimHandle.Init.Period            = ((timer_clock_frequency / (timer_prescaler * TIMER_FREQUENCY)) - 1);
-	TimHandle.Init.Prescaler         = (timer_prescaler - 1);
-	TimHandle.Init.ClockDivision     = TIM_CLOCKDIVISION_DIV1;
-	TimHandle.Init.CounterMode       = TIM_COUNTERMODE_UP;
-	TimHandle.Init.RepetitionCounter = 0x0;
+	TimHandle.Init.Period				= ((timer_clock_frequency / (timer_prescaler * TIMER_FREQUENCY)) - 1);
+	TimHandle.Init.Prescaler			= (timer_prescaler - 1);
+	TimHandle.Init.ClockDivision		= TIM_CLOCKDIVISION_DIV1;
+	TimHandle.Init.CounterMode			= TIM_COUNTERMODE_UP;
+	TimHandle.Init.RepetitionCounter	= 0x0;
 
 	if (HAL_TIM_Base_Init(&TimHandle) != HAL_OK)
 	{

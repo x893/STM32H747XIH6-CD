@@ -99,16 +99,16 @@ static uint32_t WavProcess_HeaderInit(uint8_t* pHeader, WAVE_FormatTypeDef* pAud
 */
 static uint32_t WavProcess_ParseHeader(uint8_t* pHeader, WAVE_FormatTypeDef* pAudioFormatDataStruct)
 {
-  uint32_t Temp = 0x00;
-  uint32_t ExtraFormatBytes = 0;
-  uint32_t HeadTabIdx = 0;
+	uint32_t Temp = 0x00;
+	uint32_t ExtraFormatBytes = 0;
+	uint32_t HeadTabIdx = 0;
 
-  /* Read chunkID, must be 'RIFF' --------------------------------------------*/
-  Temp = ReadUnit(4, BIG_ENDIAN, pHeader, HeadTabIdx);
-  if (Temp != CHUNK_ID)
-  {
-    return(INVALID_RIFF_ID);
-  }
+	/* Read chunkID, must be 'RIFF' --------------------------------------------*/
+	Temp = ReadUnit(4, BIG_ENDIAN, pHeader, HeadTabIdx);
+	if (Temp != CHUNK_ID)
+	{
+		return(INVALID_RIFF_ID);
+	}
   HeadTabIdx += 4;
 
   /* Read the file length ----------------------------------------------------*/

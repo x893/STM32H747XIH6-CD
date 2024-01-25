@@ -101,7 +101,7 @@ int main(void)
      HSEM notification or by any D2 wakeup source (SEV,EXTI..)   */  
 	 
   /* Initialize used Leds */
-  BSP_LED_Init(LED3);
+  BSP_LED_Init(LED1);
 
    /* Initialize the LCD   */
   if(BSP_LCD_Init() != LCD_OK)
@@ -350,7 +350,7 @@ static void MPU_Config(void)
 static void Error_Handler(void)
 {
   
-  BSP_LED_On(LED3);
+  BSP_LED_On(LED1);
   while(1) { ; } /* Blocking on error */
 }
 

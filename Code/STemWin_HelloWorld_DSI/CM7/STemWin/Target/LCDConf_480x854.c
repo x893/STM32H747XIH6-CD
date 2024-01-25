@@ -20,6 +20,10 @@
 	#include "../Components/mipi_lcd_480x854/eugen_mipi_lcd_480x854.h"
 	#include "stm32h747i_eval_lcd_mipi_480x854.h"
 #endif
+#if defined(USE_480x800)
+	#include "../Components/mipi_lcd_480x800/eugen_mipi_lcd_480x800.h"
+	#include "stm32h747i_eval_lcd_mipi_480x800.h"
+#endif
 /** @addtogroup LCD CONFIGURATION
   * @{
   */
@@ -39,8 +43,9 @@
 /** @defgroup LCD CONFIGURATION_Private_Defines
   * @{
   */ 
-#define LCD_BL_Pin 							GPIO_PIN_8
-#define LCD_BL_GPIO_Port 				GPIOA
+#define LCD_BL_Pin			GPIO_PIN_8
+#define LCD_BL_GPIO_Port	GPIOA
+
 /* Define the possible screen orientations  */
 #define ROTATION_0   0
 #define ROTATION_CW  1
@@ -58,6 +63,19 @@
 #define CMS_AL88     8
 
 /* Define physical screen sizes */
+#if defined(USE_480x800)
+	#define XSIZE_PHYS 480
+	#define YSIZE_PHYS 800
+	#define ZONES  1
+	uint32_t                   VSA; /*!< Vertical start active time in units of lines */
+	uint32_t                   VBP; /*!< Vertical Back Porch time in units of lines */
+	uint32_t                   VFP; /*!< Vertical Front Porch time in units of lines */
+	uint32_t                   VACT; /*!< Vertical Active time in units of lines = imageSize Y in pixels to display */
+	uint32_t                   HSA; /*!< Horizontal start active time in units of lcdClk */
+	uint32_t                   HBP; /*!< Horizontal Back Porch time in units of lcdClk */
+	uint32_t                   HFP; /*!< Horizontal Front Porch time in units of lcdClk */
+	uint32_t                   HACT; /*!< Horizontal Active time in units of lcdClk = imageSize X in pixels to display */
+#endif
 #if defined(USE_480x854)
 	#define XSIZE_PHYS 480
 	#define YSIZE_PHYS 854
@@ -374,6 +392,21 @@ static LCD_LayerPropTypedef          layer_prop[GUI_NUM_LAYERS];
 	#endif  
 	};
 #endif
+#if defined(USE_480x800)
+	static DSI_VidCfgTypeDef hdsivideo_handle;
+	/* Screen needed definitions */
+	uint8_t pPage[]       = {0x00, 0x00, 0x03, 0x1F}; /*   0 -> 799 */
+	/* ZONES of the screen */
+	uint8_t pCols[ZONES][4] =
+	{
+	#if(ZONES == 2 )
+		{0x00, 0x00, 0x00, 0xEF}, /*   0 -> 239 */
+		{0x02, 0x00, 0x01, 0xDF}  
+	#elif (ZONES == 1 )
+		{0x00, 0x00, 0x01, 0xDF}, /*   0 -> 479 */
+	#endif  
+	};
+#endif
 #if defined(USE_1024x600)
 	static DSI_VidCfgTypeDef hdsivideo_handle;
 	/* Screen needed definitions */
@@ -492,20 +525,18 @@ void DSI_IRQHandler(void);
 
 void BSP_LCD_BackLighInit(void)
 {
-  GPIO_InitTypeDef GPIO_InitStruct;
-
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
-
-  /*Configure GPIO pin Output Level */
+/*
+  GPIO_InitTypeDef GPIO_InitStruct;
   HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pin : PtPin */
   GPIO_InitStruct.Pin = LCD_BL_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(LCD_BL_GPIO_Port, &GPIO_InitStruct);
+*/
 }
 
 /**
@@ -576,7 +607,7 @@ void DSI_IO_WriteCmd(uint32_t NbrParams, uint8_t *pParams)
     HAL_DSI_LongWrite(&hdsi,  0, DSI_DCS_LONG_PKT_WRITE, NbrParams, pParams[NbrParams], pParams); 
   } 
 }
-#if defined (USE_1280x720 ) | (USE_1024x600) | (USE_480x854)
+#if defined (USE_1280x720 ) | (USE_1024x600) | (USE_480x854) | (USE_480x800)
 void DSI_WriteCmd(uint8_t cmd, uint8_t data) 
 {
   HAL_DSI_ShortWrite(&hdsi, MIPI_LCD_ID, DSI_DCS_SHORT_PKT_WRITE_P1, cmd, data);
@@ -597,8 +628,8 @@ static void LCD_LL_Reset(void)
   
   /* Configure the GPIO on PF10 */
   gpio_init_structure.Pin   = GPIO_PIN_10;
-  gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_PP;
-  gpio_init_structure.Pull  = GPIO_PULLUP;
+  gpio_init_structure.Mode  = GPIO_MODE_OUTPUT_OD;
+  gpio_init_structure.Pull  = GPIO_NOPULL;
   gpio_init_structure.Speed = GPIO_SPEED_FREQ_HIGH;
   
   HAL_GPIO_Init(GPIOF, &gpio_init_structure);
@@ -663,7 +694,7 @@ static void LCD_LL_Init(void)
   uint32_t laneByteClk_kHz = 0;
 
 	BSP_LCD_BackLighInit();
-	HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET);//turn on backlight
+//	HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET);//turn on backlight
   /* Toggle Hardware Reset of the DSI LCD using
   * its XRES signal (active low) */
   LCD_LL_Reset();
@@ -814,6 +845,178 @@ static void LCD_LL_Init(void)
   *  depending on configuration set in 'hdsivideo_handle'.
   */
   Eugen_MIPI_480x854_Init(MIPI_LCD_FORMAT_RGB565, MIPI_LCD_ORIENTATION_PORTRAIT);
+
+/***********************End MIPI_LCD Initialization****************************/
+}
+#endif
+
+#if defined (USE_480x800)
+/**
+* @brief  Initialize the LCD Controller.
+* @param  None
+* @retval None
+*/
+static void LCD_LL_Init(void) 
+{
+  DSI_PLLInitTypeDef dsiPllInit;
+  DSI_PHY_TimerTypeDef  PhyTimings;
+  static RCC_PeriphCLKInitTypeDef  PeriphClkInitStruct;
+  uint32_t LcdClock  = 26400; /*!< LcdClk = 26400 kHz //31250*/
+
+  uint32_t laneByteClk_kHz = 0;
+
+	BSP_LCD_BackLighInit();
+	HAL_GPIO_WritePin(LCD_BL_GPIO_Port, LCD_BL_Pin, GPIO_PIN_SET);//turn on backlight
+  /* Toggle Hardware Reset of the DSI LCD using
+  * its XRES signal (active low) */
+  LCD_LL_Reset();
+
+  /* Call first MSP Initialize only in case of first initialization
+  * This will set IP blocks LTDC, DSI and DMA2D
+  * - out of reset
+  * - clocked
+  * - NVIC IRQ related to IP blocks enabled
+  */
+  BSP_LCD_MspInit();
+
+/*************************DSI Initialization***********************************/
+
+  /* Base address of DSI Host/Wrapper registers to be set before calling De-Init */
+  hdsi.Instance = DSI;
+
+  HAL_DSI_DeInit(&(hdsi));
+
+  dsiPllInit.PLLNDIV  = 100;
+  dsiPllInit.PLLIDF   = DSI_PLL_IN_DIV5;
+  dsiPllInit.PLLODF  = DSI_PLL_OUT_DIV1;
+  laneByteClk_kHz = 62500; /* 500 MHz / 8 = 62.5 MHz = 62500 kHz */
+
+  /* Set number of Lanes */
+  hdsi.Init.NumberOfLanes = DSI_TWO_DATA_LANES;
+
+  /* TXEscapeCkdiv = f(LaneByteClk)/15.62 = 4 */
+  hdsi.Init.TXEscapeCkdiv = laneByteClk_kHz/15620;
+
+  HAL_DSI_Init(&(hdsi), &(dsiPllInit));
+  /* Timing parameters for all Video modes
+  * Set Timing parameters of LTDC depending on its chosen orientation
+  */
+
+  HACT = XSIZE_PHYS;
+  VACT = YSIZE_PHYS;
+
+  /* The following values are same for portrait and landscape orientations */
+  VSA  = MIPI_LCD_480X800_VSYNC;        /* 1 */
+  VBP  = MIPI_LCD_480X800_VBP;          /* 1 */
+  VFP  = MIPI_LCD_480X800_VFP;          /* 1 */
+  HSA  = MIPI_LCD_480X800_HSYNC;        /* 1 */
+  HBP  = MIPI_LCD_480X800_HBP;          /* 1 */
+  HFP  = MIPI_LCD_480X800_HFP;          /* 1 */
+
+  hdsivideo_handle.VirtualChannelID = MIPI_LCD_ID;
+  hdsivideo_handle.ColorCoding = LCD_DSI_PIXEL_DATA_FMT_RBG888;
+  hdsivideo_handle.VSPolarity = DSI_VSYNC_ACTIVE_HIGH;
+  hdsivideo_handle.HSPolarity = DSI_HSYNC_ACTIVE_HIGH;
+  hdsivideo_handle.DEPolarity = DSI_DATA_ENABLE_ACTIVE_HIGH;
+  hdsivideo_handle.Mode = DSI_VID_MODE_BURST; /* Mode Video burst ie : one LgP per line */
+  hdsivideo_handle.NullPacketSize = 0xFFF;
+  hdsivideo_handle.NumberOfChunks = 0;
+  hdsivideo_handle.PacketSize                = HACT; /* Value depending on display orientation choice portrait/landscape */
+  hdsivideo_handle.HorizontalSyncActive = (HSA * laneByteClk_kHz)/LcdClock;
+  hdsivideo_handle.HorizontalBackPorch = (HBP * laneByteClk_kHz)/LcdClock;
+  hdsivideo_handle.HorizontalLine = ((HACT + HSA + HBP + HFP) * laneByteClk_kHz)/LcdClock; /* Value depending on display orientation choice portrait/landscape */
+	hdsivideo_handle.VerticalSyncActive        = VSA;
+  hdsivideo_handle.VerticalBackPorch         = VBP;
+  hdsivideo_handle.VerticalFrontPorch        = VFP;
+  hdsivideo_handle.VerticalActive            = VACT; /* Value depending on display orientation choice portrait/landscape */
+
+  /* Enable or disable sending LP command while streaming is active in video mode */
+  hdsivideo_handle.LPCommandEnable = DSI_LP_COMMAND_ENABLE; /* Enable sending commands in mode LP (Low Power) */
+
+  /* Largest packet size possible to transmit in LP mode in VSA, VBP, VFP regions */
+  /* Only useful when sending LP packets is allowed while streaming is active in video mode */
+  hdsivideo_handle.LPLargestPacketSize = 16;
+
+  /* Largest packet size possible to transmit in LP mode in HFP region during VACT period */
+  /* Only useful when sending LP packets is allowed while streaming is active in video mode */
+  hdsivideo_handle.LPVACTLargestPacketSize = 0;
+
+
+  /* Specify for each region of the video frame, if the transmission of command in LP mode is allowed in this region */
+  /* while streaming is active in video mode                                                                         */
+  hdsivideo_handle.LPHorizontalFrontPorchEnable = DSI_LP_HFP_ENABLE;   /* Allow sending LP commands during HFP period */
+  hdsivideo_handle.LPHorizontalBackPorchEnable  = DSI_LP_HBP_ENABLE;   /* Allow sending LP commands during HBP period */
+  hdsivideo_handle.LPVerticalActiveEnable = DSI_LP_VACT_ENABLE;  /* Allow sending LP commands during VACT period */
+  hdsivideo_handle.LPVerticalFrontPorchEnable = DSI_LP_VFP_ENABLE;   /* Allow sending LP commands during VFP period */
+  hdsivideo_handle.LPVerticalBackPorchEnable = DSI_LP_VBP_ENABLE;   /* Allow sending LP commands during VBP period */
+  hdsivideo_handle.LPVerticalSyncActiveEnable = DSI_LP_VSYNC_ENABLE; /* Allow sending LP commands during VSync = VSA period */
+
+  /* Configure DSI Video mode timings with settings set above */
+  HAL_DSI_ConfigVideoMode(&(hdsi), &(hdsivideo_handle));
+
+  /* Configure DSI PHY HS2LP and LP2HS timings */
+  PhyTimings.ClockLaneHS2LPTime = 35;
+  PhyTimings.ClockLaneLP2HSTime = 35;
+  PhyTimings.DataLaneHS2LPTime = 35;
+  PhyTimings.DataLaneLP2HSTime = 35;
+  PhyTimings.DataLaneMaxReadTime = 0;
+  PhyTimings.StopWaitTime = 10;
+  HAL_DSI_ConfigPhyTimer(&hdsi, &PhyTimings);
+
+/*************************End DSI Initialization*******************************/
+
+
+/************************LTDC Initialization***********************************/
+
+  /* Timing Configuration */
+  hltdc.Init.HorizontalSync = (HSA - 1);
+  hltdc.Init.AccumulatedHBP = (HSA + HBP - 1);
+  hltdc.Init.AccumulatedActiveW = (XSIZE_PHYS + HSA + HBP - 1);
+  hltdc.Init.TotalWidth = (XSIZE_PHYS + HSA + HBP + HFP - 1);
+
+  /* Initialize the LCD pixel width and pixel height */
+  hltdc.LayerCfg->ImageWidth  = XSIZE_PHYS;
+  hltdc.LayerCfg->ImageHeight = YSIZE_PHYS;
+
+
+  /* LCD clock configuration */
+  /* PLL3_VCO Input = HSE_VALUE/PLL3M = 5 Mhz */
+  /* PLL3_VCO Output = PLL3_VCO Input * PLL3N = 480 Mhz */
+  /* PLLLCDCLK = PLL3_VCO Output/PLL3R = 480/18 = 26.666 Mhz */
+  /* LTDC clock frequency = PLLLCDCLK = 26.666 Mhz */
+  PeriphClkInitStruct.PeriphClockSelection = RCC_PERIPHCLK_LTDC;
+  PeriphClkInitStruct.PLL3.PLL3M = 5;
+  PeriphClkInitStruct.PLL3.PLL3N = 96;
+  PeriphClkInitStruct.PLL3.PLL3P = 2;
+  PeriphClkInitStruct.PLL3.PLL3Q = 10;
+  PeriphClkInitStruct.PLL3.PLL3R = 18;
+  HAL_RCCEx_PeriphCLKConfig(&PeriphClkInitStruct);
+
+  /* Background value */
+  hltdc.Init.Backcolor.Blue = 0;
+  hltdc.Init.Backcolor.Green = 0;
+  hltdc.Init.Backcolor.Red = 0;
+  hltdc.Init.PCPolarity = LTDC_PCPOLARITY_IPC;
+  hltdc.Instance = LTDC;
+
+  /* Get LTDC Configuration from DSI Configuration */
+  HAL_LTDC_StructInitFromVideoConfig(&(hltdc), &(hdsivideo_handle));
+
+  /* Initialize the LTDC */
+  HAL_LTDC_Init(&hltdc);
+  /* Enable the DSI host and wrapper : after LTDC */
+  /* To avoid any synchronization issue, the DSI shall be started after enabling the LTDC */
+  HAL_DSI_Start(&(hdsi));
+
+/************************End LTDC Initialization*******************************/
+
+
+/***********************MIPI_LCD Initialization********************************/
+
+  /* Initialize the MIPI_LCD LCD Display IC Driver
+  *  depending on configuration set in 'hdsivideo_handle'.
+  */
+  Eugen_MIPI_480x800_Init(MIPI_LCD_FORMAT_RGB565, MIPI_LCD_ORIENTATION_PORTRAIT);
 
 /***********************End MIPI_LCD Initialization****************************/
 }

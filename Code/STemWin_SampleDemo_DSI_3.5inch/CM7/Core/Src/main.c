@@ -74,11 +74,11 @@ int main(void)
   /* When system initialization is finished, Cortex-M7 could wakeup (when needed) the Cortex-M4  by means of 
      HSEM notification or by any D2 wakeup source (SEV,EXTI..)   */
   
-  /* Compute the prescaler value to have TIM3 counter clock equal to 10 KHz */
-  uwPrescalerValue = (uint32_t) ((SystemCoreClock /2) / 10000) - 1;
+	/* Compute the prescaler value to have TIM3 counter clock equal to 10 KHz */
+	uwPrescalerValue = (uint32_t) ((SystemCoreClock /2) / 10000) - 1;
   
-  /* Set TIMx instance */
-  TimHandle.Instance = TIM3;
+	/* Set TIMx instance */
+	TimHandle.Instance = TIM3;
    
   /* Initialize TIM3 peripheral as follows:
        + Period = 500 - 1
@@ -108,30 +108,31 @@ int main(void)
   
   /***********************************************************/
   
-  /* Init the STemWin GUI Library */
-  BSP_SDRAM_Init(); /* Initializes the SDRAM device */
-  __HAL_RCC_CRC_CLK_ENABLE(); /* Enable the CRC Module */
-  GUI_Init();
+	/* Init the STemWin GUI Library */
+	BSP_SDRAM_Init(); /* Initializes the SDRAM device */
+	__HAL_RCC_CRC_CLK_ENABLE(); /* Enable the CRC Module */
+	GUI_Init();
 
-  GUI_DispStringAt("Starting...", 0, 0);
+	GUI_DispStringAt("Starting...", 0, 0);
   
-  /* Initialize LCD and LEDs */
-  GUI_DispStringAt("Initializing lcd...", 0, 12);
+	/* Initialize LCD and LEDs */
+	GUI_DispStringAt("Initializing lcd...", 0, 12);
   
-  GUI_Initialized = 1;
+	GUI_Initialized = 1;
     
-  /* Initialize RTC and Backup */
-  GUI_DispStringAt("Initializing rtc and backup...", 0, 24);
-  RTC_Init();
+	/* Initialize RTC and Backup */
+	GUI_DispStringAt("Initializing rtc and backup...", 0, 24);
+	RTC_Init();
   
-  /* Activate the use of memory device feature */
-  WM_SetCreateFlags(WM_CF_MEMDEV);
+	/* Activate the use of memory device feature */
+	WM_SetCreateFlags(WM_CF_MEMDEV);
 	
-  /* Start Demo */
-  MainTask();
+	/* Start Demo */
+	MainTask();
 
-  /* Infinite loop */
-  for(;;);
+	/* Infinite loop */
+	for(;;)
+	;
 }
 
 void Touch_IO_Init(void)
@@ -190,13 +191,13 @@ static void BSP_Config(void)
 {
 	BSP_LED_Init(LED1);
 #ifdef USE_480x800
-  BSP_TS_Init(480, 800);
+	BSP_TS_Init(480, 800);
 #endif
 #ifdef USE_1024x600
-  BSP_TS_Init(1024, 600);
+	BSP_TS_Init(1024, 600);
 #endif
 #ifdef USE_1280x720
-  BSP_TS_Init(1280, 720);
+	BSP_TS_Init(1280, 720);
 #endif
 	Touch_IO_Init();	//must run after BSP_TS_Init
 }
@@ -208,11 +209,11 @@ static void BSP_Config(void)
   */ 
 void BSP_Background(void)
 { 
-  /* Capture input event and update cursor */
-  if(GUI_Initialized == 1)
-  {
-    BSP_Pointer_Update();
-  }   
+	/* Capture input event and update cursor */
+	if(GUI_Initialized == 1)
+	{
+		BSP_Pointer_Update();
+	}   
 	BSP_LED_Toggle(LED1);
 }
 

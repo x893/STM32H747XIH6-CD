@@ -1554,19 +1554,19 @@ HAL_StatusTypeDef HAL_DSI_ShortWrite(DSI_HandleTypeDef *hdsi,
                                      uint32_t Param1,
                                      uint32_t Param2)
 {
-  HAL_StatusTypeDef status;
-  /* Check the parameters */
-  assert_param(IS_DSI_SHORT_WRITE_PACKET_TYPE(Mode));
+	HAL_StatusTypeDef status;
+	/* Check the parameters */
+	assert_param(IS_DSI_SHORT_WRITE_PACKET_TYPE(Mode));
 
-  /* Process locked */
-  __HAL_LOCK(hdsi);
+	/* Process locked */
+	__HAL_LOCK(hdsi);
 
-   status = DSI_ShortWrite(hdsi, ChannelID, Mode, Param1, Param2);
+	status = DSI_ShortWrite(hdsi, ChannelID, Mode, Param1, Param2);
 
-  /* Process unlocked */
-  __HAL_UNLOCK(hdsi);
+	/* Process unlocked */
+	__HAL_UNLOCK(hdsi);
 
-  return status;
+	return status;
 }
 
 /**

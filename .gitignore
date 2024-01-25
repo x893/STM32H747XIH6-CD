@@ -15,3 +15,8 @@ JLinkLog.txt
 JLinkSettings.ini
 EventRecorderStub.scvd
 DebugConfig/
+*.o
+*.d
+*.crf
+*.__i
+*.dep

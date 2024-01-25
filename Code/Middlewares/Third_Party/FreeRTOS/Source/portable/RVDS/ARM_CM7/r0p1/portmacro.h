@@ -29,6 +29,8 @@
 #ifndef PORTMACRO_H
 #define PORTMACRO_H
 
+#include "FreeRTOS.h"
+
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -159,11 +161,20 @@ not necessary for to use this port.  They are defined so the common demo files
 #define portINLINE __inline
 
 #ifndef portFORCE_INLINE
-	#define portFORCE_INLINE __forceinline
+	#define portFORCE_INLINE	inline
+	//!!! __forceinline
 #endif
 
 /*-----------------------------------------------------------*/
 
+portFORCE_INLINE static void vPortSetBASEPRI( uint32_t ulBASEPRI )
+{
+	__asm volatile
+	(
+		"	msr basepri, %0	" :: "r" ( ulBASEPRI ) : "memory"
+	);
+}
+#if 0
 static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
 {
 	__asm
@@ -173,8 +184,22 @@ static portFORCE_INLINE void vPortSetBASEPRI( uint32_t ulBASEPRI )
 		msr basepri, ulBASEPRI
 	}
 }
+#endif
 /*-----------------------------------------------------------*/
 
+portFORCE_INLINE static void vPortRaiseBASEPRI( void )
+{
+	uint32_t ulNewBASEPRI;
+	__asm volatile
+	(
+		"	mov %0, %1												\n" \
+		"	msr basepri, %0											\n" \
+		"	isb														\n" \
+		"	dsb														\n" \
+		:"=r" (ulNewBASEPRI) : "i" ( configMAX_SYSCALL_INTERRUPT_PRIORITY ) : "memory"
+	);
+}
+#if 0
 static portFORCE_INLINE void vPortRaiseBASEPRI( void )
 {
 uint32_t ulNewBASEPRI = configMAX_SYSCALL_INTERRUPT_PRIORITY;
@@ -190,6 +215,8 @@ uint32_t ulNewBASEPRI = configMAX_SYSCALL_INTERRUPT_PRIORITY;
 		cpsie i
 	}
 }
+#endif
+
 /*-----------------------------------------------------------*/
 
 static portFORCE_INLINE void vPortClearBASEPRIFromISR( void )

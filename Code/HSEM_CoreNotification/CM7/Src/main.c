@@ -47,65 +47,61 @@ static void Error_Handler(void);
   */
 int main(void)
 {
-  uint32_t loop;
+	uint32_t loop;
 
-  /* System Init, System clock, voltage scaling and L1-Cache configuration are done by CPU1 (Cortex-M7) 
-     in the meantime Domain D2 is put in STOP mode(Cortex-M4 in deep-sleep)
-  */
+	/* System Init, System clock, voltage scaling and L1-Cache configuration are done by CPU1 (Cortex-M7) 
+	 in the meantime Domain D2 is put in STOP mode(Cortex-M4 in deep-sleep)
+	*/
 
-  /* Enable the CPU Cache */
-  CPU_CACHE_Enable();
-
-
-  /* STM32H7xx HAL library initialization:
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-  */
-  HAL_Init();
-
-  /* Configure the system clock to 400 MHz */
-  SystemClock_Config();  
-
-  /* When system initialization is finished, Cortex-M7 will release (wakeup) Cortex-M4  by means of 
-     HSEM notification. Cortex-M4 release could be also ensured by any Domain D2 wakeup source (SEV,EXTI..).
-  */
-
-  /*HW semaphore Clock enable*/
-  __HAL_RCC_HSEM_CLK_ENABLE();
-
-  /*Take HSEM */
-  HAL_HSEM_FastTake(HSEM_ID_0);   
-  /*Release HSEM in order to notify the CPU2(CM4)*/     
-  HAL_HSEM_Release(HSEM_ID_0,0);
+	/* Enable the CPU Cache */
+	CPU_CACHE_Enable();
 
 
-  /* Add Cortex-M7 user application code here */ 
-  /* Initialize LED 1 */
-  BSP_LED_Init(LED1);  
-  /* Infinite loop */
-  while (1)
-  {
-    /*Take HSEM */ 
-    HAL_HSEM_FastTake(HSEM_ID_0);    
+	/* STM32H7xx HAL library initialization:
+	- Systick timer is configured by default as source of time base, but user 
+		can eventually implement his proper time base source (a general purpose 
+		timer for example or other time source), keeping in mind that Time base 
+		duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
+		handled in milliseconds basis.
+	- Set NVIC Group Priority to 4
+	- Low Level Initialization
+	*/
+	HAL_Init();
 
-    for (loop = 0;loop < 10; loop ++)
-    {  
-      BSP_LED_Toggle(LED1);
+	/* Configure the system clock to 400 MHz */
+	SystemClock_Config();  
 
-      /* CM7 toggles LED 1 each 100 ms  for 10 times */
-      HAL_Delay(200);
+	/* When system initialization is finished, Cortex-M7 will release (wakeup) Cortex-M4  by means of 
+		HSEM notification. Cortex-M4 release could be also ensured by any Domain D2 wakeup source (SEV,EXTI..).
+	*/
 
-    }
-    /*Release HSEM in order to notify the CPU2(CM4)*/     
-    HAL_HSEM_Release(HSEM_ID_0,0);
+	/*HW semaphore Clock enable*/
+	__HAL_RCC_HSEM_CLK_ENABLE();
 
-  }    
+	/*Take HSEM */
+	HAL_HSEM_FastTake(HSEM_ID_0);   
+	/*Release HSEM in order to notify the CPU2(CM4)*/     
+	HAL_HSEM_Release(HSEM_ID_0,0);
 
+	/* Add Cortex-M7 user application code here */ 
+	/* Initialize LED 1 */
+	BSP_LED_Init(LED1);  
+	/* Infinite loop */
+	while (1)
+	{
+		/*Take HSEM */ 
+		HAL_HSEM_FastTake(HSEM_ID_0);    
+
+		for ( loop = 0; loop < 10; loop++ )
+		{  
+			BSP_LED_Toggle(LED1);
+
+			/* CM7 toggles LED 1 each 100 ms  for 10 times */
+			HAL_Delay(200);
+		}
+		/*Release HSEM in order to notify the CPU2(CM4)*/     
+		HAL_HSEM_Release(HSEM_ID_0,0);
+	}    
 }
 
 
