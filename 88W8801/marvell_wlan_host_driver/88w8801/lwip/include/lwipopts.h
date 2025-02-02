@@ -2,46 +2,46 @@
 #define _LWIP_LWIPOPTS_
 #include "88w8801/88w8801.h"
 
-// 分配内存时禁用临界区域保护
+// Disable critical section protection when allocating memory
 #define SYS_LIGHTWEIGHT_PROT 0
 
-// 无操作系统
+// No operating system
 #define NO_SYS 1
 
-// 对于 32 位 CPU，应采用 4 字节对齐
+// For 32-bit CPUs, 4-byte alignment should be used
 #define MEM_ALIGNMENT 4
 
-// 内存堆数组大小
+// Memory heap array size
 #define MEM_SIZE 0x4000
 
-// 启用 IPv4
+// Enable IPv4
 #define LWIP_IPV4 1
 
-// 启用 DHCP 客户端
+// Enable DHCP Client
 #define LWIP_DHCP 1
 
-// 启用 DNS
+// Enable DNS
 #define LWIP_DNS 1
 
-// 启用 TCP 选择性确认
+// Enable TCP Selective Acknowledgement
 #define LWIP_TCP_SACK_OUT 1
 
-// TCP 分段大小
+// TCP segment size
 #define TCP_MSS 1460
 
-// 启用主机名称设置
+// Enable Host Name Settings
 #define LWIP_NETIF_HOSTNAME 1
 
-// 禁用 Netconn
+// Disable Netconn
 #define LWIP_NETCONN 0
 
-// 禁用 Socket
+// Disabling Sockets
 #define LWIP_SOCKET 0
 
-// 禁用统计收集
+// Disable statistics collection
 #define LWIP_STATS 0
 
-// 启用 DHCP 服务器
+// Enable DHCP Server
 #define LWIP_DHCPD 1
 #if !defined LWIP_DHCPD || defined __DOXYGEN__
 #define LWIP_DHCPD 0
@@ -53,7 +53,7 @@
 #define LWIP_DHCPD 0
 #endif
 
-// 配置 NAT
+// Configuring NAT
 #if !defined LWIP_NAT || defined __DOXYGEN__
 #define LWIP_NAT 0
 #endif
@@ -62,6 +62,6 @@
 #define LWIP_NAT 0
 #endif
 
-// 添加相关超时
+// Adding relevant timeouts
 #define MEMP_NUM_SYS_TIMEOUT (LWIP_NUM_SYS_TIMEOUT_INTERNAL + LWIP_NAT)
 #endif

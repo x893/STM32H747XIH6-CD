@@ -20,3 +20,4 @@ DebugConfig/
 *.crf
 *.__i
 *.dep
+.vs/
