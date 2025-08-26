@@ -126,7 +126,7 @@
 #define QSPI_PAGE_SIZE             256
 
 /* QSPI Base Address */
-#define QSPI_BASE_ADDRESS          0x90000000
+#define QSPI_BASE_ADDRESS          0x90000000UL
 
 /**
   * @}
@@ -138,11 +138,11 @@
   */
 /* QSPI Info */
 typedef struct {
-  uint32_t FlashSize;          /*!< Size of the flash */
-  uint32_t EraseSectorSize;    /*!< Size of sectors for the erase operation */
-  uint32_t EraseSectorsNumber; /*!< Number of sectors for the erase operation */
-  uint32_t ProgPageSize;       /*!< Size of pages for the program operation */
-  uint32_t ProgPagesNumber;    /*!< Number of pages for the program operation */
+	uint32_t FlashSize;          /*!< Size of the flash */
+	uint32_t EraseSectorSize;    /*!< Size of sectors for the erase operation */
+	uint32_t EraseSectorsNumber; /*!< Number of sectors for the erase operation */
+	uint32_t ProgPageSize;       /*!< Size of pages for the program operation */
+	uint32_t ProgPagesNumber;    /*!< Number of pages for the program operation */
 } QSPI_Info;
 
 /**

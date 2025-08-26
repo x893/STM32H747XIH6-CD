@@ -72,57 +72,56 @@ void Blinky(void);
   */
 int main(void)
 {
-  unsigned int i;
+	unsigned int i;
 	/* Configure the MPU attributes as Write Through */
-  MPU_Config();
+	MPU_Config();
+
 	/* Enable the CPU Cache */
-  CPU_CACHE_Enable();
-  /* STM32H7xx HAL library initialization:
-       - Systick timer is configured by default as source of time base, but user 
-         can eventually implement his proper time base source (a general purpose 
-         timer for example or other time source), keeping in mind that Time base 
-         duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
-         handled in milliseconds basis.
-       - Set NVIC Group Priority to 4
-       - Low Level Initialization
-     */
-  HAL_Init();
+	CPU_CACHE_Enable();
 
-  /* Configure the system clock to 400 MHz */
-  SystemClock_Config();
+	/* STM32H7xx HAL library initialization:
+	- Systick timer is configured by default as source of time base, but user 
+	 can eventually implement his proper time base source (a general purpose 
+	 timer for example or other time source), keeping in mind that Time base 
+	 duration should be kept 1ms since PPP_TIMEOUT_VALUEs are defined and 
+	 handled in milliseconds basis.
+	- Set NVIC Group Priority to 4
+	- Low Level Initialization
+	*/
+	HAL_Init();
 
-  BSP_QSPI_Init(); 
-//  BSP_QSPI_EnableMemoryMappedMode();
+	/* Configure the system clock to 400 MHz */
+	SystemClock_Config();
 
-  /* -1- Initialize LEDs mounted on STM32H743I-EVAL board */
-  BSP_LED_Init(LED1);
-	
-	for(i = 0;i < 256;i++)
-	{
+	BSP_QSPI_Init(); 
+//	BSP_QSPI_EnableMemoryMappedMode();
+
+	/* -1- Initialize LEDs mounted on STM32H743I-EVAL board */
+	BSP_LED_Init(LED1);
+
+	for (i = 0; i < 256; i++)
 		aTxBuffer[i] = i;
-	}
 
 	BSP_QSPI_Erase_Block(0x00);
 	BSP_QSPI_Erase_Block(0x1000);
-	
-	BSP_QSPI_Write(aTxBuffer,0x400,256);
-	
-	BSP_QSPI_Read(aRxBuffer,0x400,256);
-	
-	for(i = 0;i < 256;i++)
+
+	BSP_QSPI_Write(aTxBuffer, 0x400, 256);
+	BSP_QSPI_Read(aRxBuffer, 0x400, 256);
+
+	for (i = 0; i < 256; i++)
 	{
-		if(aTxBuffer[i] != aRxBuffer[i])
+		if (aTxBuffer[i] != aRxBuffer[i])
 		{
 			while(1) { ; }
 //			BSP_LED_On(LED1);
 		}
 	}
 
-  /* Infinite loop */
-  while (1)
-  {
+	/* Infinite loop */
+	while (1)
+	{
 		Blinky();
-  }
+	}
 }
 
 //#if defined ( __ICCARM__ )
@@ -271,14 +270,14 @@ static void MPU_Config( void )
   MPU_InitStruct.Enable           = MPU_REGION_ENABLE;
   MPU_InitStruct.BaseAddress      = 0x90000000;
   MPU_InitStruct.Size             = MPU_REGION_SIZE_256MB;
-  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
-  MPU_InitStruct.IsBufferable     = MPU_ACCESS_NOT_BUFFERABLE;
-  MPU_InitStruct.IsCacheable      = MPU_ACCESS_NOT_CACHEABLE;
-  MPU_InitStruct.IsShareable      = MPU_ACCESS_NOT_SHAREABLE;
-  MPU_InitStruct.Number           = MPU_REGION_NUMBER2;
-  MPU_InitStruct.TypeExtField     = MPU_TEX_LEVEL0;
   MPU_InitStruct.SubRegionDisable = 0x00;
+  MPU_InitStruct.TypeExtField     = MPU_TEX_LEVEL0;
+  MPU_InitStruct.AccessPermission = MPU_REGION_FULL_ACCESS;
   MPU_InitStruct.DisableExec      = MPU_INSTRUCTION_ACCESS_ENABLE;
+  MPU_InitStruct.IsShareable      = MPU_ACCESS_NOT_SHAREABLE;
+  MPU_InitStruct.IsCacheable      = MPU_ACCESS_NOT_CACHEABLE;
+  MPU_InitStruct.IsBufferable     = MPU_ACCESS_NOT_BUFFERABLE;
+  MPU_InitStruct.Number           = MPU_REGION_NUMBER2;
 
   HAL_MPU_ConfigRegion(&MPU_InitStruct);
 

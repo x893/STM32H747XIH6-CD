@@ -1,6 +1,6 @@
 /**
   ******************************************************************************
-  * @file    MT25TL01G.h
+  * @file    MX25L512.h
   * @author  MCD Application Team
   * @version V1.0.0
   * @date    08-August-2016

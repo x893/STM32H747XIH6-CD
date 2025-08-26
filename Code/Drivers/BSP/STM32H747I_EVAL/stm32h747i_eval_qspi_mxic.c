@@ -118,26 +118,26 @@ static uint8_t QSPI_AutoPollingMemReady(QSPI_HandleTypeDef *hqspi, uint32_t Time
   */
 uint8_t BSP_QSPI_Init(void)
 {
-  QSPIHandle.Instance = QUADSPI;
+	QSPIHandle.Instance = QUADSPI;
 
-  /* Call the DeInit function to reset the driver */
-  if (HAL_QSPI_DeInit(&QSPIHandle) != HAL_OK)
-  {
-    return QSPI_ERROR;
-  }
+	/* Call the DeInit function to reset the driver */
+	if (HAL_QSPI_DeInit(&QSPIHandle) != HAL_OK)
+	{
+		return QSPI_ERROR;
+	}
 
-  /* System level initialization */
-  BSP_QSPI_MspInit(&QSPIHandle, NULL);
+	/* System level initialization */
+	BSP_QSPI_MspInit(&QSPIHandle, NULL);
 
-  /* QSPI initialization */
-  /* ClockPrescaler set to 1, so QSPI clock = 200MHz / (1+1) = 100MHz */
-  QSPIHandle.Init.ClockPrescaler     = 1;
-  QSPIHandle.Init.FifoThreshold      = 4;
-  QSPIHandle.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
-  QSPIHandle.Init.FlashSize          = POSITION_VAL(MT25TL01G_FLASH_SIZE) - 1;
-  QSPIHandle.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
-  QSPIHandle.Init.ClockMode          = QSPI_CLOCK_MODE_0;
-  QSPIHandle.Init.FlashID            = QSPI_FLASH_ID_1;
+	/* QSPI initialization */
+	/* ClockPrescaler set to 1, so QSPI clock = 200MHz / (1+1) = 100MHz */
+	QSPIHandle.Init.ClockPrescaler     = 1;
+	QSPIHandle.Init.FifoThreshold      = 4;
+	QSPIHandle.Init.SampleShifting     = QSPI_SAMPLE_SHIFTING_HALFCYCLE;
+	QSPIHandle.Init.FlashSize          = POSITION_VAL(MT25TL01G_FLASH_SIZE) - 1;
+	QSPIHandle.Init.ChipSelectHighTime = QSPI_CS_HIGH_TIME_1_CYCLE;
+	QSPIHandle.Init.ClockMode          = QSPI_CLOCK_MODE_0;
+	QSPIHandle.Init.FlashID            = QSPI_FLASH_ID_1;
 #ifdef USE_DUAL_QSPI
 	QSPIHandle.Init.DualFlash          = QSPI_DUALFLASH_ENABLE;
 #else
@@ -541,98 +541,101 @@ uint8_t BSP_QSPI_EnableMemoryMappedMode(void)
   */
 __weak void BSP_QSPI_MspInit(QSPI_HandleTypeDef *hqspi, void *Params)
 {
-  GPIO_InitTypeDef gpio_init_structure;
+	GPIO_InitTypeDef gpio_init_structure;
 
-  /*##-1- Enable peripherals and GPIO Clocks #################################*/
-  /* Enable the QuadSPI memory interface clock */
-  QSPI_CLK_ENABLE();
-  /* Reset the QuadSPI memory interface */
-  QSPI_FORCE_RESET();
-  QSPI_RELEASE_RESET();
-  /* Enable GPIO clocks */
-  QSPI_CLK_GPIO_CLK_ENABLE();
-  QSPI_BK1_CS_GPIO_CLK_ENABLE();
-  QSPI_BK1_D0_GPIO_CLK_ENABLE();
-  QSPI_BK1_D1_GPIO_CLK_ENABLE();
-  QSPI_BK1_D2_GPIO_CLK_ENABLE();
-  QSPI_BK1_D3_GPIO_CLK_ENABLE();
-#ifdef USE_DUAL_QSPI
-  QSPI_BK2_CS_GPIO_CLK_ENABLE();
-  QSPI_BK2_D0_GPIO_CLK_ENABLE();
-  QSPI_BK2_D1_GPIO_CLK_ENABLE();
-  QSPI_BK2_D2_GPIO_CLK_ENABLE();
-  QSPI_BK2_D3_GPIO_CLK_ENABLE();
-#endif
+	/*##-1- Enable peripherals and GPIO Clocks #################################*/
+	/* Enable the QuadSPI memory interface clock */
+	QSPI_CLK_ENABLE();
 
-  /*##-2- Configure peripheral GPIO ##########################################*/
-  /* QSPI CLK GPIO pin configuration  */
-  gpio_init_structure.Pin       = QSPI_CLK_PIN;
-  gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
-  gpio_init_structure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-  gpio_init_structure.Pull      = GPIO_NOPULL;
-  gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
-  HAL_GPIO_Init(QSPI_CLK_GPIO_PORT, &gpio_init_structure);
+	/* Reset the QuadSPI memory interface */
+	QSPI_FORCE_RESET();
+	QSPI_RELEASE_RESET();
 
-  /* QSPI CS GPIO pin configuration  */
-  gpio_init_structure.Pin       = QSPI_BK1_CS_PIN;
-  gpio_init_structure.Pull      = GPIO_PULLUP;
-  gpio_init_structure.Alternate = GPIO_AF10_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK1_CS_GPIO_PORT, &gpio_init_structure);
+	/* Enable GPIO clocks */
+	QSPI_CLK_GPIO_CLK_ENABLE();
+	QSPI_BK1_CS_GPIO_CLK_ENABLE();
+	QSPI_BK1_D0_GPIO_CLK_ENABLE();
+	QSPI_BK1_D1_GPIO_CLK_ENABLE();
+	QSPI_BK1_D2_GPIO_CLK_ENABLE();
+	QSPI_BK1_D3_GPIO_CLK_ENABLE();
 
 #ifdef USE_DUAL_QSPI
-  gpio_init_structure.Pin       = QSPI_BK2_CS_PIN;
-  gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
-  gpio_init_structure.Pull      = GPIO_PULLUP;
-  gpio_init_structure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
-  gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK2_CS_GPIO_PORT, &gpio_init_structure);
+	QSPI_BK2_CS_GPIO_CLK_ENABLE();
+	QSPI_BK2_D0_GPIO_CLK_ENABLE();
+	QSPI_BK2_D1_GPIO_CLK_ENABLE();
+	QSPI_BK2_D2_GPIO_CLK_ENABLE();
+	QSPI_BK2_D3_GPIO_CLK_ENABLE();
 #endif
 
-  /* QSPI D0 GPIO pin configuration  */
-  gpio_init_structure.Pin       = QSPI_BK1_D0_PIN;
-  gpio_init_structure.Pull      = GPIO_NOPULL;
-  gpio_init_structure.Alternate = GPIO_AF10_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK1_D0_GPIO_PORT, &gpio_init_structure);
+	/*##-2- Configure peripheral GPIO ##########################################*/
+	/* QSPI CLK GPIO pin configuration  */
+	gpio_init_structure.Pin       = QSPI_CLK_PIN;
+	gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
+	gpio_init_structure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+	gpio_init_structure.Pull      = GPIO_NOPULL;
+	gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
+	HAL_GPIO_Init(QSPI_CLK_GPIO_PORT, &gpio_init_structure);
+
+	/* QSPI CS GPIO pin configuration  */
+	gpio_init_structure.Pin       = QSPI_BK1_CS_PIN;
+	gpio_init_structure.Pull      = GPIO_PULLUP;
+	gpio_init_structure.Alternate = GPIO_AF10_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK1_CS_GPIO_PORT, &gpio_init_structure);
 
 #ifdef USE_DUAL_QSPI
-  gpio_init_structure.Pin       = QSPI_BK2_D0_PIN;
-  gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK2_D0_GPIO_PORT, &gpio_init_structure);
+	gpio_init_structure.Pin       = QSPI_BK2_CS_PIN;
+	gpio_init_structure.Mode      = GPIO_MODE_AF_PP;
+	gpio_init_structure.Pull      = GPIO_PULLUP;
+	gpio_init_structure.Speed     = GPIO_SPEED_FREQ_VERY_HIGH;
+	gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK2_CS_GPIO_PORT, &gpio_init_structure);
 #endif
 
-  /* QSPI D1 GPIO pin configuration  */
-  gpio_init_structure.Pin       = QSPI_BK1_D1_PIN;
-  gpio_init_structure.Alternate = GPIO_AF10_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK1_D1_GPIO_PORT, &gpio_init_structure);
+	/* QSPI D0 GPIO pin configuration  */
+	gpio_init_structure.Pin       = QSPI_BK1_D0_PIN;
+	gpio_init_structure.Pull      = GPIO_NOPULL;
+	gpio_init_structure.Alternate = GPIO_AF10_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK1_D0_GPIO_PORT, &gpio_init_structure);
 
 #ifdef USE_DUAL_QSPI
-  gpio_init_structure.Pin       = QSPI_BK2_D1_PIN;
-  gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK2_D1_GPIO_PORT, &gpio_init_structure);
+	gpio_init_structure.Pin       = QSPI_BK2_D0_PIN;
+	gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK2_D0_GPIO_PORT, &gpio_init_structure);
 #endif
 
-  /* QSPI D2 GPIO pin configuration  */
-  gpio_init_structure.Pin       = QSPI_BK1_D2_PIN;
-  gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
-  HAL_GPIO_Init(QSPI_BK1_D2_GPIO_PORT, &gpio_init_structure);
+	/* QSPI D1 GPIO pin configuration  */
+	gpio_init_structure.Pin       = QSPI_BK1_D1_PIN;
+	gpio_init_structure.Alternate = GPIO_AF10_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK1_D1_GPIO_PORT, &gpio_init_structure);
 
 #ifdef USE_DUAL_QSPI
-  gpio_init_structure.Pin       = QSPI_BK2_D2_PIN;
-  HAL_GPIO_Init(QSPI_BK2_D2_GPIO_PORT, &gpio_init_structure);
+	gpio_init_structure.Pin       = QSPI_BK2_D1_PIN;
+	gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK2_D1_GPIO_PORT, &gpio_init_structure);
 #endif
 
-  /* QSPI D3 GPIO pin configuration  */
-  gpio_init_structure.Pin       = QSPI_BK1_D3_PIN;
-  HAL_GPIO_Init(QSPI_BK1_D3_GPIO_PORT, &gpio_init_structure);
+	/* QSPI D2 GPIO pin configuration  */
+	gpio_init_structure.Pin       = QSPI_BK1_D2_PIN;
+	gpio_init_structure.Alternate = GPIO_AF9_QUADSPI;
+	HAL_GPIO_Init(QSPI_BK1_D2_GPIO_PORT, &gpio_init_structure);
+
 #ifdef USE_DUAL_QSPI
-  gpio_init_structure.Pin       = QSPI_BK2_D3_PIN;
-  HAL_GPIO_Init(QSPI_BK2_D3_GPIO_PORT, &gpio_init_structure);
+	gpio_init_structure.Pin       = QSPI_BK2_D2_PIN;
+	HAL_GPIO_Init(QSPI_BK2_D2_GPIO_PORT, &gpio_init_structure);
 #endif
 
-  /*##-3- Configure the NVIC for QSPI #########################################*/
-  /* NVIC configuration for QSPI interrupt */
-  HAL_NVIC_SetPriority(QUADSPI_IRQn, 0x0F, 0);
-  HAL_NVIC_EnableIRQ(QUADSPI_IRQn);
+	/* QSPI D3 GPIO pin configuration  */
+	gpio_init_structure.Pin       = QSPI_BK1_D3_PIN;
+	HAL_GPIO_Init(QSPI_BK1_D3_GPIO_PORT, &gpio_init_structure);
+#ifdef USE_DUAL_QSPI
+	gpio_init_structure.Pin       = QSPI_BK2_D3_PIN;
+	HAL_GPIO_Init(QSPI_BK2_D3_GPIO_PORT, &gpio_init_structure);
+#endif
+
+	/*##-3- Configure the NVIC for QSPI #########################################*/
+	/* NVIC configuration for QSPI interrupt */
+	HAL_NVIC_SetPriority(QUADSPI_IRQn, 0x0F, 0);
+	HAL_NVIC_EnableIRQ(QUADSPI_IRQn);
 
 }
 
